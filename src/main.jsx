@@ -18,7 +18,7 @@ const App = lazy(() => import('./App.jsx'));
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <React.StrictMode>
     <Suspense fallback={<div>Loading...</div>}>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/react-fragrance-dawn/' : '/'}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <App />

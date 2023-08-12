@@ -29,10 +29,7 @@ function App() {
     return (
         <>
             <Routes>
-                <Route
-                    basename={process.env.NODE_ENV === 'production' ? '/react-fragrance-dawn/' : '/'}
-                    element={<Layout />}
-                >
+                <Route path='/' element={<Layout />}>
                     <Route index element={<HomePage />}></Route>
                     <Route path='/products' element={<ProductsPage />}></Route>
                     <Route path='/products/:id' element={<ProductsDetailPage />}></Route>
