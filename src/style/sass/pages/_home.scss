@@ -1,0 +1,459 @@
+// ----- banner 開始
+.home-slogan-btn {
+    width: 150px;
+    height: 50px;
+    border: none;
+}
+
+.home-bg-start-container {
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    background: #81ecec8c;
+    // background: #ffeaa78c;
+    // background: #dfe6e9;
+
+    left: -1%;
+    bottom: 0;
+    z-index: -1;
+}
+.home-bg-end-container {
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    background: #a29bfe73;
+    // background: #dfe6e9;
+    // background: #b2bec3;
+    // background: #81ecec8c;
+    // background: #81ecec8c;
+
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+// 使用時要在標籤內新增兩組 span 標籤
+.home-title {
+    position: relative;
+    text-align: center;
+
+    span:first-of-type {
+        &::before {
+            content: '';
+            width: 30px;
+            height: 5px;
+            background-color: $primary;
+            position: absolute;
+            top: 50%;
+            left: 33%;
+            transform: translateX(-50%);
+
+            @media (min-width: 768px) {
+                left: 37%;
+            }
+
+            @media (min-width: 992px) {
+                left: 40%;
+            }
+
+            @media (min-width: 1200px) {
+                left: 41%;
+            }
+
+            @media (min-width: 1400px) {
+                left: 42.8%;
+            }
+        }
+    }
+
+    span:last-of-type {
+        &::after {
+            content: '';
+            width: 30px;
+            height: 5px;
+            background-color: $primary;
+            position: absolute;
+            top: 50%;
+            right: 26.8%;
+            transform: translateX(-50%);
+
+            @media (min-width: 768px) {
+                right: 33%;
+            }
+
+            @media (min-width: 992px) {
+                right: 37%;
+            }
+
+            @media (min-width: 1200px) {
+                right: 38%;
+            }
+
+            @media (min-width: 1400px) {
+                right: 40.5%;
+            }
+        }
+    }
+}
+
+.home-activity-container {
+    height: 100%;
+    // background: #e2e0e0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 35px;
+        height: 7px;
+        background-color: $primary;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 7px;
+        height: 35px;
+        background-color: $primary;
+    }
+
+    span:first-of-type::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 35px;
+        height: 7px;
+        background-color: $primary;
+    }
+    span:last-of-type::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 7px;
+        height: 35px;
+        background-color: $primary;
+    }
+}
+
+.home-hint-icon-container {
+    position: absolute;
+    // bottom: 6%;
+    // left: 7.5%;
+    left: 50%;
+    bottom: 0;
+
+    .icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+// ----- banner 結束
+
+// ----- recommend 開始
+.home-recommend-image {
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    height: 76px;
+
+    @media (min-width: 576px) {
+        height: 86px;
+    }
+    @media (min-width: 768px) {
+        height: 116px;
+    }
+    @media (min-width: 992px) {
+        height: 156px;
+    }
+    @media (min-width: 1200px) {
+        height: 185px;
+    }
+    @media (min-width: 1400px) {
+        height: 216px;
+    }
+}
+
+.home-swiper-img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    transition: all 0.3s ease-in-out;
+
+    @media (min-width: 375px) {
+        height: 350px;
+    }
+    @media (min-width: 576px) {
+        height: 383px;
+    }
+    @media (min-width: 768px) {
+        height: 400px;
+    }
+    @media (min-width: 992px) {
+        height: 350px;
+    }
+    @media (min-width: 1200px) {
+        height: 350px;
+    }
+    @media (min-width: 1400px) {
+        height: 360px;
+    }
+}
+
+.home-swiper-img-container {
+    border: 2px solid #dfe6e9;
+    transition: all 0.3s ease-in-out;
+    // overflow: hidden;
+}
+
+.home-swiper-container {
+    position: relative;
+    cursor: pointer;
+
+    &:hover .home-swiper-img-container {
+        border: 2px solid $primary;
+        box-shadow: 0 0 5px $primary;
+    }
+
+    &:hover .home-swiper-content {
+        opacity: 1;
+    }
+
+    &:hover .home-swiper-icon-button {
+        opacity: 1;
+    }
+}
+
+.home-swiper-img-container {
+    &:hover .home-swiper-img {
+        filter: brightness(1.05);
+    }
+}
+
+.home-swiper-content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 40px;
+    width: 98%;
+    height: 17%;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.home-swiper-icon-button {
+    position: absolute;
+    top: 40px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background: $primary;
+    backdrop-filter: blur(5px);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    & .icon-md {
+        fill: white;
+    }
+}
+// ----- recommend 結束
+
+// ----- category 開始
+.home-category-card {
+    display: block;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    border: 2px solid $primary;
+
+    &:hover {
+        filter: brightness(1.2);
+        box-shadow: 0 0 10px $primary;
+    }
+
+    .home-category-card-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        height: 90%;
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 2px solid white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-shadow: 0 0 5px white;
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+    }
+
+    &:hover {
+        .home-category-card-title {
+            opacity: 1;
+            box-shadow: 0 0 10px white;
+        }
+    }
+}
+
+// ----- category 結束
+
+// ----- activity 結束
+.home-activity-card-container {
+    position: relative;
+    // border: 2px solid black;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.home-activity-card-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 22%;
+    background-color: rgba(223, 230, 233, 0.6);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px black;
+
+    border-bottom-right-radius: 10px;
+}
+
+.home-activity-card-image {
+    display: block;
+    width: 100%;
+    // height: 200px;
+    object-fit: cover;
+}
+// ----- activity 結束
+
+// ----- bottomBg 開始
+.home-bottom-bg-title {
+    display: inline-block;
+    color: white;
+    background: rgba(0, 0, 0, 0.61);
+    backdrop-filter: blur(5px);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+}
+
+// ----- bottomBg 結束
+
+// ----- popular 開始
+.home-popular-start-bg {
+    // background: #eed7d7;
+    // background: #fab1a0;
+    background: #dfe6e9;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+.home-popular-end-bg {
+    background: #00000000;
+    height: 500px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: start;
+    flex-direction: column;
+}
+
+.home-popular-card-container {
+    position: absolute;
+    width: 50%;
+    top: 59%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: 992px) {
+        top: 50%;
+        left: 50%;
+    }
+}
+
+.popularSwiper {
+    height: 400px;
+    width: 233px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        transform: scale(1.1);
+        filter: brightness(1.1.5);
+    }
+}
+
+.popular-card-container {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.popular-card-img {
+    border: 2px solid $primary;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    inset: 10px;
+    display: block;
+    width: 100%;
+    height: 335px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.popular-card-title {
+    position: absolute;
+    left: -19px;
+    top: 60px;
+    width: 55px;
+    height: 210px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    color: white;
+    text-shadow: 0 0 1px white;
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 2px;
+}
+
+.popular-card-price {
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    left: 117px;
+    bottom: -101%;
+    width: 100px;
+    height: 44px;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    color: white;
+}
+
+// ----- popular 結束

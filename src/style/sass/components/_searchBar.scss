@@ -1,0 +1,184 @@
+.search-navbar-container {
+    width: 100%;
+    height: 45px;
+    height: 0;
+    position: relative;
+    // position: sticky;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.089);
+}
+
+.search-menu-btn {
+    position: absolute;
+    top: 0;
+    right: -7.5%;
+    transform: translateX(-50%);
+    width: 97px;
+    height: 47px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    @media (min-width: 650px) {
+        right: -5.5%;
+    }
+    @media (min-width: 768px) {
+        top: 3px;
+        right: -4.5%;
+        height: 40px;
+    }
+}
+
+.search-menu {
+    display: flex;
+    height: 90px;
+    width: 100%;
+    position: relative;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.384);
+    border-right: 2px solid rgba(0, 0, 0, 0.384);
+    background: white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    @media (min-width: 992px) {
+        top: 0;
+    }
+
+    > li {
+        display: inline-block;
+        margin-right: 1rem;
+        // width: 200px;
+        width: calc(100% / 4 - 20px);
+    }
+}
+
+.search-menu-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+#search-check {
+    opacity: 0;
+}
+
+.search-menu-items {
+    height: 100%;
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    @media (min-width: 992px) {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &:nth-of-type(1) div {
+            padding-left: 2rem;
+        }
+    }
+}
+
+.search-menu-link {
+    display: block;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+
+    &:hover {
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 992px) {
+    // 小於等於 992
+    .sidebar-collapse-icon {
+        display: none;
+    }
+    .search-navbar-container {
+        height: 46px;
+    }
+    .search-blur-bg {
+        position: fixed;
+        top: 34%;
+        // top: 195px;
+        width: 100%;
+        height: 100vh;
+        left: -100%;
+        z-index: 1;
+        background: #00000056;
+        transition: all 0.3s ease-in-out;
+        border-top: 2px solid black;
+    }
+    .search-menu {
+        position: fixed;
+        width: 50%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        // top: 195px;
+        top: 34%;
+        left: -100%;
+        transition: all 0.3s ease-in-out;
+        z-index: 3;
+        border-right: 2px solid black;
+        border-top: 2px solid black;
+
+        > li {
+            display: block;
+            width: 100%;
+            margin-right: 2rem;
+        }
+    }
+    .search-menu-btn {
+        display: flex;
+    }
+    .search-title {
+        display: inline-block;
+    }
+
+    // #search-check:checked ~ nav .search-menu {
+    //     left: 0;
+    // }
+    // #search-check:checked ~ nav .search-blur-bg {
+    //     left: 0;
+    // }
+
+    .search-menu-items {
+        // margin-bottom: 0;
+        margin-top: 0;
+    }
+}
+
+.menu-show {
+    left: 0;
+}
+
+.search-menu-first {
+    // 按下收回左側
+    position: fixed;
+    width: 100%;
+    height: 90px;
+    // left: -100%;
+    transform: translateX(-100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    transition: all 0.3s ease-in-out;
+    background: #ffffff;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.384);
+    border-right: 2px solid rgba(0, 0, 0, 0.384);
+
+    & > li {
+        display: inline-block;
+        margin-right: 1rem;
+        width: calc(100% / 4 - 5px);
+    }
+}
+
+.search-menu-first-show {
+    transform: translateX(0);
+}

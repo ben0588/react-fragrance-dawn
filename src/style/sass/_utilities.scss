@@ -1,0 +1,117 @@
+* ::selection {
+    background-color: $primary;
+    color: #fff;
+}
+
+td,
+th {
+    white-space: nowrap;
+}
+
+.top-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+.hover-opacity {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.link-primary-hover {
+    text-decoration: none;
+    &:hover {
+        opacity: 0.6;
+        text-decoration: underline;
+    }
+}
+
+.btn-primary-hover {
+    transition: all 0.1s ease-in;
+    opacity: 1;
+    &:hover {
+        opacity: 0.6;
+    }
+}
+
+.bg-blur {
+    backdrop-filter: blur(15px);
+}
+
+.icon-sm {
+    width: 20px;
+    height: 20px;
+}
+
+.icon-md {
+    width: 25px;
+    height: 25px;
+}
+
+.closure-icon {
+    width: 20px;
+    height: 20px;
+    fill: rgb(133, 131, 131);
+    &:hover {
+        fill: $primary;
+    }
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+.opacity-100-important {
+    opacity: 1 !important;
+}
+
+.border-none {
+    border: none !important;
+}
+.border-none {
+    background: #00000000;
+}
+
+.footer-text-hover {
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+    &:hover {
+        color: white;
+    }
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.text-ellipsis {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-ellipsis-200 {
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "category": "香水",
+        "imageUrl": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBlcmZ1bWV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60"
+    },
+    {
+        "category": "香氛蠟燭",
+        "imageUrl": "https://images.unsplash.com/photo-1599591590264-22dbba64111c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjF8fHNjZW50ZWQlMjBjYW5kbGV8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60"
+    },
+    {
+        "category": "室內擴香",
+        "imageUrl": "https://images.unsplash.com/photo-1630404387821-f4958041b9ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDR8fGRpZmZ1c2VyfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60"
+    },
+    {
+        "category": "空氣噴霧",
+        "imageUrl": "https://images.unsplash.com/photo-1617182700058-e493c8dd98da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHNwcmF5fGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60"
+    },
+    {
+        "category": "車用香氛",
+        "imageUrl": "https://images.unsplash.com/photo-1671642605304-2a0a812b5529?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDUzfHxmcmFncmFuY2UlMjBzcHJheXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60"
+    }
+]

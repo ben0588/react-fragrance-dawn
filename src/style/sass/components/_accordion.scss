@@ -1,0 +1,37 @@
+.accordion-button {
+    // 沒打開時樣式
+    background-color: #ffffff !important;
+    font-size: 1.2rem;
+    // border-bottom: 2px solid #111c30;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-button:not(.collapsed) {
+    // 打開時樣式
+    color: #111c30;
+    border-bottom: 2px solid #111c30bb;
+}
+
+.account-wishlist-icon-position {
+    top: 50%;
+    transform: translateX(-50%);
+}
+
+.sidebar-collapse-icon {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 22px;
+    left: 31px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    box-shadow: 0 0 10px #111c30;
+    z-index: 1000;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

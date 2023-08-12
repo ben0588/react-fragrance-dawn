@@ -1,0 +1,11 @@
+@import '../../../node_modules/bootstrap/scss/functions';
+@import './variables'; // 修改 bootstrap 預設
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import './utilities'; // 自訂義
+@import './components/navbar';
+@import './components/searchBar';
+@import './components/card';
+@import './components/swiper';
+@import './components/accordion';
+@import './components/cart';
+@import './pages/home';

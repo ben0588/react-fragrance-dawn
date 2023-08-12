@@ -1,0 +1,89 @@
+/* 將 thumbs swiper 的容器設定為垂直排列 */
+.thumbs-swiper-container {
+    .swiper-wrapper {
+        display: flex;
+        flex-direction: row;
+
+        @media (min-width: 1200px) {
+            flex-direction: column;
+        }
+    }
+}
+
+.thumbs-swiper {
+    @media (min-width: 576px) {
+        width: 75px !important;
+    }
+    @media (min-width: 768px) {
+        width: 85px !important;
+    }
+    @media (min-width: 1200px) {
+        width: 80px !important;
+    }
+    @media (min-width: 1400px) {
+        width: 100px !important;
+    }
+}
+
+.thumbs-swiper-container .thumbs-swiper-img {
+    cursor: pointer;
+    width: 100%;
+    // height: 100px;
+    @media (min-width: 576px) {
+        height: 75px;
+    }
+    @media (min-width: 768px) {
+        height: 85px;
+    }
+    @media (min-width: 992px) {
+        height: 81px;
+    }
+    @media (min-width: 1200px) {
+        height: 68.4px;
+    }
+    @media (min-width: 1400px) {
+        height: 82px;
+    }
+}
+
+.swiper-img {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    @media (min-width: 375px) {
+        height: 459px;
+    }
+    @media (min-width: 576px) {
+        height: 516px;
+    }
+    @media (min-width: 768px) {
+        height: 500px;
+    }
+    @media (min-width: 992px) {
+        height: 476px;
+    }
+    @media (min-width: 1200px) {
+        height: 393px;
+    }
+    @media (min-width: 1400px) {
+        height: 460px;
+    }
+}
+
+// 修改被選中時顯示樣式
+.thumbs-swiper-container .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.75;
+    border: 2px solid rgba(185, 185, 185, 0.726);
+    box-shadow: 0 0 5px rgba(185, 185, 185, 0.74);
+}
+
+.thumbs-swiper-container .swiper-slide-thumb-active {
+    opacity: 1;
+    border: 2px solid #111c30a6;
+    box-shadow: 0 0 5px #111c30b7;
+}
+
+// --- 以上是產品詳情用的

@@ -1,0 +1,84 @@
+// 商品卡片樣式
+.product-card-img-container {
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 0 10px rgba(117, 117, 117, 0.89);
+    }
+
+    &:hover .product-card-button-container {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.product-card-img {
+    object-fit: cover;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        // transform: scale(1.2);
+        filter: brightness(1.1);
+    }
+}
+
+.product-card-button-container {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 10;
+    width: 35px;
+    height: 35px;
+    opacity: 0;
+    pointer-events: none;
+    background: #ffffffa9;
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgb(97, 96, 96);
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        background: #000;
+    }
+
+    &:hover .product-card-icon {
+        fill: #ffffff;
+    }
+}
+.product-card-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.product-card-wishlist-icon {
+    position: absolute;
+    cursor: pointer;
+    transition: fill 0.2s ease-in-out;
+    top: 10%;
+    right: 5.2%;
+    width: 30px;
+    height: 30px;
+
+    @media (min-width: 576px) {
+        top: 6%;
+        right: 6.2%;
+        width: 28px;
+        height: 28px;
+    }
+
+    &:hover {
+        fill: #943126;
+    }
+}
+
+.change-wishlist-icon-position {
+    right: 3%;
+    top: 2.9%;
+    width: 30px;
+    height: 30px;
+}

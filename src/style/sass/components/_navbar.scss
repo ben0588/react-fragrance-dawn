@@ -1,0 +1,30 @@
+.nav-logo-img {
+    height: 82px;
+    position: absolute;
+    left: 50%;
+    top: 3px;
+    transform: translate(-50%);
+    object-fit: cover;
+
+    @media (min-width: 992px) {
+        height: 98px;
+        top: 5px;
+    }
+}
+
+.navbar-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.navbar-link-hover {
+    &:hover {
+        opacity: 1 !important;
+    }
+}
+
+.navbar-bg-hover {
+    &:hover {
+        background: #eaf3f881;
+    }
+}
