@@ -11,13 +11,14 @@ import { store, persistor } from './store/store.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_BASE_API_URL;
 import { register } from 'swiper/element/bundle';
+import FirstLoading from './components/FirstLoading';
 register(); // 初始化 swiper 套件
 
 const App = lazy(() => import('./App.jsx'));
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <React.StrictMode>
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<FirstLoading />}>
         <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/react-fragrance-dawn/' : '/'}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
