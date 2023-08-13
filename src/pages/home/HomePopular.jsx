@@ -39,14 +39,14 @@ const HomePopular = () => {
                     >
                         <div className='row'>
                             {Object.keys(popular).length === 0 ? null : (
-                                <div className='col-12 col-md-8 bg-light rounded-3 p-4 h-100'>
+                                <div className='col-12 col-md-8 bg-light rounded-3 p-3 h-100'>
                                     <h3 className='fw-bolder py-2'>{popular.title}</h3>
                                     <p className='text-muted py-2'>{popular.content}</p>
                                     <p className='py-1'>{popular.description}</p>
                                     <Link
                                         to={`/products/${popular.id}`}
                                         role='button'
-                                        className='btn btn-dark btn-primary-hover w-100 mt-3'
+                                        className='btn btn-dark btn-primary-hover w-100 mt-1 mb-5'
                                     >
                                         前去逛逛
                                     </Link>

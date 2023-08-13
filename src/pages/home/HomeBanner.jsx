@@ -85,15 +85,10 @@ const HomeBanner = () => {
                     </div>
                 </div>
 
-                <div className='col-12 col-md-4'>
-                    <motion.div className='d-flex justify-content-center align-items-center'>
-                        <img
-                            src={perfumeGif}
-                            alt={'香氛晨光香水相關購物中心'}
-                            style={{ width: `300px`, height: `350px` }}
-                            className='object-fit-cover'
-                        />
-                    </motion.div>
+                <div className='col-12 col-md-4 px-0'>
+                    <div className='d-flex justify-content-center align-items-center'>
+                        <img src={perfumeGif} alt={'香氛晨光香水相關購物中心'} className='home-banner-image' />
+                    </div>
                 </div>
                 <div className='col-12 col-md-4'>
                     <div className='home-activity-container p-3'>

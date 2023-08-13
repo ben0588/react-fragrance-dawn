@@ -1,4 +1,11 @@
 // ----- banner 開始
+.home-banner-image {
+    width: 187px;
+    height: 350px;
+    display: block;
+    object-fit: cover;
+}
+
 .home-slogan-btn {
     width: 150px;
     height: 50px;
@@ -19,7 +26,7 @@
 }
 .home-bg-end-container {
     position: absolute;
-    width: 10%;
+    width: 20%;
     height: 100%;
     background: #a29bfe73;
     // background: #dfe6e9;
@@ -30,6 +37,10 @@
     right: 0;
     bottom: 0;
     z-index: -1;
+
+    @media (min-width: 768px) {
+        width: 10%;
+    }
 }
 
 // 使用時要在標籤內新增兩組 span 標籤
@@ -45,8 +56,13 @@
             background-color: $primary;
             position: absolute;
             top: 50%;
-            left: 33%;
+            // left: 33%;
+            left: 30%;
             transform: translateX(-50%);
+
+            @media (min-width: 475px) {
+                left: 33%;
+            }
 
             @media (min-width: 768px) {
                 left: 37%;
@@ -74,8 +90,13 @@
             background-color: $primary;
             position: absolute;
             top: 50%;
-            right: 26.8%;
+            // right: 26.8%;
+            right: 21.8%;
             transform: translateX(-50%);
+
+            @media (min-width: 475px) {
+                right: 26.8%;
+            }
 
             @media (min-width: 768px) {
                 right: 33%;
@@ -146,10 +167,13 @@
 
 .home-hint-icon-container {
     position: absolute;
-    // bottom: 6%;
-    // left: 7.5%;
-    left: 50%;
+    width: 100%;
+    left: 0;
+    transform: translateX(-50%);
     bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .icon {
         width: 35px;
@@ -188,7 +212,7 @@
     display: block;
     object-fit: cover;
     width: 100%;
-    height: auto;
+    height: 300px;
     transition: all 0.3s ease-in-out;
 
     @media (min-width: 375px) {
@@ -319,47 +343,6 @@
 
 // ----- category 結束
 
-// ----- activity 結束
-.home-activity-card-container {
-    position: relative;
-    // border: 2px solid black;
-
-    &:hover {
-        opacity: 0.8;
-    }
-}
-
-.home-activity-card-title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 22%;
-    background-color: rgba(223, 230, 233, 0.6);
-    backdrop-filter: blur(5px);
-    box-shadow: 0 0 10px black;
-
-    border-bottom-right-radius: 10px;
-}
-
-.home-activity-card-image {
-    display: block;
-    width: 100%;
-    // height: 200px;
-    object-fit: cover;
-}
-// ----- activity 結束
-
-// ----- bottomBg 開始
-.home-bottom-bg-title {
-    display: inline-block;
-    color: white;
-    background: rgba(0, 0, 0, 0.61);
-    backdrop-filter: blur(5px);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
-}
-
-// ----- bottomBg 結束
-
 // ----- popular 開始
 .home-popular-start-bg {
     // background: #eed7d7;
@@ -457,3 +440,45 @@
 }
 
 // ----- popular 結束
+
+// ----- activity 結束
+.home-activity-card-container {
+    position: relative;
+    // border: 2px solid black;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.home-activity-card-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    // height: 22%;
+    height: 31%;
+    background-color: rgba(223, 230, 233, 0.6);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px black;
+
+    border-bottom-right-radius: 10px;
+}
+
+.home-activity-card-image {
+    display: block;
+    width: 100%;
+    // height: 200px;
+    object-fit: cover;
+}
+// ----- activity 結束
+
+// ----- bottomBg 開始
+.home-bottom-bg-title {
+    display: inline-block;
+    color: white;
+    background: rgba(0, 0, 0, 0.61);
+    backdrop-filter: blur(5px);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+}
+
+// ----- bottomBg 結束

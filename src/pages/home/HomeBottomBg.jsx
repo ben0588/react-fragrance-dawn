@@ -12,6 +12,7 @@ const HomeBottomBg = () => {
                     backgroundPosition: 'center',
                     backgroundAttachment: 'fixed',
                     height: `350px`,
+                    objectFit: `cover`,
                 }}
             >
                 <h2 className='home-bottom-bg-title mt-5 p-4'>香氣如詩，晨光如畫，與我們一起創造美好的生活</h2>

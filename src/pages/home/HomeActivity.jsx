@@ -112,7 +112,7 @@ const HomeActivity = () => {
                     <div className='row'>
                         <div className='col-12 d-flex align-items-center justify-content-center flex-column py-3'>
                             <div className='fs-3 mt-5'>活動舉行中：{activityTarget?.title}</div>
-                            <div className='fs-3 '>活動舉行期間：{activityTarget?.date}</div>
+                            <div className='fs-3 text-ellipsis '>活動舉行期間：{activityTarget?.date}</div>
                             <div className='d-flex align-items-center justify-content-start fs-4 pt-2 '>
                                 優惠碼：<span className='bg-danger text-white px-2'>50%OFF</span>
                                 <button
@@ -124,12 +124,12 @@ const HomeActivity = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='col-12 d-flex align-items-center justify-content-center flex-column mt-5 py-3 '>
+                        <div className='col-12 d-flex align-items-center justify-content-center flex-column mt-5 py-3 px-4 '>
                             <div className='d-flex align-items-center justify-content-start fs-5 mb-2 '>
                                 <PiWarningCircleBold className='icon-sm pt-1' />
-                                <span>領取優惠碼時，請注意以下注意事項：</span>
+                                <span className='text-ellipsis'>領取優惠碼時，請注意以下注意事項：</span>
                             </div>
-                            <ol className='border border-2 px-3 ps-5 py-2 mb-4 '>
+                            <ol className='text-ellipsis border border-2 ps-4 py-2 mb-4 '>
                                 <li>請在使用期限內使用優惠卷，逾期作廢。</li>
                                 <li>請在使用期限內使用優惠卷，逾期作廢。</li>
                                 <li>部分優惠卷僅限制特定商品，領取後請注意。</li>

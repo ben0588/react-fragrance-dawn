@@ -67,7 +67,7 @@ const HomeConnection = () => {
                         ></iframe>
                     </div>
                     <div className='col-12 col-lg-6'>
-                        <form onSubmit={(e) => handleSubmit(e)}>
+                        <form onSubmit={(e) => handleSubmit(e)} className='mt-4'>
                             <InputGroup
                                 name='name'
                                 id='ConnectionName'

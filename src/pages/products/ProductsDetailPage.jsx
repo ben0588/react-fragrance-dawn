@@ -127,8 +127,8 @@ const ProductsDetailPage = () => {
                                 </button>
                             </div>
                             <div className='d-flex flex-column border-start border-5 border-primary ps-2 mb-4 mt-5 '>
-                                <span>全店，滿額免運：全店滿$999元免運 (海外地區不適用)</span>
-                                <span>全店，滿額贈：消費滿$2000元贈 TEXT 品牌提袋 x1</span>
+                                <span className='text-ellipsis'>全店，滿額免運：全店滿$999元免運 (海外地區不適用)</span>
+                                <span className='text-ellipsis'>全店，滿額贈：消費滿$2000元贈 TEXT 品牌提袋 x1</span>
                             </div>
                             <div className='mt-3'>
                                 <AccordionCollapse description={product.description} />
