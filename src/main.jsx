@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './style/sass/all.scss';
 import axios from 'axios';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store/store.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -19,13 +19,13 @@ const App = lazy(() => import('./App.jsx'));
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <React.StrictMode>
     <Suspense fallback={<FirstLoading />}>
-        <BrowserRouter basename={process.env.NODE_ENV === 'production' ? '/react-fragrance-dawn/' : '/'}>
+        <HashRouter>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <App />
                 </PersistGate>
             </Provider>
-        </BrowserRouter>
+        </HashRouter>
     </Suspense>
     // </React.StrictMode>
 );

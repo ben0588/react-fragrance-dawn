@@ -21,7 +21,8 @@ const HomeActivity = () => {
             const result = await axios({
                 method: 'GET',
                 baseURL: null,
-                url: '/src/data/sale.json',
+                // url: '/src/data/sale.json',
+                url: 'https://ben0588.github.io/react-fragrance-dawn/sale.json',
                 'Content-Type': 'application/json',
             });
             setSales(result.data.slice(0, 4));

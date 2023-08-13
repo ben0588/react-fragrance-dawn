@@ -18,7 +18,8 @@ const SalePage = () => {
             const result = await axios({
                 method: 'GET',
                 baseURL: null,
-                url: '/src/data/sale.json',
+                // url: '/src/data/sale.json',
+                url: 'https://ben0588.github.io/react-fragrance-dawn/sale.json',
                 'Content-Type': 'application/json',
             });
 
