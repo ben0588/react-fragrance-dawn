@@ -4,62 +4,62 @@
         "title": "愛香精選",
         "content": "挑選我們特選的愛香產品，現在購買可享受 25% 的優惠，讓您的香水收藏更加豐富多彩。",
         "date": "7月15日 ~ 8月15日",
-        "imageUrl": "/sale/sale-1.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-1.webp"
     },
     {
         "id": "2",
         "title": "春季花香限定",
         "content": "春日花朵綻放，購買花香香水，即贈送限定花朵小禮物一份。",
         "date": "3月15日 ~ 4月15日",
-        "imageUrl": "/sale/sale-2.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-2.webp"
     },
     {
         "id": "3",
         "title": "感謝有您",
         "content": "感謝您對我們的支持，凡購買滿 $100 的訂單，即可獲得 $10 折扣，感受我們的誠意回饋。",
         "date": "5月5日 ~ 6月5日",
-        "imageUrl": "/sale/sale-3.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-3.webp"
     },
     {
         "id": "4",
         "title": "冬日暖心禮",
         "content": "溫馨冬日，購買香水送上心意禮品一份，暖意加倍。",
         "date": "11月20日 ~ 12月20日",
-        "imageUrl": "/sale/sale-4.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-4.webp"
     },
     {
         "id": "5",
         "title": "迷戀香調",
         "content": "陷入香水世界，選購任意香調商品，即享 10% 特惠，讓您成為迷人魅力的代言人。",
         "date": "9月1日 ~ 10月1日",
-        "imageUrl": "/sale/sale-5.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-5.webp"
     },
     {
         "id": "6",
         "title": "特別感恩禮",
         "content": "感謝您的支持，凡購物滿 $50 即送精美小禮物，感恩有您。",
         "date": "6月8日 ~ 7月8日",
-        "imageUrl": "/sale/sale-6.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-6.webp"
     },
     {
         "id": "7",
         "title": "尋找香水新寵",
         "content": "探索我們全新系列的香水產品，首次購買即享 15% 優惠，換上新香調，展現新自己。",
         "date": "10月12日 ~ 11月12日",
-        "imageUrl": "/sale/sale-7.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-7.webp"
     },
     {
         "id": "8",
         "title": "夏日清涼季",
         "content": "購買任意香水，即享 20% 折扣，讓您在炎炎夏日保持清新愉悅。",
         "date": "4月18日 ~ 5月18日",
-        "imageUrl": "/sale/sale-8.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-8.webp"
     },
     {
         "id": "9",
         "title": "新年新氛圍",
         "content": "迎接新的一年，選購您喜愛的香水，即可獲得 2022 年 22% 的折扣，一同打造新的香氛氛圍。",
         "date": "1月25日 ~ 2月25日",
-        "imageUrl": "/sale/sale-9.webp"
+        "imageUrl": "https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/sale/sale-9.webp"
     }
 ]
