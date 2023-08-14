@@ -2,7 +2,39 @@ import { Link } from 'react-router-dom';
 import { BsFacebook, BsYoutube, BsInstagram, BsLine, BsGithub } from 'react-icons/bs';
 
 import ListGroup from '../ListGroup';
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 const Footer = () => {
+    const [email, setEmail] = useState('');
+    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    const handleSubmit = () => {
+        if (email !== '' && pattern.test(email)) {
+            Swal.fire({
+                title: '電子報訂閱成功',
+                text: `訂閱成功！稍後將會發送相關優惠通知給您，往後優惠將一併提前通知，謝謝您。`,
+                icon: 'success',
+                confirmButtonColor: '#111c30',
+                cancelButtonColor: '#b2bec3',
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+                showCloseButton: true,
+            });
+            setEmail('');
+        } else if (!pattern.test(email)) {
+            Swal.fire({
+                title: '電子信箱格式錯誤',
+                text: `請重新填寫正確的電子信箱格式。`,
+                icon: 'error',
+                confirmButtonColor: '#111c30',
+                cancelButtonColor: '#b2bec3',
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+                showCloseButton: true,
+            });
+        }
+    };
+
     return (
         <footer>
             <div className='text-secondary p-5 ' style={{ backgroundColor: 'black' }}>
@@ -61,9 +93,16 @@ const Footer = () => {
                                         id='footer-email-input'
                                         placeholder='請輸入您的電子信箱地址'
                                         className='form-control py-1 ps-1'
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
-                                <button type='button' className='btn btn-secondary mt-2' style={{ width: `60px` }}>
+                                <button
+                                    type='button'
+                                    className='btn btn-secondary mt-2'
+                                    style={{ width: `60px` }}
+                                    onClick={() => handleSubmit()}
+                                >
                                     訂閱
                                 </button>
                             </li>
