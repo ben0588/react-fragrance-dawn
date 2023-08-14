@@ -1,48 +1,90 @@
-# 香氛晨光 FragranceDawn
+# 香氛晨光
 
-本網站為專賣香水相關周邊的店商網站。
+- 此專案為電商網站，包含前台與後台功能：
+    - 使用者可在前台觀看商品，並將商品加入購物車、填寫資料並送出訂單、且可以追蹤當前訂單狀態，並支持本地端儲存願望商品清單、使用者開啟或關閉官網訊息通知
+    - 管理者可在後台新增、編輯和刪除商品、優惠卷、文章，並可管理訂單系統與更改訂單狀態。
+- [網站頁面連結](https://ben0588.github.io/react-fragrance-dawn/#/)
 
-## 使用技術
 
-- 開發專案：使用 Vite 開發 React 框架，符合 SPA 單頁式應用
-- 開發框架：使用 React 框架 Functional Components 架構開發
-- 路由管理：使用 React-router-dom 設置 Router 路由切換管理
-- 狀態管理：使用 Redux-toolkit 完成全域狀態管理
-- 本地資料管理：使用 Redux-persist 完成資料本地端( LocalStorage ) 自動儲存與刪除。
-- 樣式開發：使用 Bootstrap5 進行開發
-- 樣式客製化：使用 sass 客製化 Bootstrap 或 手刻樣式
-- 提示訊息：使用 react-toastify 完成操作成功失敗等訊息提示
+## 功能
+
+前台
+- [x] 首頁展示
+- [x] 顯示商品列表
+- [x] 依照類別篩選商品
+- [x] 依照關鍵字篩選商品
+- [x] 依照名稱、價格排序商品
+- [x] 商品加入追蹤清單與移除
+- [x] 顯示追蹤清單列表
+- [x] 商品加入購物車
+- [x] 編輯購物車數量、刪除購物車
+- [x] 購物車使用優惠卷
+- [x] 填寫寄送者顧客資訊、表單驗證、送出訂單
+- [x] 顯示訂單列表追蹤訂單進度
+- [x] 文章專欄區查看各類文章
+- [x] 優惠專區查看近期舉辦活動資訊
+
+後台(管理者)
+- [x] 登入與登出
+- [x] 顯示商品列表
+- [ ] 依照類別篩選商品
+- [x] 新增、編輯、刪除商品
+- [x] 顯示優惠卷列表
+- [x] 新增、編輯、刪除優惠卷
+- [x] 顯示訂單列表
+- [x] 編輯訂單
+- [x] 顯示訂文章列表
+- [x] 新增、編輯、刪除文章
 
 ## 安裝與執行
 
 1. 使用 npm 安裝相依套件：`npm install`
 2. 執行專案：`npm run dev`
 
-## 功能
-
-列出專案的主要功能和特色。
-
-1. 功能一：描述功能一的內容。
-2. 後台調整商品：
-    - 本作品支持由後台修改資料，可操作新增、編輯、刪除功能
-    - ( 不開放帳號密碼，僅限影片或現場展示 )
 
 ## 專案結構
 
+- public - 存放靜態檔案
+- src 
+    - api - 共同管理 api
+    - assets - 圖片放置處
+    - components - 各功能元件放置處
+    - hooks - 自訂 custom hook
+    - pages - 管理各頁面元件
+    - store - 放置 stroe 與 slice 設定
+    - style - 設置 scss 樣式
+    
+## 專案技術
+
+- Node ^16.15.0
+- React ^18.2.0
+- react-dom ^18.2.0
+- react-router-dom ^6.14.2
+- @reduxjs/toolkit ^1.9.5
+- react-redux ^8.1.2
+- redux-persist ^6.0.0
+- axios ^1.4.0
+- sass ^1.64.1
+- bootstrap ^5.3.0
+- react-bootstrap ^2.8.0
+- react-hook-form ^7.45.4
+- react-select ^5.7.4
+- react-toastify ^9.1.3
+- swiper ^10.1.0
+- sweetalert2 ^11.7.20
+- react-icons ^4.10.1
+- framer-motion ^10.15.1
 
 ## 文件
 
 - 圖片來源皆由：unsplash.com
 - Logo 製作來至：[designevo](https://www.designevo.com/tw/)，可製作免費 Logo 標示，但免費版只支持下載 300x300 低畫質圖片。
 
-## 系統需求
-
-- Node.js 版本：Node.js v14+
-- 瀏覽器支援：Chrome, Firefox, Safari
 
 ## 授權
-
 本專案僅供個人練習作品使用，不授權任何用途
 
 ## 其他
-- 如專案展示或其餘作品展示，可前往本人個人網站，[連結](https://ben0588.github.io/PersonalWebsite/#/)
+- 可以透過以下方式與我聯絡
+    - Email：energy9527z@gmail.com
+    - 其他專案展示：[個人網站](https://ben0588.github.io/PersonalWebsite/#/)
