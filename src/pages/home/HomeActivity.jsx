@@ -110,9 +110,9 @@ const HomeActivity = () => {
                         領取活動優惠碼
                     </strong>
                     <div className='row'>
-                        <div className='col-12 d-flex align-items-center justify-content-center flex-column py-3'>
-                            <div className='fs-3 mt-5'>活動舉行中：{activityTarget?.title}</div>
-                            <div className='fs-3 text-ellipsis '>活動舉行期間：{activityTarget?.date}</div>
+                        <div className='col-12 d-flex align-items-center justify-content-center flex-column '>
+                            <div className='fs-3 pt-4'>活動舉行中：{activityTarget?.title}</div>
+                            <div className='fs-3 text-ellipsis text-center'>活動舉行期間：{activityTarget?.date}</div>
                             <div className='d-flex align-items-center justify-content-start fs-4 pt-2 '>
                                 優惠碼：<span className='bg-danger text-white px-2'>50%OFF</span>
                                 <button
@@ -124,7 +124,7 @@ const HomeActivity = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className='col-12 d-flex align-items-center justify-content-center flex-column mt-5 py-3 px-4 '>
+                        <div className='col-12 d-flex align-items-center justify-content-center flex-column pt-5 px-4 '>
                             <div className='d-flex align-items-center justify-content-start fs-5 mb-2 '>
                                 <PiWarningCircleBold className='icon-sm pt-1' />
                                 <span className='text-ellipsis'>領取優惠碼時，請注意以下注意事項：</span>
@@ -140,7 +140,7 @@ const HomeActivity = () => {
                             <Link
                                 to='/products'
                                 role='button'
-                                className='btn btn-primary btn-primary-hover border border-3  border-primary w-75 py-2 mt-4 '
+                                className='btn btn-primary btn-primary-hover border border-3  border-primary w-75 py-1 mt-3 '
                             >
                                 前去逛逛
                             </Link>
