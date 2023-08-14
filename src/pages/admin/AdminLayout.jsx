@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createAsyncMessage } from '../../store/slice/messageSlice';
 import Loading from '../../components/Loading';
 import { useEffect } from 'react';
+import { persistor } from '../../store/store';
 
 const AdminLayout = () => {
     const adminState = useSelector((state) => state.admin);

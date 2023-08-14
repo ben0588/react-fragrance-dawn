@@ -21,6 +21,8 @@ const AdminProductsSection = () => {
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
     const loadingRedux = useSelector((state) => state.loading);
+    const [categoryList, setCategoryList] = useState([]);
+    const [category, setCategory] = useState('');
 
     useEffect(() => {
         productModalRef.current = new Modal('#productModal', {
@@ -46,10 +48,10 @@ const AdminProductsSection = () => {
     };
     const handleCancelDeleteModal = () => deleteModalRef.current.hide();
 
-    const fetchProducts = useCallback(async (page = 1) => {
+    const fetchProducts = useCallback(async (page = 1, category = null) => {
         try {
             dispatch(updateLoadingState(true));
-            const result = await adminFetchLimitedProducts(page);
+            const result = await adminFetchLimitedProducts(page, category);
             const { products, pagination } = result;
             setProducts(products);
             setPagination(pagination);
@@ -63,6 +65,20 @@ const AdminProductsSection = () => {
     useEffect(() => {
         fetchProducts();
     }, [fetchProducts]);
+
+    const fetchAllProducts = useCallback(async () => {
+        try {
+            const result = await AdminFetchAllProducts();
+            const newCategoryList = [...new Set(Object.values(result.products).map((item) => item.category))];
+            setCategoryList(newCategoryList);
+        } catch (error) {
+            inputToastMessage(error.response.data);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchAllProducts();
+    }, [fetchAllProducts]);
 
     const handleDeleteProduct = async () => {
         try {
@@ -78,6 +94,11 @@ const AdminProductsSection = () => {
             dispatch(updateLoadingState(false));
             handleCancelDeleteModal();
         }
+    };
+
+    const handleFilterCategory = (e) => {
+        setCategory(e.target.value);
+        fetchProducts(1, e.target.value);
     };
 
     return (
@@ -97,16 +118,39 @@ const AdminProductsSection = () => {
 
             <h3>產品列表</h3>
             <hr />
-            <div className='text-end'>
-                <button
-                    type='button'
-                    className='btn btn-primary'
-                    // data-bs-toggle='modal'
-                    // data-bs-target='#productModal'
-                    onClick={() => handleOpenProductModal('create', {})}
-                >
-                    建立新商品
-                </button>
+            <div className='row align-items-center'>
+                <div className='col'>
+                    <div className='form-floating  '>
+                        <select
+                            name='category'
+                            id='searchCategory'
+                            className='form-select w-50'
+                            onChange={(e) => handleFilterCategory(e)}
+                            value={category}
+                        >
+                            <option className='bg-dark text-white' value=''>
+                                預設全部
+                            </option>
+                            {categoryList?.map((item) => (
+                                <option className='bg-dark text-white fs-6' value={item} key={item}>
+                                    {item}
+                                </option>
+                            ))}
+                        </select>
+                        <label htmlFor='searchCategory'>使用類別搜尋</label>
+                    </div>
+                </div>
+                <div className='col '>
+                    <button
+                        type='button'
+                        className='btn btn-primary float-end'
+                        // data-bs-toggle='modal'
+                        // data-bs-target='#productModal'
+                        onClick={() => handleOpenProductModal('create', {})}
+                    >
+                        建立新商品
+                    </button>
+                </div>
             </div>
             <table className='table'>
                 <thead>
@@ -154,6 +198,7 @@ const AdminProductsSection = () => {
                 currentPage={pagination.current_page}
                 isPre={pagination.has_pre}
                 isNext={pagination.has_next}
+                category={pagination.category}
             />
         </div>
     );

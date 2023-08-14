@@ -52,9 +52,11 @@ export const AdminFetchAllProducts = async () => {
     }
 };
 
-export const adminFetchLimitedProducts = async (page) => {
+export const adminFetchLimitedProducts = async (page, category) => {
     try {
-        const fetchApiUrl = `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/admin/products?page=${page}`;
+        const fetchApiUrl = `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/admin/products?page=${page}${
+            category ? '&category=' + category : ''
+        }`;
         const response = await axios.get(fetchApiUrl);
         return response.data;
     } catch (error) {

@@ -31,6 +31,17 @@ export const adminSlice = createSlice({
             };
         },
     },
+    extraReducers: (builder) => {
+        builder.addCase('persist/PURGE', (state, action) => {
+            // 在 persistor.purge() 完成後觸發的 action
+            return {
+                isLogin: false,
+                uid: '',
+                token: '',
+                expired: '',
+            };
+        });
+    },
 });
 
 export const { createAdminLogin, checkAdminState, removeAdminLogout } = adminSlice.actions;
