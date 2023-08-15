@@ -96,7 +96,13 @@ const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, 
             setIsUpload(true);
             const formData = new FormData();
             const file = e.target[0].files[0];
-            if (file.type.substring(0, 5) !== 'image') {
+            if (!file) {
+                inputToastMessage({
+                    success: false,
+                    message: '請選擇檔案後再進行上傳圖片功能',
+                });
+                setIsUpload(false);
+            } else if (file.type.substring(0, 5) !== 'image') {
                 inputToastMessage({
                     success: false,
                     message: '格式錯誤，請使用圖片檔案格式，如 .jpg .png',

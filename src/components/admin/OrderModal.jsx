@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { adminPutOrder } from '../../api/adminApis';
+import { adminDeleteOrder, adminPutOrder } from '../../api/adminApis';
 import InputGroup from '../InputGroup';
 import useMessage from '../../hooks/useMessage';
 import SelectGroup from '../SelectGroup';
 import usePriceToTw from '../../hooks/usePriceToTw';
+import Swal from 'sweetalert2';
 
 const OrderModal = ({ handleCancelOrderModal, fetchOrders, editOrderTarget }) => {
     const [orders, setOrders] = useState({ is_paid: '', status: 0, ...editOrderTarget });

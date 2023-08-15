@@ -94,7 +94,13 @@ const AccountOrdersPage = () => {
                                 {orders.length &&
                                     orders.map((order) => (
                                         <tr key={order.id}>
-                                            <td>{new Date(order.create_at).toLocaleDateString()}</td>
+                                            <td>
+                                                {new Date(order.create_at).toLocaleString(undefined, {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                })}
+                                            </td>
                                             <td>{order.id}</td>
                                             <td>NT{handlePriceToTw(order.total)}</td>
                                             <td className={`${Boolean(order.is_paid) ? 'text-success ' : ''}`}>
@@ -102,7 +108,11 @@ const AccountOrdersPage = () => {
                                             </td>
                                             <td>
                                                 {order.paid_date
-                                                    ? new Date(order.paid_date).toLocaleDateString()
+                                                    ? new Date(order.paid_date).toLocaleString(undefined, {
+                                                          year: 'numeric',
+                                                          month: 'long',
+                                                          day: 'numeric',
+                                                      })
                                                     : '未付款'}
                                             </td>
 

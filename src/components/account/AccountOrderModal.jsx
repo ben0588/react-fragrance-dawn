@@ -14,8 +14,6 @@ const AccountOrderModal = ({ show, handleClose, order }) => {
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <span>訂單：{order.id}</span>
-
-                        {order.is_paid ? <div className='text-success '>付款完成</div> : <div>未付款</div>}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -56,6 +54,36 @@ const AccountOrderModal = ({ show, handleClose, order }) => {
                             </tr>
                         </tfoot>
                     </table>
+                    <p>
+                        訂單狀態：
+                        {order.is_paid ? <span className='text-success '>付款完成</span> : <span>未付款</span>}
+                    </p>
+                    <p>
+                        訂單進度：
+                        <span
+                            className={`${
+                                Boolean(order.is_paid)
+                                    ? order?.status === '1'
+                                        ? 'text-dark'
+                                        : order?.status === '2'
+                                        ? 'text-warning'
+                                        : order?.status === '3'
+                                        ? 'text-success'
+                                        : 'text-secondary'
+                                    : ''
+                            }`}
+                        >
+                            {Boolean(order.is_paid)
+                                ? order?.status === '1'
+                                    ? '已確認'
+                                    : order?.status === '2'
+                                    ? '寄送中'
+                                    : order?.status === '3'
+                                    ? '已送達'
+                                    : '未確認'
+                                : '未付款'}
+                        </span>
+                    </p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant='secondary' onClick={handleClose}>

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Modal } from 'bootstrap';
 
-import { adminDeleteAllOrders, adminFetchLimitedOrders } from '../../api/adminApis';
+import { adminDeleteAllOrders, adminDeleteOrder, adminFetchLimitedOrders } from '../../api/adminApis';
 import DeleteModal from '../../components/DeleteModal';
 import Pagination from '../../components/Pagination';
 import useMessage from '../../hooks/useMessage';
@@ -10,6 +10,7 @@ import usePriceToTw from '../../hooks/usePriceToTw';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
+import Swal from 'sweetalert2';
 
 const AdminOrdersSection = () => {
     const [orders, setOrders] = useState([]);
@@ -59,13 +60,65 @@ const AdminOrdersSection = () => {
         fetchOrders(); // 初始取得訂單
     }, [fetchOrders]);
 
+    const handleDeleteOrder = async (orderId) => {
+        try {
+            Swal.fire({
+                title: '確認刪除訂單?',
+                text: '注意：刪除訂單後無法再復原，請謹慎操作',
+                icon: 'question',
+                confirmButtonColor: '#111c30',
+                cancelButtonColor: '#b2bec3',
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                showCloseButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    try {
+                        return await adminDeleteOrder(orderId);
+                    } catch (error) {
+                        Swal.showValidationMessage(`請求失敗： ${error}`);
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading(),
+            }).then((result) => {
+                if (result?.value?.success) {
+                    Swal.fire('成功', result?.value?.data?.message, 'success');
+                    fetchOrders();
+                }
+            });
+        } catch (error) {
+            inputToastMessage(error.response.data);
+        }
+    };
+
     const handleDeleteAllOrders = async () => {
         try {
-            dispatch(updateLoadingState(true));
-            const result = await adminDeleteAllOrders();
-            inputToastMessage(result);
-            dispatch(updateLoadingState(false));
-            fetchOrders();
+            Swal.fire({
+                title: '確認刪除全部訂單?',
+                text: '注意：刪除全部訂單後無法再復原，請謹慎操作',
+                icon: 'question',
+                confirmButtonColor: '#d63031',
+                cancelButtonColor: '#b2bec3',
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                showCloseButton: true,
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
+                    try {
+                        return await adminDeleteAllOrders();
+                    } catch (error) {
+                        Swal.showValidationMessage(`請求失敗： ${error}`);
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading(),
+            }).then((result) => {
+                if (result?.value?.success) {
+                    Swal.fire('成功', result?.value?.data?.message, 'success');
+                    fetchOrders();
+                }
+            });
         } catch (error) {
             inputToastMessage(error.response.data);
         }
@@ -82,7 +135,9 @@ const AdminOrdersSection = () => {
             <DeleteModal handleCancelDeleteModal={handleCancelDeleteModal} title={deleteOrderTarget.title} />
 
             <h3>訂單列表</h3>
-            {/* <button onClick={() => handleDeleteAllOrders()}>刪除所有訂單</button> */}
+            <button onClick={() => handleDeleteAllOrders()} type='button' className='btn btn-outline-danger'>
+                刪除所有訂單
+            </button>
             <hr />
             <table className='table'>
                 <thead>
@@ -114,6 +169,13 @@ const AdminOrdersSection = () => {
                                     onClick={() => handleOpenOrderModal(order)}
                                 >
                                     編輯
+                                </button>
+                                <button
+                                    type='button'
+                                    className='btn btn-outline-danger btn-sm ms-2'
+                                    onClick={() => handleDeleteOrder(order.id)}
+                                >
+                                    刪除
                                 </button>
                             </td>
                         </tr>

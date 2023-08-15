@@ -17,6 +17,7 @@ import Breadcrumb from '../../components/product/Breadcrumb';
 import { addToCart } from '../../store/slice/cartSlice';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
+import axios from 'axios';
 
 const ProductsDetailPage = () => {
     const [product, setProduct] = useState({});
@@ -26,18 +27,36 @@ const ProductsDetailPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.loading);
+    const [categoryList, setCategoryList] = useState([]);
+
+    const fetchCategory = useCallback(async (category) => {
+        try {
+            const result = await axios({
+                method: 'GET',
+                baseURL: null,
+                // url: '../../../src/data/detail.json',
+                url: 'https://ben0588.github.io/react-fragrance-dawn/detail.json',
+            });
+            const newList = result.data.filter((item) => item.category === category);
+            setCategoryList(newList[0].contents);
+        } catch (error) {
+            inputToastMessage(error?.response?.data);
+        }
+    }, []);
 
     const fetchProduct = useCallback(async () => {
         try {
             dispatch(updateLoadingState(true));
             const result = await clientFetchProduct(id);
+            fetchCategory(result.data.product.category);
             setProduct(result?.data?.product);
             dispatch(updateLoadingState(false));
         } catch (error) {
             inputToastMessage(error?.response?.data);
             dispatch(updateLoadingState(false));
         }
-    }, []);
+    }, [fetchCategory]);
+
     useEffect(() => {
         fetchProduct();
     }, [id, fetchProduct]);
@@ -131,7 +150,13 @@ const ProductsDetailPage = () => {
                                 <span className='text-ellipsis'>全店，滿額贈：消費滿$2000元贈 TEXT 品牌提袋 x1</span>
                             </div>
                             <div className='mt-3'>
-                                <AccordionCollapse description={product.description} />
+                                <AccordionCollapse
+                                    list={[
+                                        { title: '產品介紹', text: product.description },
+                                        { title: '用法&用途', text: '適量噴灑於雙手脈搏處、及耳後。' },
+                                        { title: '主要成分', text: '如包裝所示。' },
+                                    ]}
+                                />
                             </div>
                         </div>
                     </div>
@@ -139,7 +164,18 @@ const ProductsDetailPage = () => {
                         <p className='text-center fs-4 fw-bolder  my-5'>
                             <span className='border-bottom border-3 border-primary'>商品描述</span>
                         </p>
-                        <img src={descriptionImg1} alt={product.title} className='d-block w-100 object-fit-cover' />
+
+                        {categoryList?.map((items, index) => (
+                            <div key={index}>
+                                <img
+                                    src={`src/${items.imageUrl}`}
+                                    alt={items.content}
+                                    className='d-block w-100 object-fit-cover'
+                                />
+                                <p className='text-center fs-6 my-5'>{items.content}</p>
+                            </div>
+                        ))}
+                        {/* <img src={descriptionImg1} alt={product.title} className='d-block w-100 object-fit-cover' />
                         <p className='text-center fs-6 my-5'>
                             這款香水猶如高聳的摩天大樓，散發著獨特而吸引人的魅力。隨著時間的推移，金色的光線灑落在室內，讓整個空間瞬間變得更加迷人。經過精心設計，香水帶來高度的細節表現，讓您感受到無與倫比的品質與品味。
                         </p>
@@ -155,7 +191,7 @@ const ProductsDetailPage = () => {
                         <p className='text-center fs-6 my-5'>
                             這款香水產品將帶給您一場美妙的感官之旅。它的清新、乾淨與愉悅，將為您打造舒適的居家環境，同時散發出自信和魅力，讓您在每一個時刻都散發出獨特的光芒。無論是工作還是休閒，這款香水將成為您不可或缺的陪伴，讓您感受到生活的美好和滿足。
                         </p>
-                        <img src={descriptionImg5} alt={product.title} className='d-block w-100 object-fit-cover' />
+                        <img src={descriptionImg5} alt={product.title} className='d-block w-100 object-fit-cover' /> */}
                     </div>
                 </>
             )}

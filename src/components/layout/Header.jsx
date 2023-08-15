@@ -113,6 +113,8 @@ const Header = () => {
                                 { title: '全部商品', path: '/products' },
                                 { title: '香水專欄', path: '/article' },
                                 { title: '優惠', path: '/sale' },
+                                { title: '關於我們', path: '/about/' },
+                                { title: '顧客服務', path: '/service/' },
                             ].map((item) => (
                                 <li className='nav-item' key={item.title}>
                                     <NavLink to={item.path} className='nav-link' onClick={() => navbarToggle()}>

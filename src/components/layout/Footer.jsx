@@ -43,17 +43,35 @@ const Footer = () => {
                         <ListGroup
                             title='認識我們'
                             titleClass='text-white fw-bolder'
-                            list={['品牌理念', '加入我們', '門市資訊']}
+                            list={[
+                                { title: '品牌理念', path: '/about' },
+                                { title: '加入我們', path: '/about/joinUs' },
+                                { title: '門市資訊', path: '/about/storeInfo' },
+                            ]}
                         />
                     </div>
                     <div className='col-12 col-sm-6 col-lg-2  pt-2'>
-                        <ListGroup title='我的帳戶' titleClass='text-white fw-bolder' list={['追蹤訂單', '訂單紀錄']} />
+                        <ListGroup
+                            title='我的帳戶'
+                            titleClass='text-white fw-bolder'
+                            list={[
+                                { title: '追蹤訂單', path: '/orderTracking' },
+                                { title: '我的訂單', path: '/account/orders' },
+                            ]}
+                        />
                     </div>
                     <div className='col-12 col-sm-6 col-lg-2  pt-2'>
                         <ListGroup
                             title='顧客服務'
                             titleClass='text-white fw-bolder'
-                            list={['常見問題', '運送說明', '訂購需知', '退換貨政策', '聯絡我們', '隱私權政策']}
+                            list={[
+                                { title: '常見問題', path: '/service/' },
+                                { title: '運送說明', path: '/service/shipping' },
+                                { title: '訂購需知', path: '/service/shop' },
+                                { title: '退換貨政策', path: '/service/refund' },
+                                { title: '聯絡我們', path: '/service/contactUs' },
+                                { title: '隱私權政策', path: '/service/privacy' },
+                            ]}
                         />
                     </div>
                     <div className='col-12 col-sm-6 col-lg-2 pt-2'>
