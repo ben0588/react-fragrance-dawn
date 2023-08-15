@@ -1,7 +1,7 @@
 [
     {
         "title": "香氛晨光 － 新光三越A3",
-        "image": "https://images.unsplash.com/photo-1615206798016-f76d9e8ec1e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBlcmZ1bWUlMjBzaG9wfGVufDB8fDB8fHww&auto=format&fit=crop&w=400&q=60",
+        "image": "./storeInfo/storeInfo-1.webp",
         "address": "台中市西屯區臺灣大道三段301號",
         "addressPath": "https://goo.gl/maps/dDSyhaHpUuoQ9uLz8",
         "tel": "02-1234-567",
@@ -9,7 +9,7 @@
     },
     {
         "title": "香氛晨光 － 微風廣場",
-        "image": "https://images.unsplash.com/photo-1598193681146-3835eeaea11f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cGVyZnVtZSUyMHNob3B8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
+        "image": "./storeInfo/storeInfo-2.webp",
         "address": "台北市松山區復興南路一段39號",
         "addressPath": "https://goo.gl/maps/kr7tuPuqAULdzG7C8",
         "tel": "02-2255-225",
@@ -17,7 +17,7 @@
     },
     {
         "title": "香氛晨光 － 漢神巨蛋",
-        "image": "https://images.unsplash.com/photo-1599733687773-14a83800fd0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8cGVyZnVtZSUyMHNob3B8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=400&q=60",
+        "image": "./storeInfo/storeInfo-3.webp",
         "address": "高雄市左營區博愛二路777號",
         "addressPath": "https://goo.gl/maps/BYovjoCYVMvWPkth8",
         "tel": "02-3333-555",

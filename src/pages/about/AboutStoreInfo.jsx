@@ -46,7 +46,7 @@ const AboutStoreInfo = () => {
                         「香氛晨光」目前在全國各地開設了多家門市，為顧客提供便捷的購物體驗，請參考以下門市地址與營業時間，也可以透過網路商城購買您喜愛的產品，以下是我們的門市資訊：
                     </p>
                     <div className='row'>
-                        {storeList?.map((items, index) => (
+                        {storeList?.map?.((items, index) => (
                             <div className='col-12 col-md-6 col-lg-4' key={index}>
                                 <div className='card h-100 border-none'>
                                     <div className='card-img-top'>
