@@ -7,7 +7,7 @@ const ListGroup = memo(({ title, titleClass, list, children }) => {
             <li className={`${titleClass} fs-5 pb-2 `}>{title}</li>
             {list?.map((items, index) => (
                 <li className='' key={index}>
-                    <NavLink to={items.path} className='d-block text-secondary footer-text-hover fs-7 pb-2'>
+                    <NavLink to={items.path} className={`d-block  text-secondary footer-text-hover fs-7 pb-2`}>
                         {items.title}
                     </NavLink>
                 </li>

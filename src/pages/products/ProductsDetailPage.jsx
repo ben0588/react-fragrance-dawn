@@ -36,6 +36,7 @@ const ProductsDetailPage = () => {
                 baseURL: null,
                 // url: '../../../src/data/detail.json',
                 url: 'https://ben0588.github.io/react-fragrance-dawn/detail.json',
+                'Content-Type': 'application/json',
             });
             const newList = result.data.filter((item) => item.category === category);
             setCategoryList(newList[0].contents);
