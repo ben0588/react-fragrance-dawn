@@ -44,7 +44,7 @@ const Footer = () => {
                             title='認識我們'
                             titleClass='text-white fw-bolder'
                             list={[
-                                { title: '品牌理念', path: '/about' },
+                                { title: '品牌理念', path: '/about/' },
                                 { title: '加入我們', path: '/about/joinUs' },
                                 { title: '門市資訊', path: '/about/storeInfo' },
                             ]}
