@@ -3,23 +3,23 @@
         "category": "香水",
         "contents": [
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo001_compressed.webp",
                 "content": "這款香水猶如高聳的摩天大樓，散發著獨特而吸引人的魅力。隨著時間的推移，金色的光線灑落在室內，讓整個空間瞬間變得更加迷人。經過精心設計，香水帶來高度的細節表現，讓您感受到無與倫比的品質與品味。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo005_compressed.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo005_compressed.webp",
                 "content": "每一次使用，這款香水都會帶給您舒適與輕鬆的感受。清新而怡人的香氣，讓您心情愉悅，仿佛置身於一片芬芳的花海之中。它的獨特氛圍，讓您在繁忙的日常生活中找到片刻的寧靜與放鬆。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo002_compressed.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo002_compressed.webp",
                 "content": "不僅如此，這款香水還散發著自信和魅力。當您使用它時，不僅是香水，更是您個人風格的代表。這款香水將成為您的獨有標誌，讓您在人群中脫穎而出，成為吸引眼球的焦點。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo006_compressed.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo006_compressed.webp",
                 "content": "這款香水產品將帶給您一場美妙的感官之旅。它的清新、乾淨與愉悅，將為您打造舒適的居家環境，同時散發出自信和魅力，讓您在每一個時刻都散發出獨特的光芒。無論是工作還是休閒，這款香水將成為您不可或缺的陪伴，讓您感受到生活的美好和滿足。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo003_compressed.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo003_compressed.webp",
                 "content": ""
             }
         ]
@@ -28,23 +28,23 @@
         "category": "香氛蠟燭",
         "contents": [
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed7.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo001_compressed.webp",
                 "content": "這款香氛蠟燭猶如夜空中閃耀的星星，散發著迷人的香氣，彷彿在空氣中編織出一幅夢幻的畫面。隨著蠟燭緩緩燃燒，溫暖的光芒照亮了整個房間，營造出舒適而寧靜的氛圍。經過精心調配，每一款香氛蠟燭都呈現出獨特的香調，讓您感受到高品質的生活享受。無論是自己欣賞還是與摯愛分享，這款香氛蠟燭都將帶來無比的美好時光。讓您在室內營造出一場香氣與光影的奇幻之旅。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed4.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo005_compressed.webp",
                 "content": "如同一縷溫柔的微風，這款香氛蠟燭帶來的香氣輕輕瀰漫在空氣中，令人陶醉其中。每一支蠟燭都是藝術的結晶，它們不僅是香氛的來源，更是空間的點綴。當蠟燭點燃時，淡淡的光暈將房間映照得柔和而富有情調。這款香氛蠟燭將帶您進入一個充滿和平與寧靜的氛圍，讓您在繁忙的生活中找到片刻的寧靜。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed8.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo002_compressed.webp",
                 "content": "就像是一場奢華的音樂會，這款香氛蠟燭將為您的空間奏出優美的樂章。香氣如同音符一般輕盈地飄散，緩緩充滿每一個角落。精心選取的香調，讓每款蠟燭都有著獨特的個性，為您的空間帶來極致的雅致。不論是悠閒的晚上，還是浪漫的約會，點燃這款香氛蠟燭，都能讓您感受到尊貴與品味的融合。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed5.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo006_compressed.webp",
                 "content": "每一個瞬間都是一個永恆，這款香氛蠟燭將這份永恆帶入您的生活。香氣如同時間的軌跡，瀰漫著淡雅的情感，將您的空間瞬間昇華。我們的蠟燭通過精心的工藝和設計，帶來無與倫比的細節體驗。無論是放鬆的時刻，還是激情的時光，這款香氛蠟燭將為您的空間增添一絲獨特的魔法，讓您的感官獲得全新的享受。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed2.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo003_compressed.webp",
                 "content": ""
             }
         ]
@@ -53,23 +53,23 @@
         "category": "車用香氛",
         "contents": [
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed2.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo004_compressed.webp",
                 "content": "這款車用香氛就像是一瓶充滿活力的精華，隨著車內的每一次移動，香氣輕輕飄散，為您營造出一個愉悅的駕車環境。無論是在塞車的交通中，還是在自由馳騁的高速上，車用香氛將陪伴您享受每一刻的開車時光。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed4.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo005_compressed.webp",
                 "content": "為您的車內注入一股迷人的香氣，這款車用香氛將成為您出行的時尚配飾。每一款香氛都經過精心調配，帶來豐富而持久的香調，讓您在車內感受到奢華的享受。讓車用香氛成為您駕車時的心靈慰藉，為您的旅程增添一份風采。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed6.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo006_compressed.webp",
                 "content": "車用香氛彷彿是您座駕的專屬香氛，為您的車內營造出獨特的氛圍。每一款車用香氛都融合了精心挑選的香調，讓您在開車的同時感受到愜意和舒適。讓這款車用香氛成為您的旅途中的陪伴，為每一次行駛增添一份愉悅。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed8.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo007_compressed.webp",
                 "content": "車用香氛，如同在行駛的路上注入了一縷清新的風。這款香氛帶來的香氣，猶如陪伴您穿越城市的忠實夥伴，讓每一次車程都成為一段令人愉悅的體驗。無論是短途還是長途，這款車用香氛將為您的旅程增色不少。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed1.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo001_compressed.webp",
                 "content": ""
             }
         ]
@@ -78,23 +78,23 @@
         "category": "室內擴香",
         "contents": [
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed1.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo002_compressed.webp",
                 "content": "室內擴香，就像是為您的居家增添了一份奢華的禮物。這款香氛帶來的香味，彷彿是自然界的芬芳，輕輕瀰漫在每個角落，讓您的居室充滿愉悅的氛圍。每一款室內擴香都融合了獨特的香調，讓您的家成為一個充滿和諧與美感的空間。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed3.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo004_compressed.webp",
                 "content": "室內擴香彷彿是一個隨身的花園，每一次噴灑都如同灑下一縷花香。這款香氛能讓您的家充滿了清新與生機，讓每一次進入房間都像是走進了一片香氛花園。選擇您喜愛的香調，讓室內擴香成為您家中的一道風景線。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed5.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo006_compressed.webp",
                 "content": "室內擴香就像是一場無形的音樂會，每一次噴灑都彷彿奏響了一首柔和的樂章。這款香氛能將您的居室瞬間昇華，讓每一次呼吸都充滿了愉悅和輕松。選擇您喜愛的室內擴香，讓您的家成為一個充滿香氣的療癒之地。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed7.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo008_compressed.webp",
                 "content": "室內擴香就像是一個魔法瓶子，將無限的幸福和舒適灑落在您的居家。這款香氛能將每一個角落都變成一個香氛的天地，讓您的家充滿了愉悅和幸福。選擇您喜愛的室內擴香，讓每一個時刻都充滿了美好的香氛。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed2.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo003_compressed.webp",
                 "content": ""
             }
         ]
@@ -103,23 +103,23 @@
         "category": "空氣噴霧",
         "contents": [
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed2.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo004_compressed.webp",
                 "content": "空氣噴霧，彷彿是一場清新的陽光雨，為您的空間帶來一陣陣的清新與愉悅。這款香氛能瞬間中和空氣中的氣味，同時散發出獨特的香調，讓您的空間瞬間變得更加宜人。輕輕一噴，就能讓您的環境充滿了活力和清新"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed3.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo005_compressed.webp",
                 "content": "空氣噴霧就像是一個微小的魔法師，將清新的香氣噴灑在您的四周，為您帶來一份愉悅的感受。這款香氛能有效中和異味，同時為空間注入了美妙的香氣，讓您的環境變得更加宜人和舒適。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed4.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo006_compressed.webp",
                 "content": "空氣噴霧，就像是一道清風，輕輕吹拂過您的空間，帶走了不愉快的氣味，留下了一股清新的芬芳。這款香氛能讓您的環境即刻焕然一新，讓每一次呼吸都充滿了愉悅和舒適。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed5.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo003_compressed.webp",
                 "content": "空氣噴霧彷彿是一瓶魔法精靈，將空氣中的污濁一掃而空，代之以清新的香氣。這款香氛能為您的空間帶來一份愉悅的感受，讓您的環境充滿了活力和生氣。無論是在家中、辦公室還是車內，這款空氣噴霧都能為您帶來一份美好的氛圍。"
             },
             {
-                "imageUrl": "../assets/productDetailImages/demo001_compressed7.webp",
+                "imageUrl": "../../src/assets/productDetailImages/demo002_compressed.webp",
                 "content": ""
             }
         ]
