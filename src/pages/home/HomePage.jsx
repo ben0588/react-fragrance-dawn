@@ -9,7 +9,6 @@ import HomeActivity from './HomeActivity';
 import HomeBottomBg from './HomeBottomBg';
 import HomePopular from './HomePopular';
 import HomeConnection from './HomeConnection';
-import { motion, useScroll } from 'framer-motion';
 
 const HomePage = () => {
     return (
