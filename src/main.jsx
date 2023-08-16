@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 // import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './style/sass/all.scss';
+import 'react-loading-skeleton/dist/skeleton.css';
 import axios from 'axios';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
