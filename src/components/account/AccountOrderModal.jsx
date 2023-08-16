@@ -55,6 +55,14 @@ const AccountOrderModal = ({ show, handleClose, order }) => {
                         </tfoot>
                     </table>
                     <p>
+                        訂單建立時間：
+                        {new Date(order.create_at * 1000).toLocaleString(undefined, {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        })}
+                    </p>
+                    <p>
                         訂單狀態：
                         {order.is_paid ? <span className='text-success '>付款完成</span> : <span>未付款</span>}
                     </p>

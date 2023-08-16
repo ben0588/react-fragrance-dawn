@@ -159,7 +159,9 @@ const AdminOrdersSection = () => {
                             <td>{handlePriceToTw(order.total)}</td>
                             <td>{order.is_paid ? <span className='text-success fw-bold'>付款完成</span> : '未付款'}</td>
                             <td>
-                                {order.paid_date ? new Date(order.paid_date).toISOString().split('T')[0] : '未付款'}
+                                {order.paid_date
+                                    ? new Date(order.paid_date * 1000).toISOString().split('T')[0]
+                                    : '未付款'}
                             </td>
                             <td>{order.message}</td>
                             <td>

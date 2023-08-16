@@ -95,7 +95,7 @@ const AccountOrdersPage = () => {
                                     orders.map((order) => (
                                         <tr key={order.id}>
                                             <td>
-                                                {new Date(order.create_at).toLocaleString(undefined, {
+                                                {new Date(order.create_at * 1000).toLocaleString(undefined, {
                                                     year: 'numeric',
                                                     month: 'long',
                                                     day: 'numeric',
@@ -108,7 +108,7 @@ const AccountOrdersPage = () => {
                                             </td>
                                             <td>
                                                 {order.paid_date
-                                                    ? new Date(order.paid_date).toLocaleString(undefined, {
+                                                    ? new Date(order.paid_date * 1000).toLocaleString(undefined, {
                                                           year: 'numeric',
                                                           month: 'long',
                                                           day: 'numeric',
