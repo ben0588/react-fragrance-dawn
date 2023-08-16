@@ -1,9 +1,8 @@
-import Spline from '@splinetool/react-spline';
-import perfumeGif from '../../assets/home/perfume-min.gif';
+// import perfumeGif from '../../assets/home/perfume-min.gif';
+import perfumeWebm from '../../assets/home/perfume-min.webm';
+import perfumeMp4 from '../../assets/home/perfume-min.mp4'; // 防止瀏覽器不支持 webm
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { RxDoubleArrowDown } from 'react-icons/rx';
-import { useRef } from 'react';
 import { motion, useScroll } from 'framer-motion';
 
 const HomeBanner = () => {
@@ -87,7 +86,11 @@ const HomeBanner = () => {
 
                 <div className='col-12 col-md-4 px-0'>
                     <div className='d-flex justify-content-center align-items-center'>
-                        <img src={perfumeGif} alt={'香氛晨光香水相關購物中心'} className='home-banner-image' />
+                        {/* <img src={perfumeGif} alt={'香氛晨光香水相關購物中心'} className='home-banner-image' /> */}
+                        <video autoPlay loop muted playsInline className='home-banner-image'>
+                            <source src={perfumeWebm} type='video/webm' />
+                            <source src={perfumeMp4} type='video/mp4' />
+                        </video>
                     </div>
                 </div>
                 <div className='col-12 col-md-4'>
