@@ -66,9 +66,9 @@ const HomePopular = () => {
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ ease: 'easeOut', duration: 1 }}
                             >
-                                <h5 className='fw-bolder py-2'>
+                                <p className='fw-bolder fs-5 py-2 '>
                                     熱賣商品採用天然植物精華，不含任何有害物質，讓您放心使用
-                                </h5>
+                                </p>
                                 <p className='text-muted py-2'>
                                     熱賣商品都有不同的香調和風格，能夠滿足不同人群的需求，無論是甜美、清新還是性感、陽剛，都能找到適合自己的香水。
                                 </p>

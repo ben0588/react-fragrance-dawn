@@ -61,7 +61,9 @@ const HomeConnection = () => {
                             src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14561.12891656417!2d120.6468631!3d24.1618329!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2c5e7459c2aaf71a!2z6Ie65Lit5biC5pS_5bqc!5e0!3m2!1szh-TW!2stw!4v1664543172932!5m2!1szh-TW!2stw'
                             width='100%'
                             height='100%'
-                            allowFullScreen=''
+                            title='Google 地圖'
+                            aria-label='Google 地圖，顯示香氛晨光總公司位置的地理信息'
+                            allowFullScreen={false}
                             loading='lazy'
                             referrerPolicy='no-referrer-when-downgrade'
                         ></iframe>
