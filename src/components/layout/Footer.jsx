@@ -34,7 +34,6 @@ const Footer = () => {
             });
         }
     };
-
     return (
         <footer>
             <div className='text-secondary p-5 ' style={{ backgroundColor: 'black' }}>

@@ -1,5 +1,5 @@
 import Spline from '@splinetool/react-spline';
-import perfumeGif from '../../assets/home/perfume.gif';
+import perfumeGif from '../../assets/home/perfume-min.gif';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { RxDoubleArrowDown } from 'react-icons/rx';
