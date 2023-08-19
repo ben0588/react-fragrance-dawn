@@ -1,11 +1,15 @@
-// import perfumeGif from '../../assets/home/perfume-min.gif';
+import perfumeGif from '../../assets/home/perfume-min.gif';
 import perfumeWebm from '../../assets/home/perfume-min.webm';
 import perfumeMp4 from '../../assets/home/perfume-min.mp4'; // 防止瀏覽器不支持 webm
 import { Link } from 'react-router-dom';
 import { RxDoubleArrowDown } from 'react-icons/rx';
 import { motion, useScroll } from 'framer-motion';
+import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 
 const HomeBanner = () => {
+    const videoRef = useRef(null);
+    const video2Ref = useRef(null);
     const sloganVariants = {
         hidden: {
             y: 100,
@@ -16,6 +20,16 @@ const HomeBanner = () => {
             opacity: 1,
         },
     };
+
+    // useEffect(() => {
+    //     if (videoRef.current) {
+    //         // console.dir(videoRef.current.children[0]);
+    //         videoRef.current.children[0].play().catch((error) => {
+    //             alert(error);
+    //         });
+    //     }
+    // }, []);
+
     return (
         <div className='container position-relative py-5 mt-5'>
             {/* <div style={{ width: `300px`, height: `300px` }}>
@@ -86,11 +100,37 @@ const HomeBanner = () => {
 
                 <div className='col-12 col-md-4 px-0'>
                     <div className='d-flex justify-content-center align-items-center'>
-                        {/* <img src={perfumeGif} alt={'香氛晨光香水相關購物中心'} className='home-banner-image' /> */}
-                        <video autoPlay loop muted playsInline className='home-banner-image'>
-                            <source src={perfumeWebm} type='video/webm' />
-                            <source src={perfumeMp4} type='video/mp4' />
-                        </video>
+                        <img src={perfumeGif} alt={'香氛晨光香水相關購物中心'} className='home-banner-image' />
+
+                        {/* <div
+                            ref={videoRef}
+                            dangerouslySetInnerHTML={{
+                                __html: `
+                                <video
+                                    autoplay
+                                    loop
+                                    muted
+                                    playsinline
+                              
+                                >
+                                    <source src='https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/video/perfume-min.mp4' type="video/mp4" />
+                                    <source src='https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/video/perfume-min.webm' type="video/webm" />
+                                </video>`,
+                            }}
+                        /> */}
+                        {/* 
+                        <video
+                            playsInline
+                            autoPlay
+                            muted
+                            loop
+                            preload='auto'
+                        >
+                            <source
+                                src='https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/video/perfume-min.mp4#t=0.001'
+                                type='video/mp4'
+                            />
+                        </video> */}
                     </div>
                 </div>
                 <div className='col-12 col-md-4'>

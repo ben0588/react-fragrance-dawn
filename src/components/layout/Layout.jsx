@@ -45,10 +45,8 @@ const Layout = () => {
             <Footer />
             <button
                 type='button'
-                className='top-btn position-fixed'
+                className='top-btn '
                 style={{
-                    bottom: `20px`,
-                    right: `20px`,
                     display: btnShow ? 'block' : 'none',
                 }}
                 title='回首頂端'
