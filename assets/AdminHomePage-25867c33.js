@@ -1,1 +1,0 @@
-import{j as e}from"./index-bab16cd9.js";const r=()=>e.jsx("div",{className:"container text-center fw-bolder fs-4 text-primary py-5 ",children:"歡迎進入 FRAGRANCE DAWN(香氛晨光) 網站後台系統"});export{r as default};
