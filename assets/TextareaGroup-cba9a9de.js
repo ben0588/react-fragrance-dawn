@@ -1,1 +1,0 @@
-import{r as p,j as s}from"./index-e1524092.js";const h=p.memo(({name:e,id:a,title:r,groupClass:t,labelClass:m,textareaClass:o,cols:x=30,rows:l=10,placeholder:c,onChange:j,value:n})=>s.jsxs("div",{className:t,children:[s.jsx("label",{htmlFor:a,className:m,children:r}),s.jsx("textarea",{name:e,id:a,className:o,cols:x,rows:l,placeholder:c,onChange:j,value:n})]}));export{h as T};
