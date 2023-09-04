@@ -38,27 +38,9 @@ import {
     ServiceContactUs,
     ServicePrivacy,
 } from './PagesRoutes';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useLayoutEffect } from 'react';
-import FirstLoading from './components/FirstLoading';
 import AdminDashboardHome from './pages/admin/AdminDashboardHome';
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        const handleLoad = () => setIsLoading(false);
-
-        window.addEventListener('load', handleLoad);
-
-        return () => window.removeEventListener('load', handleLoad);
-    }, []);
-
-    if (isLoading) {
-        return <FirstLoading />;
-    }
-
     return (
         <>
             {/* <Suspense fallback={null}> */}
