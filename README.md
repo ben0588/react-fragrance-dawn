@@ -1,7 +1,7 @@
 # 香氛晨光
 
 ![香氛晨光](https://i.imgur.com/vr0SFdg.png)
-這是一個電商網站專案，旨在提供用戶瀏覽和購買香水產品的平台。
+> 這是一個電商網站專案，旨在提供用戶瀏覽和購買香水產品的平台。
 - [網站頁面連結](https://ben0588.github.io/react-fragrance-dawn/#/)
 
 ## 功能
