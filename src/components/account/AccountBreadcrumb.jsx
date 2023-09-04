@@ -1,5 +1,8 @@
 import { NavLink, useLocation } from 'react-router-dom';
-const AccountBreadcrumb = ({ className }) => {
+import PropTypes from 'prop-types';
+import { memo } from 'react';
+
+const AccountBreadcrumb = memo(function AccountBreadcrumb({ className }) {
     const location = useLocation();
     const handleCheckPath = () => location.pathname.match(/\/account\/(.*)/)?.[1];
 
@@ -19,5 +22,10 @@ const AccountBreadcrumb = ({ className }) => {
             </ol>
         </nav>
     );
+});
+
+AccountBreadcrumb.propTypes = {
+    className: PropTypes.string,
 };
+
 export default AccountBreadcrumb;

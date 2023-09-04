@@ -25,6 +25,7 @@ const CartCouponSection = ({ handleFetchCart }) => {
             cancelButtonText: '取消',
             showCancelButton: true,
             showCloseButton: true,
+            reverseButtons: true,
             showLoaderOnConfirm: true,
             preConfirm: async () => {
                 try {
@@ -98,7 +99,7 @@ const CartCouponSection = ({ handleFetchCart }) => {
                 {couponRedux.code && (
                     <button
                         type='button'
-                        className='form-control d-inline-block bg-secondary  btn-primary-hover text-white ms-1'
+                        className='form-control d-inline-block bg-secondary  btn-primary-hover text-white mt-2'
                         style={{ width: `100px` }}
                         onClick={() => handleRemoveCoupon()}
                     >
@@ -106,37 +107,41 @@ const CartCouponSection = ({ handleFetchCart }) => {
                     </button>
                 )}
             </InputGroup>
-            <div className=' mt-4'> 當前可使用優惠卷：</div>
-            <ul className=' mt-1'>
-                {[
-                    { name: '新會員折扣優惠', coupon: '20%OFF', date_at: '長期有效' },
-                    { name: '舊會員折扣優惠', coupon: '50%OFF', date_at: '3月15日~4月15日' },
-                ].map((item) => (
-                    <li className=' my-1' key={item.name}>
-                        <div className='row'>
-                            <div className='col-3 '>
-                                <div className='text-ellipsis align-middle '>{item.name}</div>
-                            </div>
-                            <div className='col-3 '>
-                                <div className='text-ellipsis align-middle '>{item.coupon}</div>
-                            </div>
-                            <div className='col-3 '>
-                                <div className='text-ellipsis align-middle  '>{item.date_at}</div>
-                            </div>
-                            <div className='col-3 '>
-                                <button
-                                    type='button'
-                                    className='btn btn-outline-primary  text-ellipsis py-1'
-                                    onClick={() => handleUseOfferCode(item.coupon)}
-                                    disabled={couponRedux.code === item.coupon ? true : false}
-                                >
-                                    {couponRedux.code === item.coupon ? '代碼使用中' : '使用代碼'}
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+            <div className='fs-6 mt-4'> 當前可使用優惠卷：</div>
+            <div className='table-responsive'>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>活動名稱</th>
+                            <th>優惠碼</th>
+                            <th>使用期限</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {[
+                            { name: '新會員折扣優惠', coupon: '20%OFF', date_at: '長期有效' },
+                            { name: '舊會員折扣優惠', coupon: '50%OFF', date_at: '3月15日~4月15日' },
+                        ].map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.name}</td>
+                                <td>{item.coupon}</td>
+                                <td>{item.date_at}</td>
+                                <td>
+                                    <button
+                                        type='button'
+                                        className='btn btn-outline-primary  text-ellipsis py-1'
+                                        onClick={() => handleUseOfferCode(item.coupon)}
+                                        disabled={couponRedux.code === item.coupon ? true : false}
+                                    >
+                                        {couponRedux.code === item.coupon ? '代碼使用中' : '使用代碼'}
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </>
     );
 };

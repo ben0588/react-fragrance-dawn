@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 
 const FirstLoading = () => {
@@ -7,4 +8,4 @@ const FirstLoading = () => {
         </div>
     );
 };
-export default FirstLoading;
+export default memo(FirstLoading);

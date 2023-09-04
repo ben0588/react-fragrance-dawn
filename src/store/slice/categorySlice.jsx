@@ -15,13 +15,6 @@ export const categorySlice = createSlice({
             };
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase('persist/PURGE', (state, action) => {
-            return {
-                category: '',
-            };
-        });
-    },
 });
 
 export const { changeCategory, removeCategory } = categorySlice.actions;

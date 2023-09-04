@@ -1,20 +1,20 @@
-import { NavLink, Outlet, useLocation, useNavigate, useParams, useMatch } from 'react-router-dom';
+import { NavLink, Outlet, useLocation, useNavigate, useParams, useMatch, useOutletContext } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AdminCheckAuth } from '../../api/adminApis';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactBootstrapToast from '../../components/ReactBootstrapToast';
 import { useDispatch, useSelector } from 'react-redux';
-import { createAsyncMessage, createMessage } from '../../store/slice/messageSlice';
-import { checkAdminState, createAdminLogin } from '../../store/slice/adminSlice';
-import { updateLoadingState } from '../../store/slice/loadingSlice';
+import { createAsyncMessage } from '../../store/slice/messageSlice';
+import { useAdminCheckMutation } from '../../store/store';
 
 const AdminDashboardPage = () => {
     const navigate = useNavigate();
     const matchDashboardLayout = useMatch('/admin/dashboard'); // 登入後台 Layout 首頁
     const dispatch = useDispatch();
-    const loadingRedux = useSelector((state) => state.loading);
+    const adminState = useSelector((state) => state.admin);
+    const [adminCheck, adminCheckResult] = useAdminCheckMutation();
+    const { adminLogout } = useOutletContext();
 
     const token = document.cookie
         .split('; ')
@@ -22,25 +22,23 @@ const AdminDashboardPage = () => {
         ?.split('=')[1];
     axios.defaults.headers.common['Authorization'] = token; // 全域 axios 設置
 
+    const handleCheckAdminAuth = async () => {
+        try {
+            const response = await adminCheck(adminState.uid).unwrap();
+            return response;
+        } catch (error) {
+            dispatch(createAsyncMessage(error.data));
+            adminLogout(adminState.uid); // 登出 + 返回管理者
+            throw error;
+        }
+    };
+
     useEffect(() => {
         if (!token) {
             return navigate('/admin'); // 沒有 Token 直接返回，不執行檢查權限
         } else if (!matchDashboardLayout) {
             return; // 不是初次進入後台就不重新檢查權限
         }
-        (async () => {
-            try {
-                dispatch(updateLoadingState(true));
-                const result = await AdminCheckAuth(); // 檢查權限
-                dispatch(createAsyncMessage({ ...result, message: '檢查權限成功' }));
-                dispatch(checkAdminState(result));
-                dispatch(updateLoadingState(false));
-            } catch (error) {
-                dispatch(createAsyncMessage(error?.response?.data));
-                dispatch(updateLoadingState(false));
-                navigate('/admin'); // 無權限時返回首頁
-            }
-        })();
     }, [token, navigate]);
 
     return (
@@ -62,8 +60,9 @@ const AdminDashboardPage = () => {
                         </NavLink>
                     </ul>
                 </div>
-                <div className='w-100'>{token && <Outlet />}</div>
+                <div className='w-100'>{token && <Outlet context={{ adminCheck: handleCheckAdminAuth }} />}</div>
             </div>
+
             <ToastContainer />
             <ReactBootstrapToast />
         </div>

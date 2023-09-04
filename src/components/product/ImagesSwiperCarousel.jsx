@@ -1,17 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/swiper-bundle.css'; // 所有 Swiper 樣式
-// import '../../../node_modules/swiper/modules/navigation.min.css';
-// import '../../../node_modules/swiper/modules/pagination.min.css';
-// import '../../../node_modules/swiper/modules/scrollbar.min.css';
-// import '../../../node_modules/swiper/modules/autoplay.min.css';
-// import '../../../node_modules/swiper/modules/free-mode.min.css';
-// import '../../../node_modules/swiper/modules/thumbs.min.css';
-
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const ImagesSwiperCarousel = memo(({ imagesList, alt }) => {
+const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, alt }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);
@@ -41,7 +35,7 @@ const ImagesSwiperCarousel = memo(({ imagesList, alt }) => {
                 </Swiper>
             </div>
 
-            <div className='col-12 col-md-12 col-lg-12 col-xl-9 px-lg-1'>
+            <div className='col-md-12 col-lg-12 col-xl-9 px-lg-1'>
                 <Swiper
                     slidesPerView={1}
                     slidesPerGroup={1}
@@ -82,4 +76,8 @@ const ImagesSwiperCarousel = memo(({ imagesList, alt }) => {
     );
 });
 
+ImagesSwiperCarousel.propTypes = {
+    imagesList: PropTypes.arrayOf(PropTypes.string),
+    alt: PropTypes.string,
+};
 export default ImagesSwiperCarousel;

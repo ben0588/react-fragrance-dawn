@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 
-const ListGroup = memo(({ title, titleClass, list, children }) => {
+const ListGroup = memo(function ListGroup({ title, titleClass, list, children }) {
     return (
         <ul className={`list-unstyled   `}>
             <li className={`${titleClass} fs-5 pb-2 `}>{title}</li>

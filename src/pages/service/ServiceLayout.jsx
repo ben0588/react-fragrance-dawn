@@ -4,7 +4,7 @@ const ServiceLayout = () => {
     return (
         <div className='container py-3'>
             <div className='row'>
-                <div className='col-12 col-md-3 pb-3'>
+                <div className='col-md-3 pb-3'>
                     <ul className='nav d-flex justify-content-center align-items-center justify-content-md-start pb-3'>
                         {[
                             { title: '常見問題', path: '/service/' },
@@ -29,7 +29,7 @@ const ServiceLayout = () => {
                         ))}
                     </ul>
                 </div>
-                <div className='col-12 col-md-8 '>
+                <div className='col-md-8 '>
                     <Outlet />
                 </div>
             </div>

@@ -1,18 +1,19 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { clientFetchArticle } from '../../api/clientApis';
+import { useNavigate, useParams } from 'react-router-dom';
+import { clientFetchArticle, clientFetchCategoryProduct } from '../../api/clientApis';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import useMessage from '../../hooks/useMessage';
+import RecommendCarousel from '../../components/home/RecommendCarousel';
 
 const ArticleDetailPage = () => {
-    const location = useLocation();
     const { id } = useParams();
     const navigate = useNavigate();
     const [article, setArticle] = useState({});
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.loading);
     const { inputToastMessage } = useMessage();
+    const [products, setProducts] = useState([]);
 
     const handleFetchArticle = useCallback(async () => {
         try {
@@ -30,6 +31,19 @@ const ArticleDetailPage = () => {
     useEffect(() => {
         handleFetchArticle();
     }, [handleFetchArticle]);
+
+    const handleFetchProducts = useCallback(async () => {
+        try {
+            const result = await clientFetchCategoryProduct(1, '香水');
+            setProducts(result?.data?.products);
+        } catch (error) {
+            inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
+        }
+    }, []);
+
+    useEffect(() => {
+        handleFetchProducts();
+    }, [handleFetchProducts]);
 
     return (
         <div className='container py-3 mb-3'>
@@ -73,9 +87,14 @@ const ArticleDetailPage = () => {
                     </div>
 
                     <p className='py-3'>{article.content}</p>
-                    <button onClick={() => navigate(-1)} type='button' className='btn btn-primary btn-lg'>
+                    <button onClick={() => navigate(-1)} type='button' className='btn btn-primary '>
                         回到上一頁
                     </button>
+
+                    <div className='mt-5'>
+                        <h3 className='fs-2 mb-0'>熱門選擇</h3>
+                        <RecommendCarousel imagesList={products} />
+                    </div>
                 </article>
             )}
         </div>

@@ -7,6 +7,7 @@ import ArticleModal from '../../components/admin/ArticleModal';
 import { adminDeleteArticle, adminFetchArticle, adminFetchLimitedArticles } from '../../api/adminArticleApis';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
+import { useOutletContext } from 'react-router-dom';
 
 const AdminArticleSection = () => {
     const [articles, setArticles] = useState([]);
@@ -19,6 +20,9 @@ const AdminArticleSection = () => {
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
     const loadingRedux = useSelector((state) => state.loading);
+    const { adminCheck } = useOutletContext();
+    const [editLoading, setEditLoading] = useState(false);
+    const [firstEditId, setFirstEditId] = useState('');
 
     useEffect(() => {
         articleModalRef.current = new Modal('#articleModal', {
@@ -32,20 +36,21 @@ const AdminArticleSection = () => {
 
     const handleOpenCouponModal = async (type, id) => {
         try {
+            setEditLoading(true);
             setModalOpenType(type);
             if (type === 'create') {
                 articleModalRef.current.show();
             } else {
-                dispatch(updateLoadingState(true));
                 const result = await adminFetchArticle(id);
                 setEditTarget(result.article);
                 if (Object.keys(editTarget)) {
-                    dispatch(updateLoadingState(false));
                     articleModalRef.current.show();
                 }
             }
         } catch (error) {
-            dispatch(updateLoadingState(false));
+            inputToastMessage(error?.response?.data);
+        } finally {
+            setEditLoading(false);
         }
     };
 
@@ -65,9 +70,9 @@ const AdminArticleSection = () => {
             const { articles, pagination } = result;
             setArticles(articles);
             setPagination(pagination);
-            dispatch(updateLoadingState(false));
         } catch (error) {
             inputToastMessage(error?.response?.data);
+        } finally {
             dispatch(updateLoadingState(false));
         }
     }, []);
@@ -79,16 +84,17 @@ const AdminArticleSection = () => {
     const handleDeleteArticle = async (id) => {
         try {
             dispatch(updateLoadingState(true));
+            await adminCheck();
             const result = await adminDeleteArticle(deleteTarget.id);
             inputToastMessage(result);
             fetchArticle();
             setDeleteTarget({});
-            dispatch(updateLoadingState(false));
             handleCancelDeleteModal();
         } catch (error) {
-            inputToastMessage(error.response.data);
-            dispatch(updateLoadingState(false));
+            inputToastMessage(error?.response?.data);
+        } finally {
             handleCancelDeleteModal();
+            dispatch(updateLoadingState(false));
         }
     };
 
@@ -99,6 +105,7 @@ const AdminArticleSection = () => {
                 fetchData={fetchArticle}
                 modalOpenType={modalOpenType}
                 editTarget={editTarget}
+                checkAdminAuth={adminCheck}
             />
 
             <DeleteModal
@@ -109,24 +116,16 @@ const AdminArticleSection = () => {
                 id={deleteTarget.id}
             />
 
-            {loadingRedux.isLoading ? (
-                <div>Loading 資料加載中</div>
-            ) : (
-                <div>
-                    <h3>文章列表</h3>
-                    <hr />
-                    <div className='text-end'>
-                        <button
-                            type='button'
-                            className='btn btn-primary'
-                            // data-bs-toggle='modal'
-                            // data-bs-target='#productModal'
-                            onClick={() => handleOpenCouponModal('create')}
-                        >
-                            建立新文章
-                        </button>
-                    </div>
-                    <table className='table'>
+            <div>
+                <h3>文章列表</h3>
+                <hr />
+                <div className='text-end'>
+                    <button type='button' className='btn btn-primary' onClick={() => handleOpenCouponModal('create')}>
+                        建立新文章
+                    </button>
+                </div>
+                <div className='table-responsive'>
+                    <table className='table align-middle'>
                         <thead>
                             <tr>
                                 <th scope='col'>文章編號</th>
@@ -143,7 +142,16 @@ const AdminArticleSection = () => {
                                     <td>{article.id}</td>
                                     <td>{new Date(article.create_at).toISOString().split('T')[0]}</td>
                                     <td>{article.author}</td>
-                                    <td className='text-ellipsis-200'>{article.title}</td>
+                                    <td
+                                        style={{
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            maxWidth: `300px`,
+                                        }}
+                                    >
+                                        {article.title}
+                                    </td>
                                     <td className={`${article.isPublic ? 'text-success ' : ''}`}>
                                         {article.isPublic ? '啟用' : '未啟用'}
                                     </td>
@@ -151,9 +159,19 @@ const AdminArticleSection = () => {
                                         <button
                                             type='button'
                                             className='btn btn-primary btn-sm'
-                                            onClick={() => handleOpenCouponModal('edit', article.id)}
+                                            onClick={() => {
+                                                handleOpenCouponModal('edit', article.id);
+                                                setFirstEditId(article.id);
+                                            }}
+                                            disabled={firstEditId === article.id ? editLoading : false}
                                         >
-                                            編輯
+                                            {firstEditId === article.id && editLoading ? (
+                                                <div className='spinner-border spinner-border-sm' role='status'>
+                                                    <span className='visually-hidden'>Loading...</span>
+                                                </div>
+                                            ) : (
+                                                '編輯'
+                                            )}
                                         </button>
                                         <button
                                             type='button'
@@ -167,16 +185,16 @@ const AdminArticleSection = () => {
                             ))}
                         </tbody>
                     </table>
-
-                    <Pagination
-                        changePage={fetchArticle}
-                        totalPage={pagination.total_pages}
-                        currentPage={pagination.current_page}
-                        isPre={pagination.has_pre}
-                        isNext={pagination.has_next}
-                    />
                 </div>
-            )}
+
+                <Pagination
+                    changePage={fetchArticle}
+                    totalPage={pagination.total_pages}
+                    currentPage={pagination.current_page}
+                    isPre={pagination.has_pre}
+                    isNext={pagination.has_next}
+                />
+            </div>
         </div>
     );
 };

@@ -38,16 +38,15 @@ const ArticlePage = () => {
             ) : articles.length ? (
                 <>
                     <div className='row flex-column-reverse flex-md-row'>
-                        <div className='col-12 col-md-12'>
+                        <div className='col-12'>
                             <div className='row g-3 '>
                                 {articles?.map((items, index) => (
-                                    <div className='col-12 col-md-6 col-lg-4 col-xl-3' key={index}>
+                                    <div className='col-md-6 col-lg-4 col-xl-3' key={index}>
                                         <ArticleCard article={items} />
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        {/* <div className='col-12 col-md-3'>分類欄位</div> */}
                     </div>
                     <div className='mt-5'>
                         <Pagination

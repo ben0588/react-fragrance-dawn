@@ -6,7 +6,7 @@ const AccountLayout = () => {
         <div className='container'>
             <AccountBreadcrumb className='mt-3 pb-1' />
             <div className='row'>
-                <div className='col-12 col-lg-2'>
+                <div className='col-lg-2'>
                     <ul className='nav flex-column'>
                         <li className='nav-item navbar-bg-hover '>
                             <NavLink
@@ -37,7 +37,7 @@ const AccountLayout = () => {
                         </li>
                     </ul>
                 </div>
-                <div className='col-12 col-lg-10 '>
+                <div className='col-lg-10 '>
                     <Outlet />
                 </div>
             </div>

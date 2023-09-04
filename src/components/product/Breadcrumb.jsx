@@ -1,14 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { changeCategory } from '../../store/slice/categorySlice';
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const Breadcrumb = memo(({ category, title, className }) => {
+const Breadcrumb = memo(function Breadcrumb({ category, title, className }) {
     const dispatch = useDispatch();
-    const categoryRedux = useSelector((state) => state.category);
 
     const handleToCategory = (e) => {
-        // e.preventDefault();
         dispatch(changeCategory(category));
     };
 
@@ -34,4 +33,10 @@ const Breadcrumb = memo(({ category, title, className }) => {
         </nav>
     );
 });
+
+Breadcrumb.propTypes = {
+    category: PropTypes.string,
+    title: PropTypes.string,
+    className: PropTypes.string,
+};
 export default Breadcrumb;

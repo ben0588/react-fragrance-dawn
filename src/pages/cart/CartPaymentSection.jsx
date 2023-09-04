@@ -58,35 +58,34 @@ const CartPaymentSection = () => {
         try {
             location.state = null;
             Swal.fire({
-                icon: 'info',
-                title: `付款中`,
-                showConfirmButton: false,
-                allowEscapeKey: false,
-                didOpen: async () => {
+                title: '確認付款?',
+                text: '請確認付款內容正確後按下確認',
+                icon: 'question',
+                confirmButtonColor: '#111c30',
+                cancelButtonColor: '#b2bec3',
+                confirmButtonText: '確認',
+                cancelButtonText: '取消',
+                showCancelButton: true,
+                showCloseButton: true,
+                reverseButtons: true,
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {
                     try {
-                        Swal.showLoading();
-                        const result = await clientPaymentOrder(order.id);
-                        Swal.hideLoading();
-                        Swal.update({
-                            icon: 'success',
-                            title: `${result.data.message}`,
-                            showConfirmButton: true,
-                            confirmButtonColor: '#111c30',
-                            confirmButtonText: '確認',
-                        });
+                        return await clientPaymentOrder(order.id);
                     } catch (error) {
-                        Swal.hideLoading();
-                        Swal.update({
-                            icon: 'error',
-                            title: '付款失败',
-                            text: error,
-                            showConfirmButton: true,
-                        });
+                        Swal.showValidationMessage(`請求失敗： ${error}`);
                     }
                 },
                 allowOutsideClick: () => !Swal.isLoading(),
             }).then((result) => {
-                if (result.isConfirmed) {
+                if (result?.value?.data?.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '成功',
+                        text: `${result?.value?.data?.message}`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                     reset();
                     window.history.replaceState(null, null, window.location.href); // 跳轉後回到上一頁不帶 state 狀態
                     navigate('/account/orders', { state: null });
@@ -115,7 +114,7 @@ const CartPaymentSection = () => {
     return (
         <div className='mb-3 pb-3'>
             <div className='row flex-column-reverse flex-lg-row'>
-                <div className='col-12 col-lg-6 mt-3'>
+                <div className='col-lg-6 mt-3'>
                     <h4 className=' fs-5 '>結帳</h4>
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                         <ValidationSelectGroup
@@ -126,6 +125,7 @@ const CartPaymentSection = () => {
                             selectClass='form-control'
                             errors={errors}
                             register={register}
+                            required={true}
                             rules={{
                                 required: { value: true, message: '必須選擇付款方式' },
                             }}
@@ -148,7 +148,7 @@ const CartPaymentSection = () => {
                         />
                     </form>
                 </div>
-                <div className='col-12 col-lg-6 '>
+                <div className='col-lg-6 '>
                     <div className='border border-2 p-3'>
                         <h4 className='border-bottom border-2 border-primary fs-5 pb-2'>寄送資料明細</h4>
                         <div className='row mt-3'>

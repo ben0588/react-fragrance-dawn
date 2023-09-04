@@ -4,8 +4,16 @@ import TextareaGroup from '../TextareaGroup';
 import { adminAddProduct, adminPutProduct } from '../../api/adminApis';
 import useMessage from '../../hooks/useMessage';
 import axios from 'axios';
+import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, editProductTarget }) => {
+const ProductModal = memo(function ProductModal({
+    handleCancelProductModal,
+    fetchProducts,
+    modalOpenType,
+    editProductTarget,
+    checkAdminAuth,
+}) {
     const initialValue = {
         title: '',
         category: '',
@@ -22,6 +30,9 @@ const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, 
     const { inputToastMessage } = useMessage();
     const [isUpload, setIsUpload] = useState(false);
     const uploadFormRef = useRef(null);
+    const [isCheck, setIsCheck] = useState(false);
+
+    const allFieldsFilled = Object.values(products).every((value) => value !== ''); // 監控是否都填寫完畢
 
     useEffect(() => {
         // 判斷開啟模組方式，給於初始值或者商品原本值
@@ -74,6 +85,8 @@ const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, 
 
     const handleSubmitAddProduct = async () => {
         try {
+            setIsCheck(true);
+            await checkAdminAuth(); // 檢查管理者權限
             let typeToggle = modalOpenType === 'create' ? true : false;
             let result;
             if (typeToggle) {
@@ -81,11 +94,13 @@ const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, 
             } else {
                 result = await adminPutProduct(products, products.id);
             }
-            fetchProducts();
             inputToastMessage(result);
             handleCancelProductModal();
-        } catch (error) {
-            inputToastMessage(error.response.data);
+            await fetchProducts();
+        } catch {
+            inputToastMessage(error?.response?.data);
+        } finally {
+            setIsCheck(false);
             handleCancelProductModal();
         }
     };
@@ -94,6 +109,7 @@ const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, 
         try {
             e.preventDefault();
             setIsUpload(true);
+            await checkAdminAuth();
             const formData = new FormData();
             const file = e.target[0].files[0];
             if (!file) {
@@ -317,13 +333,31 @@ const ProductModal = ({ handleCancelProductModal, fetchProducts, modalOpenType, 
                         >
                             取消
                         </button>
-                        <button type='button' className='btn btn-primary' onClick={() => handleSubmitAddProduct()}>
-                            {modalOpenType === 'create' ? '新增' : '儲存'}
+                        <button
+                            type='button'
+                            className='btn btn-primary'
+                            onClick={() => handleSubmitAddProduct()}
+                            disabled={!allFieldsFilled || isCheck}
+                        >
+                            {isCheck && (
+                                <div className='spinner-border spinner-border-sm me-2' role='status'>
+                                    <span className='visually-hidden'>Loading...</span>
+                                </div>
+                            )}
+                            {modalOpenType === 'create' ? (isCheck ? '檢查中' : '新增') : isCheck ? '檢查中' : '儲存'}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     );
+});
+
+ProductModal.propTypes = {
+    handleCancelProductModal: PropTypes.func,
+    fetchProducts: PropTypes.func,
+    modalOpenType: PropTypes.oneOf(['create', 'edit']),
+    editProductTarget: PropTypes.object,
+    checkAdminAuth: PropTypes.func,
 };
 export default ProductModal;

@@ -6,15 +6,19 @@ import { clientFetchCategoryProduct } from '../../api/clientApis';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useCallback } from 'react';
+import useMessage from '../../hooks/useMessage';
 
 const HomePopular = () => {
     const [products, setProducts] = useState([]);
+    const { inputToastMessage } = useMessage();
 
     const handleFetchProducts = useCallback(async () => {
         try {
             const result = await clientFetchCategoryProduct(1, '香水');
             setProducts(result?.data?.products);
-        } catch {}
+        } catch (error) {
+            inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
+        }
     }, []);
 
     useEffect(() => {
@@ -30,7 +34,7 @@ const HomePopular = () => {
                 <span></span>
             </h2>
             <div className='row position-relative mt-4'>
-                <div className='col-12 col-lg-6'>
+                <div className='col-lg-6'>
                     <motion.div
                         className='home-popular-start-bg p-5'
                         initial={{ y: -100, opacity: 0 }}
@@ -39,7 +43,7 @@ const HomePopular = () => {
                     >
                         <div className='row'>
                             {Object.keys(popular).length === 0 ? null : (
-                                <div className='col-12 col-md-8 bg-light rounded-3 p-3 h-100'>
+                                <div className='col-md-8 bg-light rounded-3 p-3 h-100'>
                                     <h3 className='fw-bolder py-2'>{popular.title}</h3>
                                     <p className='text-muted py-2'>{popular.content}</p>
                                     <p className='py-1'>{popular.description}</p>
@@ -52,16 +56,16 @@ const HomePopular = () => {
                                     </Link>
                                 </div>
                             )}
-                            <div className='col-12 col-md-4'></div>
+                            <div className='col-md-4'></div>
                         </div>
                     </motion.div>
                 </div>
-                <div className='col-12 col-lg-6'>
+                <div className='col-lg-6'>
                     <div className='home-popular-end-bg px-2'>
                         <div className='row'>
-                            <div className='col-12 col-md-4'></div>
+                            <div className='col-md-4'></div>
                             <motion.div
-                                className='col-12 col-md-8 bg-light rounded-3 p-3 '
+                                className='col-md-8 bg-light rounded-3 p-3 '
                                 initial={{ y: 100, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ ease: 'easeOut', duration: 1 }}

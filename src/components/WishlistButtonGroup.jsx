@@ -4,12 +4,7 @@ import { addToWishlist, removeWishlist } from '../store/slice/wishListSlice';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { memo } from 'react';
 
-const WishlistButtonGroup = memo(({ id, product, changePosition }) => {
-    /*
-    # 使用注意：
-        - 必須帶入參數：id, title, imageUrl, content, origin_price, price, unit
-        - 使用此元件的時候，外層容器記得加上 position-relative
-    */
+const WishlistButtonGroup = memo(function WishlistButtonGroup({ id, product, changePosition }) {
     const { inputToastMessage } = useMessage();
     const wishlist = useSelector((state) => state.wishlist);
     const dispatch = useDispatch();

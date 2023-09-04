@@ -1,23 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/swiper-bundle.css'; // 所有 Swiper 樣式
-// import '../../../node_modules/swiper/modules/navigation.min.css';
-// import '../../../node_modules/swiper/modules/pagination.min.css';
-// import '../../../node_modules/swiper/modules/scrollbar.min.css';
-// import '../../../node_modules/swiper/modules/autoplay.min.css';
-// import '../../../node_modules/swiper/modules/free-mode.min.css';
-// import '../../../node_modules/swiper/modules/thumbs.min.css';
-
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { Link } from 'react-router-dom';
 import usePriceToTw from '../../hooks/usePriceToTw';
-import { AiOutlineArrowRight } from 'react-icons/ai';
-import { IoIosArrowForward } from 'react-icons/io';
 import { useDispatch } from 'react-redux';
 import { updatePopular } from '../../store/slice/popularSlice';
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const PopularCarousel = memo(({ imagesList, alt }) => {
+const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
     const { handlePriceToTw } = usePriceToTw();
 
     const dispatch = useDispatch();
@@ -78,4 +70,20 @@ const PopularCarousel = memo(({ imagesList, alt }) => {
     );
 });
 
+PopularCarousel.propTypes = {
+    imagesList: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            category: PropTypes.string,
+            content: PropTypes.string,
+            description: PropTypes.string,
+            imageUrl: PropTypes.string,
+            imagesUrl: PropTypes.arrayOf(PropTypes.string),
+            origin_price: PropTypes.number,
+            price: PropTypes.number,
+            title: PropTypes.string,
+            unit: PropTypes.string,
+        }).isRequired
+    ),
+};
 export default PopularCarousel;

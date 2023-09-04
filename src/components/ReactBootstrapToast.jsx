@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createMessage, closeMessage } from '../store/slice/messageSlice';
 import { memo } from 'react';
 
-const ReactBootstrapToast = memo(() => {
+const ReactBootstrapToast = memo(function ReactBootstrapToast() {
     const message = useSelector((state) => state.message);
     const dispatch = useDispatch();
     return (

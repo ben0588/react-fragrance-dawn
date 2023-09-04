@@ -11,10 +11,10 @@ import { store, persistor } from './store/store.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
 axios.defaults.baseURL = import.meta.env.VITE_BACKEND_BASE_API_URL;
 import { register } from 'swiper/element/bundle';
+
 register(); // 初始化 swiper 套件
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    // <React.StrictMode>
     <HashRouter>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
@@ -22,5 +22,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             </PersistGate>
         </Provider>
     </HashRouter>
-    // </React.StrictMode>
 );

@@ -11,13 +11,13 @@ const AboutJoinUs = () => {
             <div className='mt-4'>更多公司及通路品牌理念與詳細職缺資訊，請由下方招募管道進一步了解：</div>
             <ul className='py-1'>
                 <li>
-                    <Link to='https://www.104.com.tw/jobs/main/' target='_black'>
+                    <Link to='https://www.104.com.tw/jobs/main/' target='_blank'>
                         104人力銀行
                     </Link>
                 </li>
 
                 <li>
-                    <Link to='https://www.linkedin.com/' target='_black'>
+                    <Link to='https://www.linkedin.com/' target='_blank'>
                         LinkedIn
                     </Link>
                 </li>

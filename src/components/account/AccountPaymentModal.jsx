@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import Modal from 'react-bootstrap/Modal';
 import ValidationSelectGroup from '../ReactHookForm/ValidationSelectGroup';
+import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const AccountPaymentModal = ({ show, handleClose, order, handlePaymentOrder }) => {
+const AccountPaymentModal = memo(function AccountPaymentModal({ show, handleClose, order, handlePaymentOrder }) {
     const {
         register,
         handleSubmit,
@@ -70,5 +72,12 @@ const AccountPaymentModal = ({ show, handleClose, order, handlePaymentOrder }) =
             </Modal.Body>
         </Modal>
     );
+});
+
+AccountPaymentModal.propTypes = {
+    show: PropTypes.bool.isRequired,
+    handleClose: PropTypes.func,
+    order: PropTypes.object,
+    handlePaymentOrder: PropTypes.func,
 };
 export default AccountPaymentModal;

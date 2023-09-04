@@ -1,17 +1,18 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-import { FaShoppingCart, FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
 import { BsBookmarkHeartFill, BsXLg } from 'react-icons/bs';
-import { FaBagShopping } from 'react-icons/fa6';
+import { FaBagShopping, FaCartShopping } from 'react-icons/fa6';
 
 import logoImg from '../../assets/logo/logo_image.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { createNavbarHeight } from '../../store/slice/navbarSlice';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/swiper-bundle.css'; // 所有 Swiper 樣式
-import { Navigation, Pagination } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { updateBulletinState } from '../../store/slice/bulletinSlice';
+import { useFetchCartsQuery } from '../../store/store';
 
 const bulletinText = [
     '感謝您的支持，我們將在本月底舉行感恩回饋活動，屆時將有更多優惠等待您的到來。',
@@ -25,12 +26,15 @@ const Header = () => {
     const navbarRef = useRef(null);
     const headerContainerRef = useRef(null);
     const dispatch = useDispatch();
-    const cart = useSelector((state) => state.cart);
+    // const cart = useSelector((state) => state.cart);
     const bulletin = useSelector((state) => state.bulletin);
+    const buttonRef = useRef(null);
+    const [toggle, setToggle] = useState(false);
+    const { data, error, isLoading } = useFetchCartsQuery();
 
     const navbarToggle = () => {
         navbarRef.current.classList.toggle('show');
-        // navbarRef.current.classList.toggle('header-navbar-show');
+        setToggle(!toggle);
         dispatch(createNavbarHeight(headerContainerRef.current.offsetHeight));
     };
 
@@ -66,7 +70,6 @@ const Header = () => {
                         loop={true}
                         grabCursor={true}
                         style={{
-                            // height: `40px`,
                             width: `80%`,
                             '--swiper-navigation-color': '#0000000',
                             '--swiper-pagination-color': '#0000000',
@@ -90,7 +93,14 @@ const Header = () => {
             ) : null}
             <nav className='navbar navbar-expand-lg sticky-top bg-white border-bottom border-2 py-4' role='navigation'>
                 <div className='container-fluid '>
-                    <Link to='/' className='navbar-brand '>
+                    <Link
+                        to='/'
+                        className='navbar-brand'
+                        onClick={(e) => {
+                            toggle ? navbarToggle() : null;
+                            // 判斷當前是否開啟選單，避免未開啟選單時按下 LOGO 反而打開選單問題
+                        }}
+                    >
                         <h1>
                             <span className='d-none'>香氛晨光FragranceDawn</span>
                             <img src={logoImg} alt='香氛晨光FragranceDawn' className='nav-logo-img' />
@@ -102,6 +112,7 @@ const Header = () => {
                         aria-controls='navbarSupportedContent'
                         aria-expanded='false'
                         aria-label='Toggle navigation'
+                        ref={buttonRef}
                         onClick={() => navbarToggle()}
                     >
                         <span className='navbar-toggler-icon'></span>
@@ -109,7 +120,6 @@ const Header = () => {
                     <div className={`collapse navbar-collapse `} id='navbarSupportedContent' ref={navbarRef}>
                         <ul className='navbar-nav fw-bolder me-auto mb-2 mb-lg-0'>
                             {[
-                                { title: '首頁', path: '/' },
                                 { title: '全部商品', path: '/products' },
                                 { title: '香水專欄', path: '/article' },
                                 { title: '優惠', path: '/sale' },
@@ -130,11 +140,13 @@ const Header = () => {
                                 onClick={() => navbarToggle()}
                                 aria-label='前往購物車頁面'
                             >
-                                <FaBagShopping className='navbar-icon' />
-                                {cart.length ? (
+                                <FaCartShopping className='navbar-icon' />
+                                {data?.data?.carts?.length ? (
                                     <span className='position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger'>
-                                        {cart.length}
-                                        <span className='visually-hidden'>當前購物車共有{cart.length}筆</span>
+                                        {data?.data?.carts?.length}
+                                        <span className='visually-hidden'>
+                                            當前購物車共有{data?.data?.carts?.length}筆
+                                        </span>
                                     </span>
                                 ) : null}
                             </NavLink>

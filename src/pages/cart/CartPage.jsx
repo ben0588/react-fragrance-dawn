@@ -41,16 +41,16 @@ const CartPage = () => {
         <>
             {loading.isLoading ? (
                 <div>isLoading</div>
-            ) : carts.length ? (
+            ) : carts?.length ? (
                 <div className='row mb-3 pb-3'>
-                    <div className='col-12 col-lg-8 '>
+                    <div className='col-lg-8 '>
                         <CartProductsSection carts={carts} handleFetchCart={handleFetchCart} />
                         <div className='border-top border-2 border-primary mt-4 pt-3 mb-3'>
                             <CartCouponSection handleFetchCart={handleFetchCart} />
                         </div>
                     </div>
 
-                    <div className='col-12 col-lg-4  border border-2 '>
+                    <div className='col-lg-4  border border-2 '>
                         <CartOrderSection carts={carts} />
                     </div>
                 </div>

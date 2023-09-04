@@ -1,15 +1,9 @@
 import perfumeGif from '../../assets/home/perfume-min.gif';
-import perfumeWebm from '../../assets/home/perfume-min.webm';
-import perfumeMp4 from '../../assets/home/perfume-min.mp4'; // 防止瀏覽器不支持 webm
 import { Link } from 'react-router-dom';
 import { RxDoubleArrowDown } from 'react-icons/rx';
-import { motion, useScroll } from 'framer-motion';
-import { useEffect, useRef } from 'react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const HomeBanner = () => {
-    const videoRef = useRef(null);
-    const video2Ref = useRef(null);
     const sloganVariants = {
         hidden: {
             y: 100,
@@ -21,20 +15,8 @@ const HomeBanner = () => {
         },
     };
 
-    // useEffect(() => {
-    //     if (videoRef.current) {
-    //         // console.dir(videoRef.current.children[0]);
-    //         videoRef.current.children[0].play().catch((error) => {
-    //             alert(error);
-    //         });
-    //     }
-    // }, []);
-
     return (
         <div className='container position-relative py-5 mt-5'>
-            {/* <div style={{ width: `300px`, height: `300px` }}>
-    <Spline scene='https://prod.spline.design/2ZUHr4UZzL0j60Zk/scene.splinecode' />
-</div> */}
             <div className='home-bg-start-container '></div>
             <motion.div
                 className='home-bg-end-container '
@@ -63,18 +45,10 @@ const HomeBanner = () => {
             </motion.div>
 
             <div className='row position-relative'>
-                <div className='col-12 col-md-4 '>
+                <div className='col-md-4 '>
                     <div className='position-absolute translate-middle-y' style={{ top: `43%`, left: `1%` }}>
                         <motion.h2
                             className=' border-bottom border-5 border-primary fw-border fs-3 pb-2'
-                            // initial={{
-                            //     y: 100,
-                            //     opacity: 0,
-                            // }}
-                            // whileInView={{
-                            //     y: 0,
-                            //     opacity: 1,
-                            // }}
                             initial='hidden'
                             whileInView='show'
                             variants={sloganVariants}
@@ -98,42 +72,12 @@ const HomeBanner = () => {
                     </div>
                 </div>
 
-                <div className='col-12 col-md-4 px-0'>
+                <div className='col-md-4 px-0'>
                     <div className='d-flex justify-content-center align-items-center'>
                         <img src={perfumeGif} alt={'香氛晨光香水相關購物中心'} className='home-banner-image' />
-
-                        {/* <div
-                            ref={videoRef}
-                            dangerouslySetInnerHTML={{
-                                __html: `
-                                <video
-                                    autoplay
-                                    loop
-                                    muted
-                                    playsinline
-                              
-                                >
-                                    <source src='https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/video/perfume-min.mp4' type="video/mp4" />
-                                    <source src='https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/video/perfume-min.webm' type="video/webm" />
-                                </video>`,
-                            }}
-                        /> */}
-                        {/* 
-                        <video
-                            playsInline
-                            autoPlay
-                            muted
-                            loop
-                            preload='auto'
-                        >
-                            <source
-                                src='https://raw.githubusercontent.com/ben0588/react-fragrance-dawn/gh-pages/video/perfume-min.mp4#t=0.001'
-                                type='video/mp4'
-                            />
-                        </video> */}
                     </div>
                 </div>
-                <div className='col-12 col-md-4'>
+                <div className='col-md-4'>
                     <div className='home-activity-container p-3'>
                         <p>
                             「香氛晨光」的理念是希望透過香氛，為每個人帶來美好的晨光，我們的產品不只是單純的香水，更是一種能夠為您帶來美好情感體驗的產品。

@@ -6,8 +6,16 @@ import TextareaGroup from '../TextareaGroup';
 import { adminCreateArticle, adminPutArticle } from '../../api/adminArticleApis';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
+import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const ArticleModal = ({ handleCancelModal, fetchData, modalOpenType, editTarget }) => {
+const ArticleModal = memo(function ArticleModal({
+    handleCancelModal,
+    fetchData,
+    modalOpenType,
+    editTarget,
+    checkAdminAuth,
+}) {
     const initialValue = {
         id: '',
         title: '',
@@ -36,6 +44,15 @@ const ArticleModal = ({ handleCancelModal, fetchData, modalOpenType, editTarget 
     const [selectDefault, setSelectDefault] = useState([]);
     const loadingRedux = useSelector((state) => state.loading);
     const dispatch = useDispatch();
+    const [checkAuth, setCheckAuth] = useState(false);
+
+    const allFieldsFilled = Object.keys(article).every((key) => {
+        if (key === 'id') {
+            // 如果是 'id' 屬性，不檢查，直接返回 true
+            return true;
+        }
+        return article[key] !== ''; // 檢查其他屬性的值是否不為空
+    });
 
     useEffect(() => {
         if (modalOpenType === 'create') {
@@ -76,6 +93,8 @@ const ArticleModal = ({ handleCancelModal, fetchData, modalOpenType, editTarget 
 
     const handleSubmitAddArticle = async () => {
         try {
+            setCheckAuth(true);
+            await checkAdminAuth();
             const newTag =
                 modalOpenType === 'create' ? tag?.map((item) => item.value) : selectDefault?.map((item) => item.value); // 依照新增或編輯給予不同預設值
             const form = {
@@ -105,6 +124,8 @@ const ArticleModal = ({ handleCancelModal, fetchData, modalOpenType, editTarget 
             handleCancelModal();
         } catch (error) {
             inputToastMessage(error?.response?.data);
+        } finally {
+            setCheckAuth(false);
             handleCancelModal();
         }
     };
@@ -245,13 +266,38 @@ const ArticleModal = ({ handleCancelModal, fetchData, modalOpenType, editTarget 
                         >
                             關閉
                         </button>
-                        <button type='button' className='btn btn-primary ' onClick={() => handleSubmitAddArticle()}>
-                            {modalOpenType === 'create' ? '新增' : '儲存'}
+                        <button
+                            type='button'
+                            className='btn btn-primary '
+                            onClick={() => handleSubmitAddArticle()}
+                            disabled={!allFieldsFilled || checkAuth}
+                        >
+                            {checkAuth && (
+                                <div className='spinner-border spinner-border-sm me-2 ' role='status'>
+                                    <span className='visually-hidden'>Loading...</span>
+                                </div>
+                            )}
+                            {modalOpenType === 'create'
+                                ? checkAuth
+                                    ? '檢查中'
+                                    : '新增'
+                                : checkAuth
+                                ? '檢查中'
+                                : '儲存'}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     );
+});
+
+ArticleModal.propTypes = {
+    handleCancelModal: PropTypes.func,
+    fetchData: PropTypes.func,
+    modalOpenType: PropTypes.oneOf(['create', 'edit']),
+    editTarget: PropTypes.object,
+    checkAdminAuth: PropTypes.func,
 };
+
 export default ArticleModal;

@@ -3,14 +3,16 @@ import bgImage from '../../assets/home/bg-2.webp';
 import { clientFetchAllProducts } from '../../api/clientApis';
 import allImage from '../../assets/home/all-3.webp';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeCategory } from '../../store/slice/categorySlice';
 import { motion } from 'framer-motion';
 import { useCallback } from 'react';
+import useMessage from '../../hooks/useMessage';
 
 const HomeCategory = () => {
     const [categoryList, setCategoryList] = useState([]);
     const dispatch = useDispatch();
+    const { inputToastMessage } = useMessage();
 
     const handleFetchAllProducts = useCallback(async () => {
         try {
@@ -26,7 +28,9 @@ const HomeCategory = () => {
             });
 
             setCategoryList([...filteredData, ['全部', allImage]]);
-        } catch {}
+        } catch (error) {
+            inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
+        }
     }, []);
 
     useEffect(() => {

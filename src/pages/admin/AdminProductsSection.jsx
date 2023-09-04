@@ -9,6 +9,7 @@ import useMessage from '../../hooks/useMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 const AdminProductsSection = () => {
     const [products, setProducts] = useState([]);
@@ -23,6 +24,7 @@ const AdminProductsSection = () => {
     const loadingRedux = useSelector((state) => state.loading);
     const [categoryList, setCategoryList] = useState([]);
     const [category, setCategory] = useState('');
+    const { adminCheck } = useOutletContext();
 
     useEffect(() => {
         productModalRef.current = new Modal('#productModal', {
@@ -83,14 +85,15 @@ const AdminProductsSection = () => {
     const handleDeleteProduct = async () => {
         try {
             dispatch(updateLoadingState(true));
+            await adminCheck();
             const result = await adminDeleteProduct(deleteProductTarget.id);
             inputToastMessage(result);
             fetchProducts();
             setDeleteProductTarget({});
             handleCancelDeleteModal();
-            dispatch(updateLoadingState(false));
         } catch (error) {
-            inputToastMessage(error.response.data);
+            // 不需要再處理這裡的錯誤，因為已經在 adminCheck 中處理
+        } finally {
             dispatch(updateLoadingState(false));
             handleCancelDeleteModal();
         }
@@ -108,6 +111,7 @@ const AdminProductsSection = () => {
                 fetchProducts={fetchProducts}
                 modalOpenType={modalOpenType}
                 editProductTarget={editProductTarget}
+                checkAdminAuth={adminCheck}
             />
 
             <DeleteModal
@@ -152,45 +156,47 @@ const AdminProductsSection = () => {
                     </button>
                 </div>
             </div>
-            <table className='table'>
-                <thead>
-                    <tr>
-                        <th scope='col'>分類</th>
-                        <th scope='col'>名稱</th>
-                        <th scope='col'>售價</th>
-                        <th scope='col'>啟用狀態</th>
-                        <th scope='col'>編輯</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {products.map((product) => (
-                        <tr key={product.id}>
-                            <td>{product.category}</td>
-                            <td>{product.title}</td>
-                            <td>{product.price}</td>
-                            <td className={`${product.is_enabled ? 'text-success ' : ''}`}>
-                                {product.is_enabled ? '啟用' : '未啟用'}
-                            </td>
-                            <td>
-                                <button
-                                    type='button'
-                                    className='btn btn-primary btn-sm'
-                                    onClick={() => handleOpenProductModal('edit', product)} // 直接帶入產品資訊
-                                >
-                                    編輯
-                                </button>
-                                <button
-                                    type='button'
-                                    className='btn btn-outline-danger btn-sm ms-2'
-                                    onClick={() => handleOpenDeleteModal(product)}
-                                >
-                                    刪除
-                                </button>
-                            </td>
+            <div className='table-responsive'>
+                <table className='table align-middle'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>分類</th>
+                            <th scope='col'>名稱</th>
+                            <th scope='col'>售價</th>
+                            <th scope='col'>啟用狀態</th>
+                            <th scope='col'>編輯</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {products.map((product) => (
+                            <tr key={product.id}>
+                                <td>{product.category}</td>
+                                <td>{product.title}</td>
+                                <td>{product.price}</td>
+                                <td className={`${product.is_enabled ? 'text-success ' : ''}`}>
+                                    {product.is_enabled ? '啟用' : '未啟用'}
+                                </td>
+                                <td>
+                                    <button
+                                        type='button'
+                                        className='btn btn-primary btn-sm'
+                                        onClick={() => handleOpenProductModal('edit', product)} // 直接帶入產品資訊
+                                    >
+                                        編輯
+                                    </button>
+                                    <button
+                                        type='button'
+                                        className='btn btn-outline-danger btn-sm ms-2'
+                                        onClick={() => handleOpenDeleteModal(product)}
+                                    >
+                                        刪除
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Pagination
                 changePage={fetchProducts}

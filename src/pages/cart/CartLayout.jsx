@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import CartBreadcrumb from '../../components/cart/CartBreadcrumb';
 
 const CartLayout = () => {

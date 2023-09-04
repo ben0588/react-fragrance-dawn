@@ -13,6 +13,7 @@ export const adminSlice = createSlice({
             if (action.payload.success) {
                 state.isLogin = action.payload.success;
                 state.token = action.payload.token;
+                state.uid = action.payload.uid;
                 state.expired = action.payload.expired;
             }
         },
@@ -31,19 +32,10 @@ export const adminSlice = createSlice({
             };
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase('persist/PURGE', (state, action) => {
-            // 在 persistor.purge() 完成後觸發的 action
-            return {
-                isLogin: false,
-                uid: '',
-                token: '',
-                expired: '',
-            };
-        });
-    },
 });
 
 export const { createAdminLogin, checkAdminState, removeAdminLogout } = adminSlice.actions;
+
+export const selectAuthToken = (state) => state.admin.token;
 
 export default adminSlice.reducer;

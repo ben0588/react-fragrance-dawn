@@ -3,11 +3,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import usePriceToTw from '../../hooks/usePriceToTw';
 import { useForm, useWatch } from 'react-hook-form';
 import ValidationInputGroup from '../../components/ReactHookForm/ValidationInputGroup';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import ValidationSelectGroup from '../../components/ReactHookForm/ValidationSelectGroup';
 import { BsCheckAll, BsChevronDoubleLeft } from 'react-icons/bs';
-import { clientCreateOrder, clientDeleteAllCarts } from '../../api/clientApis';
+import { clientCreateOrder } from '../../api/clientApis';
 import useMessage from '../../hooks/useMessage';
 import { removeCarts } from '../../store/slice/cartSlice';
 import { removeCoupon } from '../../store/slice/couponSlice';
@@ -23,8 +23,6 @@ const CartCheckoutSection = () => {
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [createOrderEnding, setCreateOrderEnding] = useState(false);
-    const [orderId, setOrderId] = useState('');
     const {
         register,
         handleSubmit,
@@ -32,6 +30,7 @@ const CartCheckoutSection = () => {
         getValues,
         control,
         reset,
+        watch,
     } = useForm({
         defaultValues: {
             email: '',
@@ -77,6 +76,7 @@ const CartCheckoutSection = () => {
                 cancelButtonText: '取消',
                 showCancelButton: true,
                 showCloseButton: true,
+                reverseButtons: true,
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
@@ -87,23 +87,25 @@ const CartCheckoutSection = () => {
                 },
                 allowOutsideClick: () => !Swal.isLoading(),
             }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire('成功', result?.value?.data?.message, 'success');
-                    setIsLoading(false);
+                if (result?.value?.data?.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '成功',
+                        text: `${result?.value?.data?.message}`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                     dispatch(removeCarts());
                     dispatch(removeCoupon());
                     persistor.purge('coupon');
                     reset();
-                    setCreateOrderEnding(true);
-                    setOrderId(result.value.data.orderId);
                     navigate('/cart/payment', { state: result.value.data.orderId });
-                } else {
-                    setIsLoading(false);
                 }
             });
         } catch (error) {
             inputToastMessage(error?.response?.data);
-            setCreateOrderEnding(true);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -128,10 +130,13 @@ const CartCheckoutSection = () => {
     const useFormState = useWatch({ control });
     useEffect(() => {}, [useFormState]);
 
+    // 監控是否表單所有內容已填寫
+    const allFieldsFilled = Object.values(watch()).every((value) => value !== '');
+
     return (
         <div className='mb-3 pb-3'>
             <div className='row'>
-                <div className='col-12 col-lg-8  pt-2 pb-3'>
+                <div className='col-lg-8  pt-2 pb-3'>
                     <h4 className='border-bottom border-2 border-primary fs-5 pb-2'>配送資料</h4>
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                         <fieldset>
@@ -146,6 +151,7 @@ const CartCheckoutSection = () => {
                                 labelClass='form-label mb-1'
                                 inputClass='form-control'
                                 placeholder='請輸入電子郵件'
+                                required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
                                     pattern: {
@@ -164,6 +170,7 @@ const CartCheckoutSection = () => {
                                 labelClass='form-label mb-1'
                                 inputClass='form-control'
                                 placeholder='請輸入聯絡人姓名'
+                                required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
                                     pattern: {
@@ -183,6 +190,7 @@ const CartCheckoutSection = () => {
                                 labelClass='form-label mb-1'
                                 inputClass='form-control'
                                 placeholder='請輸入聯絡手機'
+                                required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
                                     pattern: {
@@ -200,6 +208,7 @@ const CartCheckoutSection = () => {
                                 groupClass='mt-3'
                                 labelClass='form-label mb-1'
                                 selectClass='form-control'
+                                required={true}
                                 rules={{
                                     required: { value: true, message: '請選擇縣市' },
                                 }}
@@ -224,6 +233,7 @@ const CartCheckoutSection = () => {
                                 labelClass='form-label mb-1'
                                 selectClass='form-control'
                                 defaultValue=''
+                                required={true}
                                 rules={{
                                     required: { value: true, message: '請選擇鄉鎮市區' },
                                 }}
@@ -249,6 +259,7 @@ const CartCheckoutSection = () => {
                                 labelClass='form-label mb-1'
                                 inputClass='form-control'
                                 placeholder='請輸入配送地址'
+                                required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
                                     pattern: {
@@ -272,13 +283,13 @@ const CartCheckoutSection = () => {
                                     className='btn btn-primary btn-primary-hover '
                                     value={isLoading ? '表單處理中' : '確認送出'}
                                     style={{ width: `120px` }}
-                                    disabled={isLoading}
+                                    disabled={!allFieldsFilled || isLoading}
                                 />
                             </div>
                         </fieldset>
                     </form>
                 </div>
-                <div className='col-12 col-lg-4 border border-2 py-2'>
+                <div className='col-lg-4 border border-2 py-2'>
                     <h4 className='border-bottom border-2 border-primary fs-5 pb-2'>購物車明細</h4>
                     {carts?.length
                         ? carts?.map((product) => (

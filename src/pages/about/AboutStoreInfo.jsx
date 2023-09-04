@@ -47,7 +47,7 @@ const AboutStoreInfo = () => {
                     </p>
                     <div className='row'>
                         {storeList?.map?.((items, index) => (
-                            <div className='col-12 col-md-6 col-lg-4' key={index}>
+                            <div className='col-md-6 col-lg-4' key={index}>
                                 <div className='card h-100 border-none'>
                                     <div className='card-img-top'>
                                         <img
@@ -61,7 +61,7 @@ const AboutStoreInfo = () => {
                                         <h3 className='card-title text-center fs-4 fw-bolder'>{items.title}</h3>
                                         <address className='d-flex align-items-center justify-content-center text-center fs-6 m-0 pt-3'>
                                             {items.address}
-                                            <Link to={items.addressPath} target='_black'>
+                                            <Link to={items.addressPath} target='_blank'>
                                                 <FaMapMarkerAlt className='icon-md ms-1' />
                                             </Link>
                                         </address>

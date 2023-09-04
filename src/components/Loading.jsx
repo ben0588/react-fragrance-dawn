@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import ReactLoading from 'react-loading';
 import { useSelector } from 'react-redux';
-const Loading = memo(() => {
+const Loading = memo(function Loading() {
     const loading = useSelector((state) => state.loading);
     return (
         <>

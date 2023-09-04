@@ -1,19 +1,36 @@
 import { useEffect, useState } from 'react';
-import { adminDeleteOrder, adminPutOrder } from '../../api/adminApis';
+import { adminPutOrder } from '../../api/adminApis';
 import InputGroup from '../InputGroup';
 import useMessage from '../../hooks/useMessage';
 import SelectGroup from '../SelectGroup';
 import usePriceToTw from '../../hooks/usePriceToTw';
-import Swal from 'sweetalert2';
+import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const OrderModal = ({ handleCancelOrderModal, fetchOrders, editOrderTarget }) => {
-    const [orders, setOrders] = useState({ is_paid: '', status: 0, ...editOrderTarget });
+const OrderModal = memo(function OrderModal({
+    handleCancelOrderModal,
+    fetchOrders,
+    modalOpenType,
+    editOrderTarget,
+    checkAdminAuth,
+}) {
+    const initialValues = {
+        is_paid: '',
+        status: 0,
+    };
+    const [orders, setOrders] = useState({});
     const { inputToastMessage } = useMessage();
     const { handlePriceToTw } = usePriceToTw();
+    const [checkAuth, setCheckAuth] = useState(false);
 
     useEffect(() => {
-        setOrders({ ...editOrderTarget, is_paid: editOrderTarget.is_paid, status: editOrderTarget.status }); // 新增 status 屬性
+        setOrders({ ...initialValues, ...editOrderTarget });
     }, [editOrderTarget]);
+
+    const handleCancelOrderModalRemove = () => {
+        setOrders({ ...initialValues, ...editOrderTarget });
+        handleCancelOrderModal();
+    };
 
     const handleChangeValue = (e) => {
         const { name, value } = e.target;
@@ -32,13 +49,26 @@ const OrderModal = ({ handleCancelOrderModal, fetchOrders, editOrderTarget }) =>
 
     const handleSubmitPutOrder = async () => {
         try {
-            const result = await adminPutOrder(orders.id, { data: { ...orders } });
+            setCheckAuth(true);
+            await checkAdminAuth();
+            const data = {
+                create_at: orders.create_at,
+                is_paid: orders.is_paid,
+                message: orders.message || '',
+                products: orders.products,
+                user: orders.user,
+                num: orders.num,
+                status: orders.status,
+            };
+            const result = await adminPutOrder(orders.id, { data });
             inputToastMessage(result);
             fetchOrders();
             handleCancelOrderModal();
         } catch (error) {
-            inputToastMessage(error.response.data);
+            inputToastMessage(error?.response?.data);
+        } finally {
             handleCancelOrderModal();
+            setCheckAuth(false);
         }
     };
 
@@ -54,7 +84,7 @@ const OrderModal = ({ handleCancelOrderModal, fetchOrders, editOrderTarget }) =>
                         <button
                             type='button'
                             className='btn-close'
-                            onClick={() => handleCancelOrderModal()}
+                            onClick={() => handleCancelOrderModalRemove()}
                             aria-label='Close'
                         ></button>
                     </div>
@@ -136,7 +166,7 @@ const OrderModal = ({ handleCancelOrderModal, fetchOrders, editOrderTarget }) =>
                             labelClass='form-label mb-1'
                             selectClass='form-select'
                             onChange={handleChangeValue}
-                            defaultValue={orders?.status || ''}
+                            value={orders?.status}
                         >
                             <option className='bg-dark text-white' value={0}>
                                 未確認
@@ -153,16 +183,38 @@ const OrderModal = ({ handleCancelOrderModal, fetchOrders, editOrderTarget }) =>
                         </SelectGroup>
                     </div>
                     <div className='modal-footer'>
-                        <button type='button' className='btn btn-secondary' onClick={() => handleCancelOrderModal()}>
+                        <button
+                            type='button'
+                            className='btn btn-secondary'
+                            onClick={() => handleCancelOrderModalRemove()}
+                        >
                             關閉
                         </button>
-                        <button type='button' className='btn btn-primary ' onClick={() => handleSubmitPutOrder()}>
-                            儲存
+                        <button
+                            type='button'
+                            className='btn btn-primary '
+                            onClick={() => handleSubmitPutOrder()}
+                            disabled={checkAuth}
+                        >
+                            {checkAuth && (
+                                <div className='spinner-border spinner-border-sm me-2 ' role='status'>
+                                    <span className='visually-hidden'>Loading...</span>
+                                </div>
+                            )}
+                            {checkAuth ? '檢查中' : '儲存'}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     );
+});
+
+OrderModal.propTypes = {
+    handleCancelOrderModal: PropTypes.func,
+    fetchOrders: PropTypes.func,
+    modalOpenType: PropTypes.oneOf(['create', 'edit']),
+    editOrderTarget: PropTypes.object,
+    checkAdminAuth: PropTypes.func,
 };
 export default OrderModal;

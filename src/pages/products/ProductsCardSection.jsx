@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Card from '../../components/Card';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '../../components/Pagination';
 import { clientFetchAllProducts, clientFetchCategoryProduct, clientFetchLimitedProducts } from '../../api/clientApis';
 import useMessage from '../../hooks/useMessage';
-import { persistor } from '../../store/store';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
+import { useFetchCartsQuery } from '../../store/store';
 
 const ProductsCardSection = () => {
     const [products, setProducts] = useState([]);
@@ -59,7 +58,6 @@ const ProductsCardSection = () => {
     }, []);
 
     useEffect(() => {
-        // fetchProducts();
         handleFetchAllProducts(); // 初始取得全部商品用來關鍵字搜尋
     }, [fetchProducts, handleFetchAllProducts]);
 
@@ -117,17 +115,23 @@ const ProductsCardSection = () => {
     return (
         <div className='container mb-3 pb-3 pt-1'>
             <div className='row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mt-5'>
-                {searchRedux.isSearch
-                    ? filterSearchProducts?.map((product) => (
-                          <div className='col' key={product.id}>
-                              <Card product={product} />
-                          </div>
-                      ))
-                    : filterSortProducts?.map((product) => (
-                          <div className='col' key={product.id}>
-                              <Card product={product} />
-                          </div>
-                      ))}
+                {searchRedux.isSearch ? (
+                    filterSearchProducts.length ? (
+                        filterSearchProducts?.map((product) => (
+                            <div className='col' key={product.id}>
+                                <Card product={product} />
+                            </div>
+                        ))
+                    ) : (
+                        <div className='text-danger fs-5 w-100 '>關鍵字搜尋不到相關商品，請重新進行搜尋</div>
+                    )
+                ) : (
+                    filterSortProducts?.map((product) => (
+                        <div className='col' key={product.id}>
+                            <Card product={product} />
+                        </div>
+                    ))
+                )}
             </div>
 
             <div className='pt-4'>

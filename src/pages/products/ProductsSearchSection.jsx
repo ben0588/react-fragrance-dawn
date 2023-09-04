@@ -3,12 +3,13 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { clientFetchAllProducts } from '../../api/clientApis';
 import { changeCategory, removeCategory } from '../../store/slice/categorySlice';
 import { changeSearch, removeSearch } from '../../store/slice/searchSlice';
-import { BsXSquare } from 'react-icons/bs';
 import useMessage from '../../hooks/useMessage';
 import { updateSorting } from '../../store/slice/sortingSlice';
+import { BsXSquare } from 'react-icons/bs';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsXLg } from 'react-icons/bs';
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarRightCollapse } from 'react-icons/tb';
+import { IoMdFunnel } from 'react-icons/io';
 
 const ProductsSearchSection = () => {
     const navbar = useSelector((state) => state.navbar);
@@ -48,28 +49,15 @@ const ProductsSearchSection = () => {
         dispatch(updateSorting(e.target.value));
     };
 
-    const handleChangeText = debounce((e) => {
-        if (e.target.value !== '') {
+    const handleKeyDownSearch = (e) => {
+        if (e.key === 'Enter') {
             let searchData = {
                 isSearch: true,
-                searchText: e.target.value.replaceAll(' ', ''),
+                searchText: searchValue,
             };
-            dispatch(changeSearch(searchData));
-        } else {
-            // 2023/8/1 react 不支持 onSearch 事件綁定，模擬按下 X 觸發清除
-            dispatch(removeSearch());
+            dispatch(changeSearch(searchData)); // 按下確認直接觸發搜尋
         }
-    }, 1500);
-
-    function debounce(callback, time = 1500) {
-        let timer;
-        return (...ages) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                callback(...ages);
-            }, time);
-        };
-    }
+    };
 
     useEffect(() => {
         setSearchValue(searchRedux.searchText);
@@ -111,14 +99,6 @@ const ProductsSearchSection = () => {
         }
     }, [window.innerWidth, searchContainer]);
 
-    useEffect(() => {
-        if (searchRedux.searchText !== '' || categoryRedux.category !== '' || sortingRedux.sorting !== '建議') {
-            setTimeout(() => {
-                navbarToggle();
-            }, 800);
-        }
-    }, [searchRedux.searchText, categoryRedux.category, sortingRedux.sorting]);
-
     return (
         <div
             className='search-sticky bg-white w-100'
@@ -137,15 +117,15 @@ const ProductsSearchSection = () => {
                 {menuOpen ? (
                     <TbLayoutSidebarRightCollapse
                         style={{
-                            width: `40px`,
-                            height: `40px`,
+                            width: `2.5rem`,
+                            height: `2.5rem`,
                         }}
                     />
                 ) : (
                     <TbLayoutSidebarLeftCollapse
                         style={{
-                            width: `40px`,
-                            height: `40px`,
+                            width: `2.5rem`,
+                            height: `2.5rem`,
                         }}
                     />
                 )}
@@ -154,11 +134,7 @@ const ProductsSearchSection = () => {
                 {/* <input type='checkbox' id='search-check' /> */}
                 <label htmlFor='search-check' className='search-menu-btn' onClick={() => navbarToggle()}>
                     <span className='me-2'>篩選</span>
-                    {toggleIcon ? (
-                        <BsXLg className='search-menu-icon' />
-                    ) : (
-                        <AiOutlineMenu className='search-menu-icon' />
-                    )}
+                    {toggleIcon ? <BsXLg className='search-menu-icon' /> : <IoMdFunnel className='search-menu-icon' />}
                 </label>
                 <nav className=''>
                     <ul className={`${searchContainer ? 'search-menu-first' : 'search-menu '} mb-0`} ref={menuRef}>
@@ -250,16 +226,8 @@ const ProductsSearchSection = () => {
                                     className='form-control'
                                     id='searchInput'
                                     placeholder='關鍵字搜尋'
-                                    onChange={(e) => {
-                                        setSearchValue(e.target.value);
-                                        handleChangeText(e);
-                                    }}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter') {
-                                            setSearchValue(e.target.value);
-                                            dispatch(changeSearch(e.target.value)); // 按下確認直接觸發搜尋
-                                        }
-                                    }}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                    onKeyDown={handleKeyDownSearch}
                                     value={searchValue}
                                     disabled={categoryRedux.category !== '' ? true : false}
                                 />

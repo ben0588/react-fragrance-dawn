@@ -13,8 +13,8 @@ th {
     bottom: 20px;
     right: 20px;
 
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 50%;
     z-index: 20;
     display: flex;
@@ -64,18 +64,18 @@ th {
 }
 
 .icon-sm {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .icon-md {
-    width: 25px;
-    height: 25px;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .closure-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
     fill: rgb(133, 131, 131);
     &:hover {
         fill: $primary;
@@ -125,4 +125,19 @@ th {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+p {
+    text-align: justify;
+    line-height: 1.5;
+    letter-spacing: 0.05em;
+    word-break: break-all;
+}
+
+p:lang(en) {
+    max-width: 80ch;
+}
+
+p:lang(zh) {
+    max-width: 40em;
 }

@@ -38,16 +38,6 @@ export const couponSlice = createSlice({
             };
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase('persist/PURGE', (state, action) => {
-            return {
-                isLoading: false,
-                code: '',
-                total: '',
-                finalTotal: '',
-            };
-        });
-    },
 });
 
 export const { updateLoading, updateCoupon, updateTotal, updateCode, removeCoupon } = couponSlice.actions;

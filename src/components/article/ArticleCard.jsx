@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const ArticleCard = memo(({ article }) => {
+const ArticleCard = memo(function ArticleCard({ article }) {
     return (
         <article className='card  h-100'>
             <div className='product-card-img-container '>
@@ -41,4 +42,17 @@ const ArticleCard = memo(({ article }) => {
         </article>
     );
 });
+
+ArticleCard.propTypes = {
+    article: PropTypes.shape({
+        author: PropTypes.string,
+        create_at: PropTypes.number,
+        description: PropTypes.string,
+        id: PropTypes.string,
+        image: PropTypes.string,
+        isPublic: PropTypes.bool,
+        tag: PropTypes.arrayOf(PropTypes.string),
+        title: PropTypes.string,
+    }),
+};
 export default ArticleCard;

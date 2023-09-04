@@ -1,11 +1,4 @@
 import axios from 'axios';
-// axios.defaults.baseURL = import.meta.env.VITE_BACKEND_BASE_API_URL; // main.jsx already set
-
-// const config = {
-//     headers: {
-//         Authorization: ``,
-//     },
-// };
 
 // ----- Admin 管理者 Login API -----
 export const AdminSignIns = async (user) => {
@@ -44,9 +37,6 @@ export const AdminFetchAllProducts = async () => {
         const adminFetchApiUrl = `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/admin/products/all`;
         const response = await axios.get(adminFetchApiUrl);
         return response.data;
-        // const result = await AdminFetchAllProducts();
-        // const objectToArray = Object.entries(result.products); // 資料是物件先轉陣列
-        // const newList = objectToArray.map((item) => item[1]);
     } catch (error) {
         throw error;
     }

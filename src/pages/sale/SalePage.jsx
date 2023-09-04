@@ -43,7 +43,7 @@ const SalePage = () => {
                     <div>isLoading</div>
                 ) : (
                     sales?.map((item) => (
-                        <div className='col-12 col-sm-6 col-md-4 col-xl-3 ' key={item.id}>
+                        <div className='col-sm-6 col-md-4 col-xl-3 ' key={item.id}>
                             <Link to='/products' className='hover-opacity text-decoration-none' title='前往查看'>
                                 <div className='card  border-none h-100 '>
                                     <img

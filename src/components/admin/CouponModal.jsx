@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { adminAddCoupon, adminPutCoupon } from '../../api/adminApis';
 import InputGroup from '../InputGroup';
 import useMessage from '../../hooks/useMessage';
+import { memo } from 'react';
 
-const CouponModal = ({
-    handleCancelCouponModal: handleCancelCouponModal,
+import PropTypes from 'prop-types';
+
+const CouponModal = memo(function CouponModal({
+    handleCancelCouponModal,
     fetchCoupons,
     modalOpenType,
     editCouponTarget,
-}) => {
+    checkAdminAuth,
+}) {
     const initialValue = {
         title: '',
         is_enabled: 0,
@@ -18,6 +22,9 @@ const CouponModal = ({
     };
     const [coupons, setCoupons] = useState(initialValue);
     const { inputToastMessage } = useMessage();
+    const [checkAuth, setCheckAuth] = useState(false);
+
+    const allFieldsFilled = Object.values(coupons).every((value) => value !== ''); // 監控是否都填寫完畢
 
     useEffect(() => {
         if (modalOpenType === 'create') {
@@ -66,6 +73,8 @@ const CouponModal = ({
     const handleSubmitAddCoupon = async () => {
         const newCoupons = { ...coupons, due_date: new Date(coupons.due_date).getTime() }; // 將到期時間 yyyy-dd-mm 轉換 unix 時間戳
         try {
+            setCheckAuth(true);
+            await checkAdminAuth();
             let typeToggle = modalOpenType === 'create' ? true : false;
             let result;
             if (typeToggle) {
@@ -77,8 +86,10 @@ const CouponModal = ({
             fetchCoupons();
             handleCancelCouponModal();
         } catch (error) {
-            inputToastMessage(error.response.data);
+            inputToastMessage(error?.response?.data);
+        } finally {
             handleCancelCouponModal();
+            setCheckAuth(false);
         }
     };
 
@@ -86,9 +97,6 @@ const CouponModal = ({
         <div
             className='modal fade'
             id='couponModal' // 與 Bootstrap Modal 綁定
-            // tabIndex='-1'
-            // aria-labelledby='exampleModalLabel'
-            // aria-hidden='true'
         >
             <div className='modal-dialog modal-lg'>
                 <div className='modal-content'>
@@ -99,7 +107,6 @@ const CouponModal = ({
                         <button
                             type='button'
                             className='btn-close'
-                            // data-bs-dismiss='modal'
                             onClick={() => handleCancelCouponModal()}
                             aria-label='Close'
                         ></button>
@@ -181,13 +188,37 @@ const CouponModal = ({
                         <button type='button' className='btn btn-secondary' onClick={() => handleCancelCouponModal()}>
                             關閉
                         </button>
-                        <button type='button' className='btn btn-primary ' onClick={() => handleSubmitAddCoupon()}>
-                            {modalOpenType === 'create' ? '新增' : '儲存'}
+                        <button
+                            type='button'
+                            className='btn btn-primary '
+                            onClick={() => handleSubmitAddCoupon()}
+                            disabled={!allFieldsFilled || checkAuth}
+                        >
+                            {checkAuth && (
+                                <div className='spinner-border spinner-border-sm me-2 ' role='status'>
+                                    <span className='visually-hidden'>Loading...</span>
+                                </div>
+                            )}
+                            {modalOpenType === 'create'
+                                ? checkAuth
+                                    ? '檢查中'
+                                    : '新增'
+                                : checkAuth
+                                ? '檢查中'
+                                : '儲存'}
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     );
+});
+
+CouponModal.propTypes = {
+    handleCancelCouponModal: PropTypes.func,
+    fetchCoupons: PropTypes.func,
+    modalOpenType: PropTypes.oneOf(['create', 'edit']),
+    editCouponTarget: PropTypes.object,
+    checkAdminAuth: PropTypes.func,
 };
 export default CouponModal;

@@ -18,7 +18,7 @@ const useMessage = () => {
         <ToastContainer />
     */
     const inputToastMessage = (props) => {
-        if (props.success) {
+        if (props?.success) {
             let type = props.type ?? 'success';
             if (props.type === 'default') {
                 return toast(props.message, { ...initialOption, position: props.position ?? initialOption.position });

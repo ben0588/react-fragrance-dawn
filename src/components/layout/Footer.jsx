@@ -15,9 +15,7 @@ const Footer = () => {
                 text: `訂閱成功！稍後將會發送相關優惠通知給您，往後優惠將一併提前通知，謝謝您。`,
                 icon: 'success',
                 confirmButtonColor: '#111c30',
-                cancelButtonColor: '#b2bec3',
                 confirmButtonText: '確認',
-                cancelButtonText: '取消',
                 showCloseButton: true,
             });
             setEmail('');
@@ -27,18 +25,16 @@ const Footer = () => {
                 text: `請重新填寫正確的電子信箱格式。`,
                 icon: 'error',
                 confirmButtonColor: '#111c30',
-                cancelButtonColor: '#b2bec3',
                 confirmButtonText: '確認',
-                cancelButtonText: '取消',
                 showCloseButton: true,
             });
         }
     };
     return (
-        <footer>
-            <div className='text-secondary p-5 ' style={{ backgroundColor: 'black' }}>
-                <div className='row mx-auto px-5'>
-                    <div className='col-12 col-sm-6 col-lg-2  pt-2'>
+        <footer style={{ backgroundColor: 'black' }}>
+            <div className='container text-secondary py-5 '>
+                <div className='row mx-auto'>
+                    <div className='col-sm-6 col-md-2  pt-2'>
                         <ListGroup
                             title='認識我們'
                             titleClass='text-white fw-bolder'
@@ -49,7 +45,7 @@ const Footer = () => {
                             ]}
                         />
                     </div>
-                    <div className='col-12 col-sm-6 col-lg-2  pt-2'>
+                    <div className='col-sm-6 col-md-2  pt-2'>
                         <ListGroup
                             title='我的帳戶'
                             titleClass='text-white fw-bolder'
@@ -59,7 +55,7 @@ const Footer = () => {
                             ]}
                         />
                     </div>
-                    <div className='col-12 col-sm-6 col-lg-2  pt-2'>
+                    <div className='col-sm-6 col-md-2  pt-2'>
                         <ListGroup
                             title='顧客服務'
                             titleClass='text-white fw-bolder'
@@ -73,7 +69,7 @@ const Footer = () => {
                             ]}
                         />
                     </div>
-                    <div className='col-12 col-sm-6 col-lg-2 pt-2'>
+                    <div className='col-sm-6 col-md-2 pt-2'>
                         <ListGroup title='關注我們' titleClass='text-white fw-bolder'>
                             <li>
                                 {[
@@ -98,7 +94,7 @@ const Footer = () => {
                             </ListGroup>
                         </div>
                     </div>
-                    <div className='col-12 col-sm-6 col-lg-4  pt-2 '>
+                    <div className='col-sm-6 col-md-4  pt-2 '>
                         <ListGroup title='訂閱電子報' titleClass='text-white fw-bolder'>
                             <li className='fs-7 text-white pb-2'>
                                 <label htmlFor='footer-email-input'>輸入電子郵件得最新商品與活動</label>
@@ -119,6 +115,7 @@ const Footer = () => {
                                     className='btn btn-secondary mt-2'
                                     style={{ width: `60px` }}
                                     onClick={() => handleSubmit()}
+                                    disabled={email === '' && true}
                                 >
                                     訂閱
                                 </button>
@@ -127,7 +124,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <small className='d-flex align-items-center justify-content-center flex-column flex-lg-row text-white bg-secondary py-2 '>
+            <small className='d-flex align-items-center justify-content-center flex-column flex-md-row text-white bg-secondary py-2 '>
                 Copyright © 2023
                 <Link
                     to='https://github.com/ben0588'

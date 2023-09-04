@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createPage } from '../store/slice/pageSlice';
 import { memo } from 'react';
 
-const Pagination = memo(({ changePage, totalPage, currentPage, isPre, isNext, category }) => {
+const Pagination = memo(function Pagination({ changePage, totalPage, currentPage, isPre, isNext, category }) {
     const dispatch = useDispatch();
 
     useEffect(() => {

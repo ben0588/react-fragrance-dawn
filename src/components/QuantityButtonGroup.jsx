@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { BsDashLg, BsPlusLg } from 'react-icons/bs';
-const QuantityButtonGroup = memo(({ quantity, setChange, groupWidth = `200px`, btnSize }) => {
+const QuantityButtonGroup = memo(function QuantityButtonGroup({ quantity, setChange, groupWidth = `200px`, btnSize }) {
     return (
         <>
             <div className='input-group' style={{ width: groupWidth }}>

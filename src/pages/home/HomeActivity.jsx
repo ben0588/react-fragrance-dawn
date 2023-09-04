@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { FaStar } from 'react-icons/fa';
 import { BiCalendarHeart } from 'react-icons/bi';
 import { PiWarningCircleBold } from 'react-icons/pi';
 import { IoFlameSharp } from 'react-icons/io5';
 import useMessage from '../../hooks/useMessage';
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
 import { useCallback } from 'react';
 
 const HomeActivity = () => {
@@ -21,13 +19,14 @@ const HomeActivity = () => {
             const result = await axios({
                 method: 'GET',
                 baseURL: null,
-                // url: '/src/data/sale.json',
                 url: 'https://ben0588.github.io/react-fragrance-dawn/sale.json',
                 'Content-Type': 'application/json',
             });
             setSales(result.data.slice(0, 4));
             setActivityTarget(result.data.slice(0, 4)[0]);
-        } catch {}
+        } catch (error) {
+            inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
+        }
     }, []);
 
     useEffect(() => {
@@ -67,20 +66,20 @@ const HomeActivity = () => {
 
             <div className='row align-items-center'>
                 <div className='col-6'>
-                    <strong className='d-flex align-items-center justify-content-center fs-5 pt-3 pb-2'>
+                    <strong className='d-flex align-items-center justify-content-center fs-6 pt-3 pb-2'>
                         <FaStar className='icon-md me-1' />
                         領取活動優惠碼
                     </strong>
                 </div>
                 <div className='col-6'>
-                    <strong className='d-flex align-items-center justify-content-center fs-5 pt-3 pb-2'>
+                    <strong className='d-flex align-items-center justify-content-center fs-6 pt-3 pb-2'>
                         <BiCalendarHeart className='icon-md me-1' />
                         期間限定活動
                     </strong>
                 </div>
             </div>
             <div className='row align-items-center'>
-                <div className='col-12 col-lg-6 '>
+                <div className='col-lg-6 '>
                     <div className='row border border-3 border-primary'>
                         {sales.map((item, index) => (
                             <motion.div
@@ -92,12 +91,22 @@ const HomeActivity = () => {
                                 custom={index}
                             >
                                 <Link to='/products' className='home-activity-card-container'>
-                                    <h3 className='home-activity-card-title fs-5 fw-bolder p-2'>
-                                        {item.title}
+                                    <h3 className='home-activity-card-title fs-6 fw-bolder p-2'>
+                                        <div className='d-flex align-items-center justify-content-center fs-5'>
+                                            {item.title}
+                                            {item.title === activityTarget?.title ? (
+                                                <IoFlameSharp
+                                                    style={{
+                                                        width: `1.2rem`,
+                                                        height: `1.2rem`,
+                                                        fill: '#d63031',
+                                                        display: 'inline-block',
+                                                    }}
+                                                />
+                                            ) : null}
+                                        </div>
+
                                         <time className='d-block fs-6'>{item.date}</time>
-                                        {item.title === activityTarget?.title ? (
-                                            <IoFlameSharp className='home-activity-card-icon' />
-                                        ) : null}
                                     </h3>
                                     <img src={item.imageUrl} alt={item.title} className='home-activity-card-image' />
                                 </Link>
@@ -106,9 +115,9 @@ const HomeActivity = () => {
                     </div>
                 </div>
 
-                <div className='col-12 col-lg-6'>
+                <div className='col-lg-6'>
                     <div className='row align-items-stretch'>
-                        <div className='col-12 d-flex align-items-center justify-content-center flex-column h-100 '>
+                        <div className='d-flex align-items-center justify-content-center flex-column h-100 '>
                             <div className='px-4 py-4'>
                                 <div className='fs-3 text-center'>活動舉行中：{activityTarget?.title}</div>
                                 <div className='fs-3 text-ellipsis text-center'>
@@ -126,13 +135,13 @@ const HomeActivity = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='col-12 d-flex align-items-center justify-content-center flex-column h-100  '>
+                        <div className='d-flex align-items-center justify-content-center flex-column h-100  '>
                             <div className='px-4 py-4'>
                                 <div className='d-flex align-items-center justify-content-start fs-5 mb-2 '>
                                     <PiWarningCircleBold className='icon-sm pt-1' />
                                     <span className='text-ellipsis'>領取優惠碼時，請注意以下注意事項：</span>
                                 </div>
-                                <ol className='text-ellipsis border border-2 ps-4 p-2  '>
+                                <ol className='text-ellipsis border border-2 ps-5 p-3  '>
                                     <li>請在使用期限內使用優惠卷，逾期作廢。</li>
                                     <li>請在使用期限內使用優惠卷，逾期作廢。</li>
                                     <li>部分優惠卷僅限制特定商品，領取後請注意。</li>

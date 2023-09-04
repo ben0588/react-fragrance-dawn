@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react';
 import { clientFetchCategoryProduct } from '../../api/clientApis';
 import RecommendCarousel from '../../components/home/RecommendCarousel';
 import { useCallback } from 'react';
+import useMessage from '../../hooks/useMessage';
 
 const HomeRecommend = () => {
     const [products, setProducts] = useState([]);
+    const { inputToastMessage } = useMessage();
 
     const handleFetchProducts = useCallback(async () => {
         try {
             const result = await clientFetchCategoryProduct(1, '香水');
             setProducts(result?.data?.products);
-        } catch {} // 因為是首頁狀態，不希望跳提示
+        } catch (error) {
+            inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
+        }
     }, []);
 
     useEffect(() => {

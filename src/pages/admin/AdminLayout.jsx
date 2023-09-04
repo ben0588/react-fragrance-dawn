@@ -6,30 +6,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createAsyncMessage } from '../../store/slice/messageSlice';
 import Loading from '../../components/Loading';
 import { useEffect } from 'react';
-import { persistor } from '../../store/store';
+import { useAdminCheckMutation, useAdminLogoutMutation } from '../../store/store';
 
 const AdminLayout = () => {
     const adminState = useSelector((state) => state.admin);
+    const [adminLogout, result] = useAdminLogoutMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const adminLogout = async () => {
-        try {
-            const result = await AdminLogout();
-            document.cookie = 'adminToken=;';
-            dispatch(removeAdminLogout());
-            dispatch(createAsyncMessage(result));
-            navigate('/admin');
-        } catch (error) {
-            dispatch(createAsyncMessage(error?.response?.data));
-        }
+    const handleAdminLogout = async () => {
+        // 處理權限不足時操作
+        adminLogout(adminState.uid)
+            .unwrap()
+            .then((response) => {
+                document.cookie = 'adminToken=;';
+                dispatch(removeAdminLogout());
+                dispatch(
+                    createAsyncMessage({
+                        ...response,
+                        message: '成功登出',
+                    })
+                );
+                navigate('/admin');
+            })
+            .catch((error) => {
+                dispatch(createAsyncMessage(error?.data));
+                navigate('/admin');
+            });
     };
 
     useEffect(() => {
         // 監控有效時間，無效時通知且登出管理員
         if (adminState.expired !== '' && adminState.expired <= new Date().getTime()) {
             dispatch(createAsyncMessage({ id: new Date().getTime(), message: '管理者時效已達，登出成功，請重新登入' }));
-            dispatch(removeAdminLogout());
+            handleAdminLogout();
         }
     }, [adminState]);
 
@@ -71,9 +81,15 @@ const AdminLayout = () => {
                                         <button
                                             type='button'
                                             className='btn btn-sm btn-light fw-bolder px-3'
-                                            onClick={adminLogout}
+                                            onClick={handleAdminLogout}
+                                            disabled={result.isLoading}
                                         >
-                                            登出
+                                            {result.isLoading && (
+                                                <div className='spinner-border spinner-border-sm me-2 ' role='status'>
+                                                    <span className='visually-hidden'>Loading...</span>
+                                                </div>
+                                            )}
+                                            {result.isLoading ? '登出中' : '登出'}
                                         </button>
                                     </li>
                                     <li className='nav-item'>
@@ -95,7 +111,7 @@ const AdminLayout = () => {
                     </div>
                 </div>
             </nav>
-            <Outlet />
+            <Outlet context={{ adminLogout: handleAdminLogout }} />
             <ReactBootstrapToast />
             <Loading />
         </div>

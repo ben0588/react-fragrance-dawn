@@ -3,7 +3,6 @@ import { NavLink, Outlet } from 'react-router-dom';
 const AboutLayout = () => {
     return (
         <div className='container mt-5 py-3 mb-3'>
-            {/* <h2 className='text-center'>認識我們</h2> */}
             <ul className='nav nav-tabs '>
                 {[
                     { title: '品牌理念', path: '/about/' },
@@ -21,10 +20,8 @@ const AboutLayout = () => {
                     </li>
                 ))}
             </ul>
-            <div className='row '>
-                <div className='col-12 py-4'>
-                    <Outlet />
-                </div>
+            <div className='py-4'>
+                <Outlet />
             </div>
         </div>
     );

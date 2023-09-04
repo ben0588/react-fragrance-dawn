@@ -1,6 +1,8 @@
-const ValidationTextareaGroup = ({
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+
+const ValidationTextareaGroup = memo(function ValidationTextareaGroup({
     id,
-    children,
     register,
     rules,
     errors,
@@ -14,10 +16,12 @@ const ValidationTextareaGroup = ({
     cols = 30,
     rows = 10,
     placeholder,
-}) => {
+    required,
+}) {
     return (
         <div className={groupClass ? groupClass : ''}>
             <label htmlFor={id} className={labelClass}>
+                {required && <span className='text-danger fs-5'>*</span>}
                 {labelText}
             </label>
             <textarea
@@ -35,5 +39,24 @@ const ValidationTextareaGroup = ({
             {errors?.[id] && <div className='invalid-feedback'>{errors?.[id]?.message}</div>}
         </div>
     );
+});
+
+ValidationTextareaGroup.propTypes = {
+    id: PropTypes.string.isRequired,
+    errors: PropTypes.object.isRequired,
+    register: PropTypes.func.isRequired,
+    value: PropTypes.string,
+    defaultValue: PropTypes.string,
+    labelText: PropTypes.string,
+    labelClass: PropTypes.string,
+    textareaClass: PropTypes.string,
+    groupClass: PropTypes.string,
+    rules: PropTypes.object.isRequired,
+    placeholder: PropTypes.string,
+    required: PropTypes.bool,
+    disabled: PropTypes.bool,
+    cols: PropTypes.number,
+    rows: PropTypes.number,
 };
+
 export default ValidationTextareaGroup;

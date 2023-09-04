@@ -15,13 +15,6 @@ export const wishlistSlice = createSlice({
             return [];
         },
     },
-    // extraReducers: (builder) => {
-    //     builder.addCase('persist/PURGE', (state, action) => {
-    //         // 在 persistor.purge() 完成後觸發的 action
-    //         // 在這裡可以重置需要重新渲染的 state
-    //         return [];
-    //     });
-    // },
 });
 
 export const { addToWishlist, removeWishlist, removeAllWishlist } = wishlistSlice.actions;

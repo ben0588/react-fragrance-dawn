@@ -1,23 +1,18 @@
-import { useEffect, useState } from 'react';
-import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { clientAddToCart, clientFetchProduct } from '../../api/clientApis';
 import useMessage from '../../hooks/useMessage';
 import QuantityButtonGroup from '../../components/QuantityButtonGroup';
 import WishlistButtonGroup from '../../components/WishlistButtonGroup';
 import SwiperCarouselProgress from '../../components/product/ImagesSwiperCarousel';
 import AccordionCollapse from '../../components/AccordionCollapse';
-import descriptionImg1 from '../../assets/productDetailImages/demo001_compressed.webp';
-import descriptionImg2 from '../../assets/productDetailImages/demo005_compressed.webp';
-import descriptionImg3 from '../../assets/productDetailImages/demo002_compressed.webp';
-import descriptionImg4 from '../../assets/productDetailImages/demo006_compressed.webp';
-import descriptionImg5 from '../../assets/productDetailImages/demo003_compressed.webp';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeCategory } from '../../store/slice/categorySlice';
 import Breadcrumb from '../../components/product/Breadcrumb';
 import { addToCart } from '../../store/slice/cartSlice';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
-import { useCallback } from 'react';
-import axios from 'axios';
+import { useAddToCartMutation } from '../../store/store';
 
 const ProductsDetailPage = () => {
     const [product, setProduct] = useState({});
@@ -28,13 +23,13 @@ const ProductsDetailPage = () => {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.loading);
     const [categoryList, setCategoryList] = useState([]);
+    const [addToCart, addToCartResult] = useAddToCartMutation();
 
     const fetchCategory = useCallback(async (category) => {
         try {
             const result = await axios({
                 method: 'GET',
                 baseURL: null,
-                // url: '../../../src/data/detail.json',
                 url: 'https://ben0588.github.io/react-fragrance-dawn/detail.json',
                 'Content-Type': 'application/json',
             });
@@ -69,12 +64,14 @@ const ProductsDetailPage = () => {
                 product_id: product.id,
                 qty: quantity,
             };
-            const result = await clientAddToCart(data);
-            dispatch(addToCart(data));
-            setIsLoading(false);
+            // const result = await clientAddToCart(data);
+            const result = await addToCart(data);
+            // dispatch(addToCart(data));
             inputToastMessage(result.data);
         } catch (error) {
             inputToastMessage(error?.response?.data);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -93,7 +90,7 @@ const ProductsDetailPage = () => {
             ) : (
                 <>
                     <div className='row g-3 mb-5'>
-                        <div className='col-12 col-lg-6 pe-xl-5'>
+                        <div className='col-lg-6 pe-xl-5'>
                             {product.imagesUrl && (
                                 <SwiperCarouselProgress
                                     imagesList={product.imagesUrl}
@@ -104,7 +101,7 @@ const ProductsDetailPage = () => {
                             )}
                         </div>
 
-                        <div className='col-12 col-lg-6 position-relative px-3 py-3 '>
+                        <div className='col-lg-6 position-relative px-3 py-3 '>
                             <WishlistButtonGroup
                                 product={product}
                                 id={id}
@@ -161,19 +158,19 @@ const ProductsDetailPage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='mt-5'>
-                        <p className='text-center fs-4 fw-bolder  my-5'>
+                    <div className='row mt-5'>
+                        <div className='col-12 text-center fs-4 fw-bolder my-5'>
                             <span className='border-bottom border-3 border-primary'>商品描述</span>
-                        </p>
+                        </div>
 
                         {categoryList?.map((items, index) => (
-                            <div key={index}>
+                            <div key={index} className='col-md-6'>
                                 <img
                                     src={items.imageUrl}
                                     alt={items.content}
                                     className='d-block w-100 object-fit-cover'
                                 />
-                                <p className='text-center fs-6 my-5'>{items.content}</p>
+                                <p className='fs-6 my-5'>{items.content}</p>
                             </div>
                         ))}
                     </div>

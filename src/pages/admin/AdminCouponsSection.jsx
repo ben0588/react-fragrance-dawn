@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Modal } from 'bootstrap';
-
 import { adminDeleteCoupon, adminFetchLimitedCoupons } from '../../api/adminApis';
 import DeleteModal from '../../components/DeleteModal';
 import Pagination from '../../components/Pagination';
@@ -9,6 +8,7 @@ import useMessage from '../../hooks/useMessage';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 const AdminCouponsSection = () => {
     const [coupons, setCoupons] = useState([]);
@@ -20,7 +20,7 @@ const AdminCouponsSection = () => {
     const [deleteCouponTarget, setDeleteCouponTarget] = useState({});
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
-    const loadingRedux = useSelector((state) => state.loading);
+    const { adminCheck } = useOutletContext();
 
     useEffect(() => {
         couponModalRef.current = new Modal('#couponModal', {
@@ -68,17 +68,18 @@ const AdminCouponsSection = () => {
     const handleDeleteCoupon = async () => {
         try {
             dispatch(updateLoadingState(true));
+            await adminCheck();
             const result = await adminDeleteCoupon(deleteCouponTarget.id);
-            // const result = await adminDeleteCoupon('2s');
             inputToastMessage(result);
-            fetchCoupons();
             setDeleteCouponTarget({});
             handleCancelDeleteModal();
+            await fetchCoupons();
             dispatch(updateLoadingState(false));
         } catch (error) {
-            inputToastMessage(error.response.data);
-            handleCancelDeleteModal();
+            // 不需要再處理這裡的錯誤，因為已經在 adminCheck 中處理
+        } finally {
             dispatch(updateLoadingState(false));
+            handleCancelDeleteModal();
         }
     };
 
@@ -89,6 +90,7 @@ const AdminCouponsSection = () => {
                 fetchCoupons={fetchCoupons}
                 modalOpenType={modalOpenType}
                 editCouponTarget={editCouponTarget}
+                checkAdminAuth={adminCheck}
             />
 
             <DeleteModal
@@ -110,47 +112,49 @@ const AdminCouponsSection = () => {
                     建立新優惠卷
                 </button>
             </div>
-            <table className='table'>
-                <thead>
-                    <tr>
-                        <th scope='col'>標題</th>
-                        <th scope='col'>折扣比(%)</th>
-                        <th scope='col'>到期日</th>
-                        <th scope='col'>優惠碼</th>
-                        <th scope='col'>啟用狀態</th>
-                        <th scope='col'>編輯</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {coupons?.map((coupon) => (
-                        <tr key={coupon.id}>
-                            <td>{coupon.title}</td>
-                            <td>{coupon.percent}</td>
-                            <td>{new Date(coupon.due_date).toISOString().split('T')[0]}</td>
-                            <td>{coupon.code}</td>
-                            <td className={`${coupon.is_enabled ? 'text-success ' : ''}`}>
-                                {coupon.is_enabled ? '啟用' : '未啟用'}
-                            </td>
-                            <td>
-                                <button
-                                    type='button'
-                                    className='btn btn-primary btn-sm'
-                                    onClick={() => handleOpenCouponModal('edit', coupon)} // 直接帶入產品資訊
-                                >
-                                    編輯
-                                </button>
-                                <button
-                                    type='button'
-                                    className='btn btn-outline-danger btn-sm ms-2'
-                                    onClick={() => handleOpenDeleteModal(coupon)}
-                                >
-                                    刪除
-                                </button>
-                            </td>
+            <div className='table-responsive'>
+                <table className='table align-middle'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>標題</th>
+                            <th scope='col'>折扣比(%)</th>
+                            <th scope='col'>到期日</th>
+                            <th scope='col'>優惠碼</th>
+                            <th scope='col'>啟用狀態</th>
+                            <th scope='col'>編輯</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {coupons?.map((coupon) => (
+                            <tr key={coupon.id}>
+                                <td>{coupon.title}</td>
+                                <td>{coupon.percent}</td>
+                                <td>{new Date(coupon.due_date).toISOString().split('T')[0]}</td>
+                                <td>{coupon.code}</td>
+                                <td className={`${coupon.is_enabled ? 'text-success ' : ''}`}>
+                                    {coupon.is_enabled ? '啟用' : '未啟用'}
+                                </td>
+                                <td>
+                                    <button
+                                        type='button'
+                                        className='btn btn-primary btn-sm'
+                                        onClick={() => handleOpenCouponModal('edit', coupon)} // 直接帶入產品資訊
+                                    >
+                                        編輯
+                                    </button>
+                                    <button
+                                        type='button'
+                                        className='btn btn-outline-danger btn-sm ms-2'
+                                        onClick={() => handleOpenDeleteModal(coupon)}
+                                    >
+                                        刪除
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Pagination
                 changePage={fetchCoupons}

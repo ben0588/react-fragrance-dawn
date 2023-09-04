@@ -62,6 +62,7 @@ const ServiceContactUs = () => {
                     selectClass='form-control'
                     errors={errors}
                     register={register}
+                    required={true}
                     rules={{
                         required: { value: true, message: '必須選擇詢問類型' },
                     }}
@@ -86,6 +87,7 @@ const ServiceContactUs = () => {
                     labelClass='form-label mb-1'
                     inputClass='form-control'
                     placeholder='請輸入聯絡人姓名'
+                    required={true}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
                         pattern: {
@@ -105,6 +107,7 @@ const ServiceContactUs = () => {
                     labelClass='form-label mb-1'
                     inputClass='form-control'
                     placeholder='請輸入電子郵件'
+                    required={true}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
                         pattern: {
@@ -124,6 +127,7 @@ const ServiceContactUs = () => {
                     labelClass='form-label mb-1'
                     inputClass='form-control'
                     placeholder='請輸入聯絡手機'
+                    required={true}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
                         pattern: {
@@ -144,7 +148,8 @@ const ServiceContactUs = () => {
                     labelClass='form-label mb-1'
                     textareaClass='form-control'
                     placeholder='請描述問題'
-                    rows='5'
+                    required={true}
+                    rows={5}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
                     }}

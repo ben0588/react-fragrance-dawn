@@ -18,7 +18,7 @@ const AccountOrdersPage = () => {
     const loading = useSelector((state) => state.loading);
     const dispatch = useDispatch();
 
-    const [targetData, setTargetData] = useState([]);
+    const [targetData, setTargetData] = useState({});
     const handleOrderClose = () => setOrderShow(false);
     const handleOrderShow = (data) => {
         setTargetData(data);
@@ -63,7 +63,7 @@ const AccountOrdersPage = () => {
     };
 
     return (
-        <div className='container  '>
+        <div className='container  pb-5'>
             <AccountOrderModal show={orderShow} handleClose={handleOrderClose} order={targetData} />
             <AccountPaymentModal
                 show={paymentShow}
@@ -103,8 +103,8 @@ const AccountOrdersPage = () => {
                                             </td>
                                             <td>{order.id}</td>
                                             <td>NT{handlePriceToTw(order.total)}</td>
-                                            <td className={`${Boolean(order.is_paid) ? 'text-success ' : ''}`}>
-                                                {Boolean(order.is_paid) ? '已付款' : '未付款'}
+                                            <td className={`${order.is_paid ? 'text-success ' : ''}`}>
+                                                {order.is_paid ? '已付款' : '未付款'}
                                             </td>
                                             <td>
                                                 {order.paid_date
@@ -123,7 +123,7 @@ const AccountOrdersPage = () => {
                                             </td>
                                             <td
                                                 className={`${
-                                                    Boolean(order.is_paid)
+                                                    order.is_paid
                                                         ? order?.status === '1'
                                                             ? 'text-dark'
                                                             : order?.status === '2'
@@ -134,7 +134,7 @@ const AccountOrdersPage = () => {
                                                         : ''
                                                 }`}
                                             >
-                                                {Boolean(order.is_paid) ? (
+                                                {order.is_paid ? (
                                                     order?.status === '1' ? (
                                                         '已確認'
                                                     ) : order?.status === '2' ? (

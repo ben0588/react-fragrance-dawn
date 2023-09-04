@@ -1,6 +1,7 @@
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
-const DeleteModal = memo(({ handleCancelDeleteModal, handleDelete, title, type, id }) => {
+const DeleteModal = memo(function DeleteModal({ handleCancelDeleteModal, handleDelete, title, type, id }) {
     return (
         <div className='modal' id='deleteModal'>
             <div className='modal-dialog'>
@@ -34,4 +35,13 @@ const DeleteModal = memo(({ handleCancelDeleteModal, handleDelete, title, type, 
         </div>
     );
 });
+
+DeleteModal.propTypes = {
+    handleCancelDeleteModal: PropTypes.func,
+    handleDelete: PropTypes.func,
+    title: PropTypes.string,
+    id: PropTypes.string,
+    type: PropTypes.string,
+};
+
 export default DeleteModal;

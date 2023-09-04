@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
 import Swal from 'sweetalert2';
+import { useOutletContext } from 'react-router-dom';
 
 const AdminOrdersSection = () => {
     const [orders, setOrders] = useState([]);
@@ -23,7 +24,7 @@ const AdminOrdersSection = () => {
     const { inputToastMessage } = useMessage();
     const { handlePriceToTw } = usePriceToTw();
     const dispatch = useDispatch();
-    const loadingRedux = useSelector((state) => state.loading);
+    const { adminCheck } = useOutletContext();
 
     useEffect(() => {
         orderModalRef.current = new Modal('#orderModal', {
@@ -72,9 +73,11 @@ const AdminOrdersSection = () => {
                 cancelButtonText: '取消',
                 showCancelButton: true,
                 showCloseButton: true,
+                reverseButtons: true,
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
+                        await adminCheck();
                         return await adminDeleteOrder(orderId);
                     } catch (error) {
                         Swal.showValidationMessage(`請求失敗： ${error}`);
@@ -83,7 +86,13 @@ const AdminOrdersSection = () => {
                 allowOutsideClick: () => !Swal.isLoading(),
             }).then((result) => {
                 if (result?.value?.success) {
-                    Swal.fire('成功', result?.value?.data?.message, 'success');
+                    Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        text: `訂單刪除成功`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                     fetchOrders();
                 }
             });
@@ -104,9 +113,11 @@ const AdminOrdersSection = () => {
                 cancelButtonText: '取消',
                 showCancelButton: true,
                 showCloseButton: true,
+                reverseButtons: true,
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
+                        await adminCheck();
                         return await adminDeleteAllOrders();
                     } catch (error) {
                         Swal.showValidationMessage(`請求失敗： ${error}`);
@@ -115,7 +126,13 @@ const AdminOrdersSection = () => {
                 allowOutsideClick: () => !Swal.isLoading(),
             }).then((result) => {
                 if (result?.value?.success) {
-                    Swal.fire('成功', result?.value?.data?.message, 'success');
+                    Swal.fire({
+                        icon: 'success',
+                        title: '刪除成功',
+                        text: `訂單刪除成功`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
                     fetchOrders();
                 }
             });
@@ -131,6 +148,7 @@ const AdminOrdersSection = () => {
                 fetchOrders={fetchOrders}
                 modalOpenType={modalOpenType}
                 editOrderTarget={editOrderTarget}
+                checkAdminAuth={adminCheck}
             />
             <DeleteModal handleCancelDeleteModal={handleCancelDeleteModal} title={deleteOrderTarget.title} />
 
@@ -139,51 +157,55 @@ const AdminOrdersSection = () => {
                 刪除所有訂單
             </button>
             <hr />
-            <table className='table'>
-                <thead>
-                    <tr>
-                        <th scope='col'>訂單 id</th>
-                        <th scope='col'>購買用戶</th>
-                        <th scope='col'>訂單金額</th>
-                        <th scope='col'>付款狀態</th>
-                        <th scope='col'>付款日期</th>
-                        <th scope='col'>留言訊息</th>
-                        <th scope='col'>編輯</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order?.user?.email}</td>
-                            <td>{handlePriceToTw(order.total)}</td>
-                            <td>{order.is_paid ? <span className='text-success fw-bold'>付款完成</span> : '未付款'}</td>
-                            <td>
-                                {order.paid_date
-                                    ? new Date(order.paid_date * 1000).toISOString().split('T')[0]
-                                    : '未付款'}
-                            </td>
-                            <td>{order.message}</td>
-                            <td>
-                                <button
-                                    type='button'
-                                    className='btn btn-primary btn-sm'
-                                    onClick={() => handleOpenOrderModal(order)}
-                                >
-                                    編輯
-                                </button>
-                                <button
-                                    type='button'
-                                    className='btn btn-outline-danger btn-sm ms-2'
-                                    onClick={() => handleDeleteOrder(order.id)}
-                                >
-                                    刪除
-                                </button>
-                            </td>
+            <div className='table-responsive'>
+                <table className='table align-middle'>
+                    <thead>
+                        <tr>
+                            <th scope='col'>訂單 id</th>
+                            <th scope='col'>購買用戶</th>
+                            <th scope='col'>訂單金額</th>
+                            <th scope='col'>付款狀態</th>
+                            <th scope='col'>付款日期</th>
+                            <th scope='col'>留言訊息</th>
+                            <th scope='col'>編輯</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {orders.map((order) => (
+                            <tr key={order.id}>
+                                <td>{order.id}</td>
+                                <td>{order?.user?.email}</td>
+                                <td>{handlePriceToTw(order.total)}</td>
+                                <td>
+                                    {order.is_paid ? <span className='text-success fw-bold'>付款完成</span> : '未付款'}
+                                </td>
+                                <td>
+                                    {order.paid_date
+                                        ? new Date(order.paid_date * 1000).toISOString().split('T')[0]
+                                        : '未付款'}
+                                </td>
+                                <td>{order.message}</td>
+                                <td>
+                                    <button
+                                        type='button'
+                                        className='btn btn-primary btn-sm'
+                                        onClick={() => handleOpenOrderModal(order)}
+                                    >
+                                        編輯
+                                    </button>
+                                    <button
+                                        type='button'
+                                        className='btn btn-outline-danger btn-sm ms-2'
+                                        onClick={() => handleDeleteOrder(order.id)}
+                                    >
+                                        刪除
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
             <Pagination
                 changePage={fetchOrders}

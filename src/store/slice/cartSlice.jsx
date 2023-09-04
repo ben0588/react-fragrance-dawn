@@ -18,11 +18,7 @@ export const cartSlice = createSlice({
             return [];
         },
     },
-    extraReducers: (builder) => {
-        builder.addCase('persist/PURGE', (state, action) => {
-            return [];
-        });
-    },
+
 });
 
 export const { addToCart, deleteCart, removeCarts } = cartSlice.actions;

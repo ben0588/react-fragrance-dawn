@@ -7,8 +7,12 @@ import Swal from 'sweetalert2';
 import useMessage from '../../hooks/useMessage';
 import listImage from '../../assets/account/list.png';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
+import { useState } from 'react';
+import { clientAddToCart } from '../../api/clientApis';
+import { addToCart } from '../../store/slice/cartSlice';
 
 const AccountWishListPage = () => {
+    const [isLoadingId, setIsLoadingId] = useState('');
     const wishlistRedux = useSelector((state) => state.wishlist);
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
@@ -24,6 +28,7 @@ const AccountWishListPage = () => {
             cancelButtonText: '取消',
             showCancelButton: true,
             showCloseButton: true,
+            reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(removeWishlist(cartId));
@@ -48,6 +53,7 @@ const AccountWishListPage = () => {
             cancelButtonText: '取消',
             showCancelButton: true,
             showCloseButton: true,
+            reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(removeAllWishlist());
@@ -61,6 +67,23 @@ const AccountWishListPage = () => {
         });
     };
 
+    const handleAddToCart = async (id) => {
+        try {
+            setIsLoadingId(id);
+            const data = {
+                product_id: id,
+                qty: 1,
+            };
+            const result = await clientAddToCart(data);
+            dispatch(addToCart(data));
+            inputToastMessage(result.data);
+        } catch (error) {
+            inputToastMessage(error?.response?.data);
+        } finally {
+            setIsLoadingId('');
+        }
+    };
+
     return (
         <div className='container py-3 mb-3'>
             {wishlistRedux.length ? (
@@ -69,6 +92,7 @@ const AccountWishListPage = () => {
                         <thead>
                             <tr>
                                 <th colSpan={2}>追蹤商品資訊</th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th colSpan={2} className='text-center '>
@@ -110,10 +134,35 @@ const AccountWishListPage = () => {
                                         </div>
                                     </td>
                                     <td className='text-center'>
-                                        <Link to={`/products/${product.id}`} className='link-primary'>
+                                        <button
+                                            className='btn btn-primary btn-primary-hover'
+                                            title='加入購物車'
+                                            onClick={() => handleAddToCart(product.id)}
+                                            disabled={product.id === isLoadingId}
+                                        >
+                                            {product.id === isLoadingId ? (
+                                                <>
+                                                    <span
+                                                        className='spinner-grow product-card-icon me-1'
+                                                        aria-hidden='true'
+                                                    ></span>
+                                                    <span role='status'>正在加入</span>
+                                                </>
+                                            ) : (
+                                                <span>加入購物車</span>
+                                            )}
+                                        </button>
+                                    </td>
+                                    <td className='text-center'>
+                                        <Link
+                                            to={`/products/${product.id}`}
+                                            className='link-primary'
+                                            title='查看商品詳情'
+                                        >
                                             查看商品詳情
                                         </Link>
                                     </td>
+
                                     <td>
                                         <div className='d-flex justify-content-center align-items-center'>
                                             <button
