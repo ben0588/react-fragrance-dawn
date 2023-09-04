@@ -1,4 +1,3 @@
-// 商品卡片樣式
 .product-card-img-container {
     position: relative;
     overflow: hidden;
@@ -18,12 +17,19 @@
     object-fit: cover;
     transition: all 0.3s ease-in-out;
     &:hover {
-        // transform: scale(1.2);
         filter: brightness(1.1);
     }
 }
 
 .product-card-button-container {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+
     position: absolute;
     bottom: 5%;
     right: 5%;

@@ -9,10 +9,17 @@ th {
 }
 
 .top-btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+
     position: fixed;
     bottom: 20px;
     right: 20px;
-
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;

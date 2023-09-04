@@ -3,7 +3,6 @@
     height: 45px;
     height: 0;
     position: relative;
-    // position: sticky;
     border-bottom: 1px solid rgba(0, 0, 0, 0.089);
 }
 
@@ -50,7 +49,6 @@
     > li {
         display: inline-block;
         margin-right: 1rem;
-        // width: 200px;
         width: calc(100% / 4 - 20px);
     }
 }
@@ -92,7 +90,6 @@
 }
 
 @media (max-width: 992px) {
-    // 小於等於 992
     .sidebar-collapse-icon {
         display: none;
     }
@@ -102,7 +99,6 @@
     .search-blur-bg {
         position: fixed;
         top: 26%;
-        // top: 195px;
         width: 100%;
         height: 100vh;
         left: -100%;
@@ -119,7 +115,6 @@
         align-items: center;
         justify-content: flex-start;
         flex-direction: column;
-        // top: 195px;
         top: 26%;
         left: -100%;
         transition: all 0.3s ease-in-out;
@@ -140,15 +135,7 @@
         display: inline-block;
     }
 
-    // #search-check:checked ~ nav .search-menu {
-    //     left: 0;
-    // }
-    // #search-check:checked ~ nav .search-blur-bg {
-    //     left: 0;
-    // }
-
     .search-menu-items {
-        // margin-bottom: 0;
         margin-top: 0;
     }
 }
@@ -158,11 +145,9 @@
 }
 
 .search-menu-first {
-    // 按下收回左側
     position: fixed;
     width: 100%;
     height: 90px;
-    // left: -100%;
     transform: translateX(-100%);
     display: flex;
     align-items: center;

@@ -57,7 +57,7 @@ const Layout = () => {
                 title='回首頂端'
                 onClick={() => handleGoToTop()}
             >
-                <AiOutlineArrowUp style={{ width: `1.25rem`, height: `1.25rem`, fill: 'white' }} />
+                <AiOutlineArrowUp style={{ width: '1.5rem', height: '1.5rem', fill: 'white', fontSize: '1.5rem' }} />
             </button>
             <Loading />
         </div>
