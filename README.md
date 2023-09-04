@@ -1,5 +1,6 @@
 # 香氛晨光
 
+![香氛晨光](https://i.imgur.com/vr0SFdg.png)
 這是一個電商網站專案，旨在提供用戶瀏覽和購買香水產品的平台。
 - [網站頁面連結](https://ben0588.github.io/react-fragrance-dawn/#/)
 
@@ -57,13 +58,16 @@
 - React ^18.2.0
 - react-dom ^18.2.0
 - react-router-dom ^6.14.2
+- prop-types ^15.8.1
 - @reduxjs/toolkit ^1.9.5
+- RTK Query ^1.9.5
 - react-redux ^8.1.2
 - redux-persist ^6.0.0
 - axios ^1.4.0
 - sass ^1.64.1
 - bootstrap ^5.3.0
 - react-bootstrap ^2.8.0
+- styled-components ^6.0.5
 - react-hook-form ^7.45.4
 - react-select ^5.7.4
 - react-toastify ^9.1.3
