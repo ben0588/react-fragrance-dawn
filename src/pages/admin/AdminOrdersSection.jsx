@@ -7,7 +7,7 @@ import Pagination from '../../components/Pagination';
 import useMessage from '../../hooks/useMessage';
 import OrderModal from '../../components/admin/OrderModal';
 import usePriceToTw from '../../hooks/usePriceToTw';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
 import Swal from 'sweetalert2';
@@ -18,9 +18,7 @@ const AdminOrdersSection = () => {
     const [pagination, setPagination] = useState({});
     const orderModalRef = useRef(null);
     const deleteModalRef = useRef(null);
-    const [modalOpenType, setModalOpenType] = useState('create'); // 判斷新增與編輯模組展開方式
     const [editOrderTarget, setEditOrderTarget] = useState({}); // 暫存編輯商品的目標
-    const [deleteOrderTarget, setDeleteOrderTarget] = useState({});
     const { inputToastMessage } = useMessage();
     const { handlePriceToTw } = usePriceToTw();
     const dispatch = useDispatch();
@@ -142,32 +140,31 @@ const AdminOrdersSection = () => {
     };
 
     return (
-        <div className='p-3'>
+        <div className="p-3">
             <OrderModal
                 handleCancelOrderModal={handleCancelOrderModal}
                 fetchOrders={fetchOrders}
-                modalOpenType={modalOpenType}
                 editOrderTarget={editOrderTarget}
                 checkAdminAuth={adminCheck}
             />
-            <DeleteModal handleCancelDeleteModal={handleCancelDeleteModal} title={deleteOrderTarget.title} />
+            <DeleteModal handleCancelDeleteModal={handleCancelDeleteModal} />
 
             <h3>訂單列表</h3>
-            <button onClick={() => handleDeleteAllOrders()} type='button' className='btn btn-outline-danger'>
+            <button onClick={() => handleDeleteAllOrders()} type="button" className="btn btn-outline-danger">
                 刪除所有訂單
             </button>
             <hr />
-            <div className='table-responsive'>
-                <table className='table align-middle'>
+            <div className="table-responsive">
+                <table className="table align-middle">
                     <thead>
                         <tr>
-                            <th scope='col'>訂單 id</th>
-                            <th scope='col'>購買用戶</th>
-                            <th scope='col'>訂單金額</th>
-                            <th scope='col'>付款狀態</th>
-                            <th scope='col'>付款日期</th>
-                            <th scope='col'>留言訊息</th>
-                            <th scope='col'>編輯</th>
+                            <th scope="col">訂單 id</th>
+                            <th scope="col">購買用戶</th>
+                            <th scope="col">訂單金額</th>
+                            <th scope="col">付款狀態</th>
+                            <th scope="col">付款日期</th>
+                            <th scope="col">留言訊息</th>
+                            <th scope="col">編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -177,7 +174,7 @@ const AdminOrdersSection = () => {
                                 <td>{order?.user?.email}</td>
                                 <td>{handlePriceToTw(order.total)}</td>
                                 <td>
-                                    {order.is_paid ? <span className='text-success fw-bold'>付款完成</span> : '未付款'}
+                                    {order.is_paid ? <span className="text-success fw-bold">付款完成</span> : '未付款'}
                                 </td>
                                 <td>
                                     {order.paid_date
@@ -187,15 +184,15 @@ const AdminOrdersSection = () => {
                                 <td>{order.message}</td>
                                 <td>
                                     <button
-                                        type='button'
-                                        className='btn btn-primary btn-sm'
+                                        type="button"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() => handleOpenOrderModal(order)}
                                     >
                                         編輯
                                     </button>
                                     <button
-                                        type='button'
-                                        className='btn btn-outline-danger btn-sm ms-2'
+                                        type="button"
+                                        className="btn btn-outline-danger btn-sm ms-2"
                                         onClick={() => handleDeleteOrder(order.id)}
                                     >
                                         刪除

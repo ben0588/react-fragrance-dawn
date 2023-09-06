@@ -1,0 +1,14 @@
+node_modules/
+public/
+es/
+lib/
+dist/
+docs/
+src/assets/
+
+.env.local
+.gitignore
+package.json
+postcss.config.js
+vite.config.js
+.prettierrc.cjs

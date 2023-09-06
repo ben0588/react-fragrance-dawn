@@ -6,7 +6,6 @@ import { changeSearch, removeSearch } from '../../store/slice/searchSlice';
 import useMessage from '../../hooks/useMessage';
 import { updateSorting } from '../../store/slice/sortingSlice';
 import { BsXSquare } from 'react-icons/bs';
-import { AiOutlineMenu } from 'react-icons/ai';
 import { BsXLg } from 'react-icons/bs';
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarRightCollapse } from 'react-icons/tb';
 import { IoMdFunnel } from 'react-icons/io';
@@ -21,7 +20,6 @@ const ProductsSearchSection = () => {
     const [sortingValue, setSortingValue] = useState('建議');
     const categoryRedux = useSelector((state) => state.category);
     const searchRedux = useSelector((state) => state.search);
-    const sortingRedux = useSelector((state) => state.sorting);
     const [toggleIcon, setToggleIcon] = useState(false);
     const menuRef = useRef(null);
     const menuBgRef = useRef(null);
@@ -97,11 +95,11 @@ const ProductsSearchSection = () => {
         if (window.innerWidth <= 992) {
             setSearchContainer(false); // 更換 class 名稱
         }
-    }, [window.innerWidth, searchContainer]);
+    }, [searchContainer]);
 
     return (
         <div
-            className='search-sticky bg-white w-100'
+            className="search-sticky bg-white w-100"
             style={{
                 position: 'sticky',
                 top: `${navbar.height - 1}px`, // RWD選單時也可以悬停搜尋欄位
@@ -110,7 +108,7 @@ const ProductsSearchSection = () => {
             }}
         >
             <div
-                className='bg-white sidebar-collapse-icon '
+                className="bg-white sidebar-collapse-icon "
                 onClick={() => handleSearchContainer()}
                 title={menuOpen ? '展開篩選條件區塊' : '收合篩選條件區塊'}
             >
@@ -130,13 +128,13 @@ const ProductsSearchSection = () => {
                     />
                 )}
             </div>
-            <div className='search-navbar-container ' ref={searchContainerRef}>
+            <div className="search-navbar-container " ref={searchContainerRef}>
                 {/* <input type='checkbox' id='search-check' /> */}
-                <label htmlFor='search-check' className='search-menu-btn' onClick={() => navbarToggle()}>
-                    <span className='me-2'>篩選</span>
-                    {toggleIcon ? <BsXLg className='search-menu-icon' /> : <IoMdFunnel className='search-menu-icon' />}
+                <label htmlFor="search-check" className="search-menu-btn" onClick={() => navbarToggle()}>
+                    <span className="me-2">篩選</span>
+                    {toggleIcon ? <BsXLg className="search-menu-icon" /> : <IoMdFunnel className="search-menu-icon" />}
                 </label>
-                <nav className=''>
+                <nav className="">
                     <ul className={`${searchContainer ? 'search-menu-first' : 'search-menu '} mb-0`} ref={menuRef}>
                         <li>
                             <div
@@ -145,14 +143,14 @@ const ProductsSearchSection = () => {
                                 }`}
                             >
                                 {categoryRedux?.category ? (
-                                    <div className=' d-flex justify-content-start justify-content-lg-center align-items-center w-100 '>
+                                    <div className=" d-flex justify-content-start justify-content-lg-center align-items-center w-100 ">
                                         當前類別：
-                                        <mark className='position-relative border border-2 user-select-none bg-white pe-4'>
+                                        <mark className="position-relative border border-2 user-select-none bg-white pe-4">
                                             {categoryRedux.category}
                                             <BsXSquare
-                                                className='closure-icon position-absolute top-50 end-0 translate-middle-y'
-                                                role='button'
-                                                title='清除類別選擇'
+                                                className="closure-icon position-absolute top-50 end-0 translate-middle-y"
+                                                role="button"
+                                                title="清除類別選擇"
                                                 onClick={() => {
                                                     navbarToggle();
                                                     dispatch(removeCategory());
@@ -161,14 +159,14 @@ const ProductsSearchSection = () => {
                                         </mark>
                                     </div>
                                 ) : searchRedux?.searchText ? (
-                                    <div className='d-flex justify-content-start justify-content-lg-center align-items-center '>
+                                    <div className="d-flex justify-content-start justify-content-lg-center align-items-center ">
                                         當前搜尋：
-                                        <mark className='position-relative border border-2 user-select-none bg-white ps-4 pe-5'>
+                                        <mark className="position-relative border border-2 user-select-none bg-white ps-4 pe-5">
                                             {searchRedux.searchText}
                                             <BsXSquare
-                                                className='closure-icon position-absolute top-50 end-0 translate-middle-y'
-                                                role='button'
-                                                title='清除搜尋目標'
+                                                className="closure-icon position-absolute top-50 end-0 translate-middle-y"
+                                                role="button"
+                                                title="清除搜尋目標"
                                                 onClick={() => {
                                                     navbarToggle();
                                                     dispatch(removeSearch());
@@ -180,62 +178,62 @@ const ProductsSearchSection = () => {
                             </div>
                         </li>
                         <li>
-                            <div className='search-menu-items form-floating  '>
+                            <div className="search-menu-items form-floating  ">
                                 <select
-                                    name='category'
-                                    id='searchCategory'
-                                    className='form-select'
+                                    name="category"
+                                    id="searchCategory"
+                                    className="form-select"
                                     onChange={(e) => handleChangeCategory(e)}
                                     value={category}
                                     disabled={searchRedux.searchText !== '' ? true : false}
                                 >
-                                    <option className='bg-dark text-white' value='' disabled>
+                                    <option className="bg-dark text-white" value="" disabled>
                                         {searchRedux.searchText !== '' ? '不可選擇' : ' 開始選擇'}
                                     </option>
                                     {categoryList?.map((item) => (
-                                        <option className='bg-dark text-white fs-6' value={item} key={item}>
+                                        <option className="bg-dark text-white fs-6" value={item} key={item}>
                                             {item}
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor='searchCategory'>使用類別搜尋</label>
+                                <label htmlFor="searchCategory">使用類別搜尋</label>
                             </div>
                         </li>
                         <li>
-                            <div className='search-menu-items form-floating '>
+                            <div className="search-menu-items form-floating ">
                                 <select
-                                    name='category'
-                                    id='searchCategory'
-                                    className='form-select'
+                                    name="category"
+                                    id="searchCategory"
+                                    className="form-select"
                                     onChange={(e) => handleChangeSorting(e)}
                                     value={sortingValue}
                                 >
                                     {sortingList.map((item) => (
-                                        <option className='bg-dark text-white fs-6' value={item} key={item}>
+                                        <option className="bg-dark text-white fs-6" value={item} key={item}>
                                             {item}
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor='searchCategory'>商品排序</label>
+                                <label htmlFor="searchCategory">商品排序</label>
                             </div>
                         </li>
                         <li>
-                            <div className='search-menu-items form-floating '>
+                            <div className="search-menu-items form-floating ">
                                 <input
-                                    type='search'
-                                    className='form-control'
-                                    id='searchInput'
-                                    placeholder='關鍵字搜尋'
+                                    type="search"
+                                    className="form-control"
+                                    id="searchInput"
+                                    placeholder="關鍵字搜尋"
                                     onChange={(e) => setSearchValue(e.target.value)}
                                     onKeyDown={handleKeyDownSearch}
                                     value={searchValue}
                                     disabled={categoryRedux.category !== '' ? true : false}
                                 />
-                                <label htmlFor='searchInput'>關鍵字搜尋</label>
+                                <label htmlFor="searchInput">關鍵字搜尋</label>
                             </div>
                         </li>
                     </ul>
-                    <div className='search-blur-bg ' ref={menuBgRef} onClick={() => navbarToggle()}></div>
+                    <div className="search-blur-bg " ref={menuBgRef} onClick={() => navbarToggle()}></div>
                 </nav>
             </div>
         </div>

@@ -5,7 +5,7 @@ import Pagination from '../../components/Pagination';
 import useMessage from '../../hooks/useMessage';
 import ArticleModal from '../../components/admin/ArticleModal';
 import { adminDeleteArticle, adminFetchArticle, adminFetchLimitedArticles } from '../../api/adminArticleApis';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useOutletContext } from 'react-router-dom';
 
@@ -19,7 +19,6 @@ const AdminArticleSection = () => {
     const [deleteTarget, setDeleteTarget] = useState({});
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
-    const loadingRedux = useSelector((state) => state.loading);
     const { adminCheck } = useOutletContext();
     const [editLoading, setEditLoading] = useState(false);
     const [firstEditId, setFirstEditId] = useState('');
@@ -81,7 +80,7 @@ const AdminArticleSection = () => {
         fetchArticle();
     }, [fetchArticle]);
 
-    const handleDeleteArticle = async (id) => {
+    const handleDeleteArticle = async () => {
         try {
             dispatch(updateLoadingState(true));
             await adminCheck();
@@ -99,7 +98,7 @@ const AdminArticleSection = () => {
     };
 
     return (
-        <div className='p-3'>
+        <div className="p-3">
             <ArticleModal
                 handleCancelModal={handleCancelCouponModal}
                 fetchData={fetchArticle}
@@ -112,28 +111,28 @@ const AdminArticleSection = () => {
                 handleCancelDeleteModal={handleCancelDeleteModal}
                 handleDelete={handleDeleteArticle}
                 title={deleteTarget.title}
-                type='article'
+                type="article"
                 id={deleteTarget.id}
             />
 
             <div>
                 <h3>文章列表</h3>
                 <hr />
-                <div className='text-end'>
-                    <button type='button' className='btn btn-primary' onClick={() => handleOpenCouponModal('create')}>
+                <div className="text-end">
+                    <button type="button" className="btn btn-primary" onClick={() => handleOpenCouponModal('create')}>
                         建立新文章
                     </button>
                 </div>
-                <div className='table-responsive'>
-                    <table className='table align-middle'>
+                <div className="table-responsive">
+                    <table className="table align-middle">
                         <thead>
                             <tr>
-                                <th scope='col'>文章編號</th>
-                                <th scope='col'>建立時間</th>
-                                <th scope='col'>作者</th>
-                                <th scope='col'>標題</th>
-                                <th scope='col'>公開狀態</th>
-                                <th scope='col'>編輯</th>
+                                <th scope="col">文章編號</th>
+                                <th scope="col">建立時間</th>
+                                <th scope="col">作者</th>
+                                <th scope="col">標題</th>
+                                <th scope="col">公開狀態</th>
+                                <th scope="col">編輯</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -157,8 +156,8 @@ const AdminArticleSection = () => {
                                     </td>
                                     <td>
                                         <button
-                                            type='button'
-                                            className='btn btn-primary btn-sm'
+                                            type="button"
+                                            className="btn btn-primary btn-sm"
                                             onClick={() => {
                                                 handleOpenCouponModal('edit', article.id);
                                                 setFirstEditId(article.id);
@@ -166,16 +165,16 @@ const AdminArticleSection = () => {
                                             disabled={firstEditId === article.id ? editLoading : false}
                                         >
                                             {firstEditId === article.id && editLoading ? (
-                                                <div className='spinner-border spinner-border-sm' role='status'>
-                                                    <span className='visually-hidden'>Loading...</span>
+                                                <div className="spinner-border spinner-border-sm" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
                                                 </div>
                                             ) : (
                                                 '編輯'
                                             )}
                                         </button>
                                         <button
-                                            type='button'
-                                            className='btn btn-outline-danger btn-sm ms-2'
+                                            type="button"
+                                            className="btn btn-outline-danger btn-sm ms-2"
                                             onClick={() => handleOpenDeleteModal(article)}
                                         >
                                             刪除

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/swiper-bundle.css'; // 所有 Swiper 樣式
 import { Pagination } from 'swiper/modules';
@@ -22,14 +21,14 @@ const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
                 content: target.content,
                 description: target.description,
                 title: target.title,
-            })
+            }),
         );
     };
 
     return (
-        <div className='pb-3'>
+        <div className="pb-3">
             <Swiper
-                direction='vertical'
+                direction="vertical"
                 slidesPerView={1}
                 slidesPerGroup={1}
                 spaceBetween={15}
@@ -43,7 +42,7 @@ const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
                 centeredSlides={true}
                 grabCursor={true}
                 pagination={{ clickable: true }}
-                className='popularSwiper'
+                className="popularSwiper"
                 style={{
                     '--swiper-navigation-color': '#ffffff0',
                     '--swiper-navigation-size': '0px',
@@ -52,15 +51,15 @@ const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
                 }}
                 onSlideChange={handleSlideChange} // 監聽輪播切換事件
             >
-                {imagesList?.map((item, index) => (
+                {imagesList?.map((item) => (
                     <SwiperSlide key={item.id}>
-                        <div className='popular-card-container my-4 py-4'>
-                            <Link to={`/products/${item.id}`} className='d-block '>
-                                <img src={item.imageUrl} alt={item.title} className='popular-card-img' />
-                                <h3 className='popular-card-title text-ellipsis text-center fw-bolder fs-5 '>
+                        <div className="popular-card-container my-4 py-4">
+                            <Link to={`/products/${item.id}`} className="d-block ">
+                                <img src={item.imageUrl} alt={item.title} className="popular-card-img" />
+                                <h3 className="popular-card-title text-ellipsis text-center fw-bolder fs-5 ">
                                     {item.title}
                                 </h3>
-                                <span className='popular-card-price py-2'>NT{handlePriceToTw(item.price)}</span>
+                                <span className="popular-card-price py-2">NT{handlePriceToTw(item.price)}</span>
                             </Link>
                         </div>
                     </SwiperSlide>
@@ -83,7 +82,7 @@ PopularCarousel.propTypes = {
             price: PropTypes.number,
             title: PropTypes.string,
             unit: PropTypes.string,
-        }).isRequired
+        }).isRequired,
     ),
 };
 export default PopularCarousel;

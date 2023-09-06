@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import WishlistButtonGroup from '../../components/WishlistButtonGroup';
-import { clientDeleteAllCarts, clientDeleteCart, clientPutCart } from '../../api/clientApis';
 import usePriceToTw from '../../hooks/usePriceToTw';
 import { useDispatch } from 'react-redux';
-import { deleteCart, removeCarts } from '../../store/slice/cartSlice';
 import useMessage from '../../hooks/useMessage';
 import { removeCoupon } from '../../store/slice/couponSlice';
-import { useDeleteCartMutation, useRemoveCartsMutation } from '../../store/store';
+import { useDeleteCartMutation, useRemoveCartsMutation, useUpdateCartMutation } from '../../store/store';
+import PropTypes from 'prop-types';
 
 const CartProductsSection = ({ carts, handleFetchCart }) => {
     const dispatch = useDispatch();
     const { handlePriceToTw } = usePriceToTw();
     const [loadingItems, setLoadingItems] = useState([]);
     const { inputToastMessage } = useMessage();
-    const [deleteCart, deleteCartResult] = useDeleteCartMutation();
-    const [removeCarts, removeCartsResult] = useRemoveCartsMutation();
+    const [deleteCart] = useDeleteCartMutation();
+    const [removeCarts] = useRemoveCartsMutation();
+    const [updateCart] = useUpdateCartMutation();
 
     const handlePutCart = async (cartId, productId, quantity) => {
         try {
@@ -26,11 +26,17 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                 product_id: productId,
                 qty: quantity,
             };
-            await clientPutCart(cartId, data);
+            const result = await updateCart({ id: cartId, data }).unwrap();
+            inputToastMessage({
+                success: result.success,
+                type: 'default',
+                message: `✨ ${result.message}`,
+                position: 'top-left',
+            });
             setLoadingItems(loadingItems.filter((items) => items !== cartId));
-            handleFetchCart();
+            await handleFetchCart();
         } catch (error) {
-            inputToastMessage(error?.response?.data);
+            inputToastMessage(error?.data);
         }
     };
 
@@ -50,7 +56,6 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
             preConfirm: async () => {
                 try {
                     return await deleteCart(cartId);
-                    // return await clientDeleteCart(cartId);
                 } catch (error) {
                     Swal.showValidationMessage(`請求失敗： ${error}`);
                 }
@@ -65,7 +70,6 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                // dispatch(deleteCart());
                 dispatch(removeCoupon());
                 handleFetchCart();
             }
@@ -89,7 +93,6 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
             preConfirm: async () => {
                 try {
                     return await removeCarts();
-                    // return await clientDeleteAllCarts();
                 } catch (error) {
                     Swal.showValidationMessage(`請求失敗： ${error}`);
                 }
@@ -112,8 +115,8 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
     };
 
     return (
-        <div className='table-responsive'>
-            <table className='table align-middle '>
+        <div className="table-responsive">
+            <table className="table align-middle ">
                 <thead>
                     <tr>
                         <th>商品資料</th>
@@ -122,8 +125,8 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                         <th>總額</th>
                         <th>
                             <button
-                                type='button'
-                                className='btn btn-none fw-bolder py-0'
+                                type="button"
+                                className="btn btn-none fw-bolder py-0"
                                 onClick={() => handleDeleteAllCarts()}
                             >
                                 全部刪除
@@ -131,25 +134,25 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody className='table-group-divider'>
+                <tbody className="table-group-divider">
                     {carts?.map((cart) => (
                         <tr key={cart.id}>
                             <td>
-                                <div className='row m-0'>
-                                    <div className='col-lg-4 col-xl-3 d-flex justify-content-start align-items-center p-0 '>
-                                        <Link to={`/products/${cart.product_id}`} className='cart-img-container'>
+                                <div className="row m-0">
+                                    <div className="col-lg-4 col-xl-3 d-flex justify-content-start align-items-center p-0 ">
+                                        <Link to={`/products/${cart.product_id}`} className="cart-img-container">
                                             <img
                                                 src={cart?.product?.imageUrl}
                                                 alt={cart?.product?.title}
-                                                className='cart-img'
-                                                title='查看商品詳情'
+                                                className="cart-img"
+                                                title="查看商品詳情"
                                             />
                                         </Link>
                                     </div>
-                                    <div className='col-lg-8 col-xl-9 p-0'>
-                                        <div className='h-100 d-flex justify-content-center align-items-start flex-column position-relative'>
-                                            <h3 className='fs-6 m-0 mt-2 pb-lg-1'>
-                                                <Link to={`/products/${cart.product_id}`} title='查看商品詳情'>
+                                    <div className="col-lg-8 col-xl-9 p-0">
+                                        <div className="h-100 d-flex justify-content-center align-items-start flex-column position-relative">
+                                            <h3 className="fs-6 m-0 mt-2 pb-lg-1">
+                                                <Link to={`/products/${cart.product_id}`} title="查看商品詳情">
                                                     {cart?.product?.title}
                                                 </Link>
                                                 <WishlistButtonGroup
@@ -158,10 +161,10 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                                                     id={cart?.product?.id} // 要傳入產品 id
                                                 />
                                             </h3>
-                                            <p className='d-none d-md-block fs-7 text-muted text-ellipsis m-0 '>
+                                            <p className="d-none d-md-block fs-7 text-muted text-ellipsis m-0 ">
                                                 {cart?.product?.content}
                                             </p>
-                                            <span className='pt-2'>{cart?.product?.unit}</span>
+                                            <span className="pt-2">{cart?.product?.unit}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -169,7 +172,7 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                             <td>{handlePriceToTw(cart?.product?.price)}</td>
                             <td>
                                 <select
-                                    className='form-select'
+                                    className="form-select"
                                     value={cart.qty}
                                     onChange={(e) => handlePutCart(cart.id, cart.product_id, parseInt(e.target.value))}
                                     disabled={loadingItems.includes(cart.id)} // 發送請求 API 時先鎖住
@@ -183,14 +186,14 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                                 </select>
                             </td>
                             <td>{handlePriceToTw(cart?.total)}</td>
-                            <td className='ps-4'>
+                            <td className="ps-4">
                                 <button
-                                    type='button'
-                                    className='btn btn-none d-flex justify-content-center align-items-center py-2'
+                                    type="button"
+                                    className="btn btn-none d-flex justify-content-center align-items-center py-2"
                                     onClick={() => handleDeleteCart(cart.id, cart?.product?.title)}
-                                    title='移除商品'
+                                    title="移除商品"
                                 >
-                                    <FaRegTrashAlt className='cart-icon ' />
+                                    <FaRegTrashAlt className="cart-icon " />
                                 </button>
                             </td>
                         </tr>
@@ -199,5 +202,10 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
             </table>
         </div>
     );
+};
+
+CartProductsSection.propTypes = {
+    carts: PropTypes.array,
+    handleFetchCart: PropTypes.func,
 };
 export default CartProductsSection;

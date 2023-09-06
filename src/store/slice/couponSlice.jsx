@@ -28,7 +28,7 @@ export const couponSlice = createSlice({
             // state.code = action.payload;
             state.isSelected = action.payload;
         },
-        removeCoupon(state, action) {
+        removeCoupon() {
             return {
                 isLoading: false,
                 isSelected: false,

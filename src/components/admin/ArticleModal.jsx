@@ -56,7 +56,7 @@ const ArticleModal = memo(function ArticleModal({
 
     useEffect(() => {
         if (modalOpenType === 'create') {
-            selectRef.current.setValue([], 'clear');
+            selectRef?.current?.setValue([], 'clear');
             setSelectDefault([]);
             setArticle(initialValue);
         } else if (modalOpenType === 'edit') {
@@ -132,89 +132,89 @@ const ArticleModal = memo(function ArticleModal({
 
     return (
         <div
-            className='modal fade'
-            id='articleModal' // 與 Bootstrap Modal 綁定
+            className="modal fade"
+            id="articleModal" // 與 Bootstrap Modal 綁定
         >
-            <div className='modal-dialog modal-lg'>
-                <div className='modal-content'>
-                    <div className='modal-header'>
-                        <h5 className='modal-title fw-bolder'>
+            <div className="modal-dialog modal-lg">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title fw-bolder">
                             {modalOpenType === 'create' ? '新增文章' : `編輯文章：${editTarget?.title}`}
                         </h5>
                         <button
-                            type='button'
-                            className='btn-close'
+                            type="button"
+                            className="btn-close"
                             onClick={() => {
                                 setArticle(initialValue);
                                 handleCancelModal();
                             }}
-                            aria-label='Close'
+                            aria-label="Close"
                         ></button>
                     </div>
-                    <div className='modal-body'>
-                        <div className=''>
-                            <div className='row'>
-                                <div className='col-6'>
+                    <div className="modal-body">
+                        <div className="">
+                            <div className="row">
+                                <div className="col-6">
                                     <InputGroup
-                                        name='title'
-                                        id='articleTitle'
-                                        type='text'
-                                        title='標題'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
+                                        name="title"
+                                        id="articleTitle"
+                                        type="text"
+                                        title="標題"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
                                         onChange={handleChangeValue}
                                         value={article.title || ''}
-                                        placeholder='請輸入文章標題'
+                                        placeholder="請輸入文章標題"
                                     />
                                     <InputGroup
-                                        name='author'
-                                        id='articleAuthor'
-                                        type='text'
-                                        title='作者'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
+                                        name="author"
+                                        id="articleAuthor"
+                                        type="text"
+                                        title="作者"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
                                         onChange={handleChangeValue}
                                         value={article.author || ''}
-                                        placeholder='請輸入文章作者'
+                                        placeholder="請輸入文章作者"
                                     />
                                     <InputGroup
-                                        name='description'
-                                        id='articleDescription'
-                                        type='text'
-                                        title='描述'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
+                                        name="description"
+                                        id="articleDescription"
+                                        type="text"
+                                        title="描述"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
                                         onChange={handleChangeValue}
                                         value={article.description || ''}
-                                        placeholder='請輸入文章描述'
+                                        placeholder="請輸入文章描述"
                                     />
                                     <TextareaGroup
-                                        name='content'
-                                        id='articleContent'
-                                        title='內容'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        textareaClass='form-control'
-                                        placeholder='輸入文章的內容'
+                                        name="content"
+                                        id="articleContent"
+                                        title="內容"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        textareaClass="form-control"
+                                        placeholder="輸入文章的內容"
                                         cols={30}
                                         rows={5}
                                         onChange={handleChangeValue}
                                         value={article.content || ''}
                                     />
                                 </div>
-                                <div className='col-6'>
+                                <div className="col-6">
                                     <InputGroup
-                                        name='image'
-                                        id='articleImage'
-                                        type='text'
-                                        title='文章封面圖片網址'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
-                                        placeholder='請輸入圖片連結'
+                                        name="image"
+                                        id="articleImage"
+                                        type="text"
+                                        title="文章封面圖片網址"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
+                                        placeholder="請輸入圖片連結"
                                         onChange={handleChangeValue}
                                         value={article.image || ''}
                                     />
@@ -223,31 +223,31 @@ const ArticleModal = memo(function ArticleModal({
                                         <div>資料加載中</div>
                                     ) : (
                                         <>
-                                            <label htmlFor='articleTag' className='form-label fw-bolder'>
+                                            <label htmlFor="articleTag" className="form-label fw-bolder">
                                                 文章標籤
                                             </label>
                                             <Select
                                                 ref={selectRef}
                                                 key={`my_unique_select_key__${selectDefault}`}
-                                                name='tag'
-                                                id='articleTag'
+                                                name="tag"
+                                                id="articleTag"
                                                 defaultValue={selectDefault}
                                                 options={options}
                                                 onChange={(item) => setTag(item)}
                                                 isMulti={true}
                                                 closeMenuOnSelect={false}
-                                                placeholder='選擇標籤'
+                                                placeholder="選擇標籤"
                                             />
                                         </>
                                     )}
                                     <InputGroup
-                                        name='isPublic'
-                                        id='articlePublic'
-                                        type='checkbox'
-                                        title='文章是否啟用'
-                                        groupClass='form-check my-3'
-                                        labelClass='form-check-label'
-                                        inputClass='form-check-input'
+                                        name="isPublic"
+                                        id="articlePublic"
+                                        type="checkbox"
+                                        title="文章是否啟用"
+                                        groupClass="form-check my-3"
+                                        labelClass="form-check-label"
+                                        inputClass="form-check-input"
                                         onChange={handleChangeValue}
                                         checked={Boolean(article.isPublic)}
                                     />
@@ -255,10 +255,10 @@ const ArticleModal = memo(function ArticleModal({
                             </div>
                         </div>
                     </div>
-                    <div className='modal-footer'>
+                    <div className="modal-footer">
                         <button
-                            type='button'
-                            className='btn btn-secondary'
+                            type="button"
+                            className="btn btn-secondary"
                             onClick={() => {
                                 setArticle(initialValue);
                                 handleCancelModal();
@@ -267,14 +267,14 @@ const ArticleModal = memo(function ArticleModal({
                             關閉
                         </button>
                         <button
-                            type='button'
-                            className='btn btn-primary '
+                            type="button"
+                            className="btn btn-primary "
                             onClick={() => handleSubmitAddArticle()}
                             disabled={!allFieldsFilled || checkAuth}
                         >
                             {checkAuth && (
-                                <div className='spinner-border spinner-border-sm me-2 ' role='status'>
-                                    <span className='visually-hidden'>Loading...</span>
+                                <div className="spinner-border spinner-border-sm me-2 " role="status">
+                                    <span className="visually-hidden">Loading...</span>
                                 </div>
                             )}
                             {modalOpenType === 'create'

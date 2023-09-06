@@ -11,7 +11,7 @@ export const wishlistSlice = createSlice({
             const index = state.findIndex((wish) => wish.id === action.payload);
             state.splice(index, 1);
         },
-        removeAllWishlist(state, action) {
+        removeAllWishlist() {
             return [];
         },
     },

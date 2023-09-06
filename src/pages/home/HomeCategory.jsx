@@ -53,37 +53,37 @@ const HomeCategory = () => {
     };
 
     return (
-        <div className='w-100 py-5 my-5' style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover' }}>
-            <div className='container'>
-                <h2 className='home-title'>
+        <div className="w-100 py-5 my-5" style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover' }}>
+            <div className="container">
+                <h2 className="home-title">
                     更多種類<span></span>
                     <span></span>
                 </h2>
             </div>
 
-            <div className='container py-4'>
-                <div className='row'>
+            <div className="container py-4">
+                <div className="row">
                     {categoryList?.map((items, index) => (
                         <motion.div
-                            className='col-6 col-md-4 col-xl-2 p-0'
+                            className="col-6 col-md-4 col-xl-2 p-0"
                             key={items[0]}
-                            initial='hidden'
-                            whileInView='show'
+                            initial="hidden"
+                            whileInView="show"
                             variants={categoryVariants}
                             custom={index}
                             transition={{ duration: 0.5, delay: 0.25 }}
                         >
                             <Link
                                 to={`/products`}
-                                onClick={(e) => (items[0] === '全部' ? null : dispatch(changeCategory(items[0])))}
-                                className='home-category-card'
+                                onClick={() => (items[0] === '全部' ? null : dispatch(changeCategory(items[0])))}
+                                className="home-category-card"
                             >
-                                <h4 className='home-category-card-title'>{items[0]}</h4>
+                                <h4 className="home-category-card-title">{items[0]}</h4>
                                 <img
                                     src={items[1]}
                                     alt={items[0]}
                                     style={{ width: `100%`, height: `200px` }}
-                                    className='object-fit-cover'
+                                    className="object-fit-cover"
                                 />
                             </Link>
                         </motion.div>

@@ -9,7 +9,7 @@ export const sortingSlice = createSlice({
         updateSorting(state, action) {
             state.sorting = action.payload;
         },
-        removeSorting(state, action) {
+        removeSorting() {
             return {
                 sorting: '建議',
             };

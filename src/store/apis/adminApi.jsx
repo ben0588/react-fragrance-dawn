@@ -15,7 +15,7 @@ const adminApi = createApi({
     endpoints(builder) {
         return {
             adminLogin: builder.mutation({
-                invalidatesTags: (result, error, admin) => {
+                invalidatesTags: (result) => {
                     return [{ type: 'adminApi', id: result.uid }];
                 },
                 query: (admin) => {

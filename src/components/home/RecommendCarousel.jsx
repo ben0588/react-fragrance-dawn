@@ -1,4 +1,3 @@
-import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/swiper-bundle.css'; // 所有 Swiper 樣式
 import { Pagination } from 'swiper/modules';
@@ -27,8 +26,8 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
     };
 
     return (
-        <div className='row flex-row flex-sm-column-reverse flex-lg-row '>
-            <div className='col-12'>
+        <div className="row flex-row flex-sm-column-reverse flex-lg-row ">
+            <div className="col-12">
                 <Swiper
                     slidesPerView={5}
                     slidesPerGroup={5}
@@ -42,7 +41,7 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
                     loop={true}
                     grabCursor={true}
                     pagination={{ clickable: true }}
-                    className='mySwiper'
+                    className="mySwiper"
                     style={{
                         '--swiper-navigation-color': '#ffffff0',
                         '--swiper-navigation-size': '0px',
@@ -74,24 +73,24 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
                 >
                     {imagesList?.map((item, index) => (
                         <SwiperSlide key={item.id}>
-                            <div className='home-swiper-container my-4 py-4'>
+                            <div className="home-swiper-container my-4 py-4">
                                 <motion.div
-                                    initial='hidden'
-                                    whileInView='show'
+                                    initial="hidden"
+                                    whileInView="show"
                                     custom={index}
                                     variants={imagesVariants}
                                 >
-                                    <Link to={`/products/${item.id}`} className='d-block'>
-                                        <div className='home-swiper-img-container'>
-                                            <img src={item.imageUrl} alt={item.title} className='home-swiper-img' />
+                                    <Link to={`/products/${item.id}`} className="d-block">
+                                        <div className="home-swiper-img-container">
+                                            <img src={item.imageUrl} alt={item.title} className="home-swiper-img" />
                                         </div>
-                                        <div className='home-swiper-content '>
-                                            <h3 className='text-ellipsis text-center fs-5 mb-0'>{item.title}</h3>
+                                        <div className="home-swiper-content ">
+                                            <h3 className="text-ellipsis text-center fs-5 mb-0">{item.title}</h3>
                                             <span>NT{handlePriceToTw(item.price)}</span>
                                         </div>
                                     </Link>
-                                    <Link to={`/products/${item.id}`} className='home-swiper-icon-button'>
-                                        <AiOutlineArrowRight className='icon-md' />
+                                    <Link to={`/products/${item.id}`} className="home-swiper-icon-button">
+                                        <AiOutlineArrowRight className="icon-md" />
                                     </Link>
                                 </motion.div>
                             </div>
@@ -116,7 +115,7 @@ RecommendCarousel.propTypes = {
             price: PropTypes.number,
             title: PropTypes.string,
             unit: PropTypes.string,
-        }).isRequired
+        }).isRequired,
     ),
 };
 export default RecommendCarousel;

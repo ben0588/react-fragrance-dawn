@@ -16,7 +16,6 @@ import bulletinReducer from './slice/bulletinSlice';
 
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 import { adminApi } from './apis/adminApi';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { cartApi } from './apis/cartApi';

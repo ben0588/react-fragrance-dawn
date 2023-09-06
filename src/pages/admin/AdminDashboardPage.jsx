@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation, useNavigate, useParams, useMatch, useOutletContext } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, useMatch, useOutletContext } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
@@ -13,7 +13,7 @@ const AdminDashboardPage = () => {
     const matchDashboardLayout = useMatch('/admin/dashboard'); // 登入後台 Layout 首頁
     const dispatch = useDispatch();
     const adminState = useSelector((state) => state.admin);
-    const [adminCheck, adminCheckResult] = useAdminCheckMutation();
+    const [adminCheck] = useAdminCheckMutation();
     const { adminLogout } = useOutletContext();
 
     const token = document.cookie
@@ -43,24 +43,24 @@ const AdminDashboardPage = () => {
 
     return (
         <div>
-            <div className='d-flex' style={{ minHeight: 'calc(100vh - 56px)' }}>
-                <div className='bg-light' style={{ width: '200px' }}>
-                    <ul className='list-group list-group-flush'>
-                        <NavLink className='list-group-item list-group-item-action fw-bolder py-2' to='products'>
+            <div className="d-flex" style={{ minHeight: 'calc(100vh - 56px)' }}>
+                <div className="bg-light" style={{ width: '200px' }}>
+                    <ul className="list-group list-group-flush">
+                        <NavLink className="list-group-item list-group-item-action fw-bolder py-2" to="products">
                             產品列表
                         </NavLink>
-                        <NavLink className='list-group-item list-group-item-action fw-bolder py-2' to='coupons'>
+                        <NavLink className="list-group-item list-group-item-action fw-bolder py-2" to="coupons">
                             優惠卷列表
                         </NavLink>
-                        <NavLink className='list-group-item list-group-item-action fw-bolder py-2' to='orders'>
+                        <NavLink className="list-group-item list-group-item-action fw-bolder py-2" to="orders">
                             訂單列表
                         </NavLink>
-                        <NavLink className='list-group-item list-group-item-action fw-bolder py-2' to='article'>
+                        <NavLink className="list-group-item list-group-item-action fw-bolder py-2" to="article">
                             文章列表
                         </NavLink>
                     </ul>
                 </div>
-                <div className='w-100'>{token && <Outlet context={{ adminCheck: handleCheckAdminAuth }} />}</div>
+                <div className="w-100">{token && <Outlet context={{ adminCheck: handleCheckAdminAuth }} />}</div>
             </div>
 
             <ToastContainer />

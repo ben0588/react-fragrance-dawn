@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 const usePriceToTw = () => {
     const handlePriceToTw = useMemo(
@@ -11,7 +11,7 @@ const usePriceToTw = () => {
                 minimumFractionDigits: 0,
             }).format(price);
         },
-        []
+        [],
     );
 
     return { handlePriceToTw };

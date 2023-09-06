@@ -12,7 +12,7 @@ const cartApi = createApi({
     endpoints(builder) {
         return {
             fetchCarts: builder.query({
-                providesTags: (result, error, carts) => {
+                providesTags: () => {
                     return ['Carts'];
                 },
                 query: () => {
@@ -23,7 +23,7 @@ const cartApi = createApi({
                 },
             }),
             addToCart: builder.mutation({
-                invalidatesTags: (result, error, cart) => {
+                invalidatesTags: () => {
                     return ['Carts'];
                 },
                 query: (data) => {
@@ -37,10 +37,10 @@ const cartApi = createApi({
                 },
             }),
             updateCart: builder.mutation({
-                invalidatesTags: (result, error, cart) => {
+                invalidatesTags: () => {
                     return ['Carts'];
                 },
-                query: (id, data) => {
+                query: ({ id, data }) => {
                     return {
                         url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/cart/${id}`,
                         method: 'PUT',
@@ -51,7 +51,7 @@ const cartApi = createApi({
                 },
             }),
             deleteCart: builder.mutation({
-                invalidatesTags: (result, error, cart) => {
+                invalidatesTags: () => {
                     return ['Carts'];
                 },
                 query: (id) => {
@@ -62,7 +62,7 @@ const cartApi = createApi({
                 },
             }),
             removeCarts: builder.mutation({
-                invalidatesTags: (result, error, cart) => {
+                invalidatesTags: () => {
                     return ['Carts'];
                 },
                 query: () => {

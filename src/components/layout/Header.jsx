@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 import { FaUserCircle } from 'react-icons/fa';
 import { BsBookmarkHeartFill, BsXLg } from 'react-icons/bs';
-import { FaBagShopping, FaCartShopping } from 'react-icons/fa6';
+import { FaCartShopping } from 'react-icons/fa6';
 
 import logoImg from '../../assets/logo/logo_image.png';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,7 +30,7 @@ const Header = () => {
     const bulletin = useSelector((state) => state.bulletin);
     const buttonRef = useRef(null);
     const [toggle, setToggle] = useState(false);
-    const { data, error, isLoading } = useFetchCartsQuery();
+    const { data } = useFetchCartsQuery();
 
     const navbarToggle = () => {
         navbarRef.current.classList.toggle('show');
@@ -38,10 +38,10 @@ const Header = () => {
         dispatch(createNavbarHeight(headerContainerRef.current.offsetHeight));
     };
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         // 初始紀錄
         dispatch(createNavbarHeight(headerContainerRef.current.offsetHeight));
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         // 監控  navbar 元素高度
@@ -53,12 +53,12 @@ const Header = () => {
         window.addEventListener('resize', checkNavbarHeight);
 
         return () => window.removeEventListener('resize', checkNavbarHeight);
-    }, [headerContainerRef]);
+    }, [dispatch]);
 
     return (
-        <header className='sticky-top' ref={headerContainerRef}>
+        <header className="sticky-top" ref={headerContainerRef}>
             {bulletin.open ? (
-                <div className='position-relative bg-dark text-center text-white '>
+                <div className="position-relative bg-dark text-center text-white ">
                     <Swiper
                         autoplay={{
                             delay: 10000,
@@ -77,99 +77,99 @@ const Header = () => {
                     >
                         {bulletinText.map((text, index) => (
                             <SwiperSlide key={index}>
-                                <div className='slide-content text-ellipsis fs-7 py-3'>{text}</div>
+                                <div className="slide-content text-ellipsis fs-7 py-3">{text}</div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
                     <button
-                        type='button'
-                        className='d-flex justify-content-center align-items-center position-absolute top-50 end-0 translate-middle-y btn btn-none'
-                        title='不再顯示公告'
+                        type="button"
+                        className="d-flex justify-content-center align-items-center position-absolute top-50 end-0 translate-middle-y btn btn-none"
+                        title="不再顯示公告"
                         onClick={() => dispatch(updateBulletinState(false))}
                     >
-                        <BsXLg className='icon-md mx-2' style={{ fill: 'white' }} />
+                        <BsXLg className="icon-md mx-2" style={{ fill: 'white' }} />
                     </button>
                 </div>
             ) : null}
-            <nav className='navbar navbar-expand-lg sticky-top bg-white border-bottom border-2 py-4' role='navigation'>
-                <div className='container-fluid '>
+            <nav className="navbar navbar-expand-lg sticky-top bg-white border-bottom border-2 py-4" role="navigation">
+                <div className="container-fluid ">
                     <Link
-                        to='/'
-                        className='navbar-brand'
-                        onClick={(e) => {
+                        to="/"
+                        className="navbar-brand"
+                        onClick={() => {
                             toggle ? navbarToggle() : null;
                             // 判斷當前是否開啟選單，避免未開啟選單時按下 LOGO 反而打開選單問題
                         }}
                     >
                         <h1>
-                            <span className='d-none'>香氛晨光FragranceDawn</span>
-                            <img src={logoImg} alt='香氛晨光FragranceDawn' className='nav-logo-img' />
+                            <span className="d-none">香氛晨光FragranceDawn</span>
+                            <img src={logoImg} alt="香氛晨光FragranceDawn" className="nav-logo-img" />
                         </h1>
                     </Link>
                     <button
-                        className='navbar-toggler'
-                        type='button'
-                        aria-controls='navbarSupportedContent'
-                        aria-expanded='false'
-                        aria-label='Toggle navigation'
+                        className="navbar-toggler"
+                        type="button"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
                         ref={buttonRef}
                         onClick={() => navbarToggle()}
                     >
-                        <span className='navbar-toggler-icon'></span>
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className={`collapse navbar-collapse `} id='navbarSupportedContent' ref={navbarRef}>
-                        <ul className='navbar-nav fw-bolder me-auto mb-2 mb-lg-0'>
+                    <div className={`collapse navbar-collapse `} id="navbarSupportedContent" ref={navbarRef}>
+                        <ul className="navbar-nav fw-bolder me-auto mb-2 mb-lg-0">
                             {[
                                 { title: '全部商品', path: '/products' },
                                 { title: '香水專欄', path: '/article' },
                                 { title: '優惠', path: '/sale' },
                             ].map((item) => (
-                                <li className='nav-item' key={item.title}>
-                                    <NavLink to={item.path} className='nav-link' onClick={() => navbarToggle()}>
+                                <li className="nav-item" key={item.title}>
+                                    <NavLink to={item.path} className="nav-link" onClick={() => navbarToggle()}>
                                         {item.title}
                                     </NavLink>
                                 </li>
                             ))}
                         </ul>
-                        <div className='d-flex '>
+                        <div className="d-flex ">
                             <NavLink
-                                to='/cart'
-                                role='button'
-                                className='nav-link position-relative navbar-link-hover me-2 py-3 px-2'
+                                to="/cart"
+                                role="button"
+                                className="nav-link position-relative navbar-link-hover me-2 py-3 px-2"
                                 style={({ isActive }) => ({ opacity: isActive ? 1 : 0.8 })}
                                 onClick={() => navbarToggle()}
-                                aria-label='前往購物車頁面'
+                                aria-label="前往購物車頁面"
                             >
-                                <FaCartShopping className='navbar-icon' />
+                                <FaCartShopping className="navbar-icon" />
                                 {data?.data?.carts?.length ? (
-                                    <span className='position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger'>
+                                    <span className="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger">
                                         {data?.data?.carts?.length}
-                                        <span className='visually-hidden'>
+                                        <span className="visually-hidden">
                                             當前購物車共有{data?.data?.carts?.length}筆
                                         </span>
                                     </span>
                                 ) : null}
                             </NavLink>
                             <NavLink
-                                to='/wishlist'
-                                role='button'
-                                className='nav-link navbar-link-hover me-2 py-3 px-2'
+                                to="/wishlist"
+                                role="button"
+                                className="nav-link navbar-link-hover me-2 py-3 px-2"
                                 style={({ isActive }) => ({ opacity: isActive ? 1 : 0.8 })}
                                 onClick={() => navbarToggle()}
-                                aria-label='前往願望追蹤清單頁面'
+                                aria-label="前往願望追蹤清單頁面"
                             >
-                                <BsBookmarkHeartFill className='navbar-icon' />
+                                <BsBookmarkHeartFill className="navbar-icon" />
                             </NavLink>
 
                             <NavLink
-                                to='/account'
-                                role='button'
-                                className='nav-link navbar-link-hover me-4  py-3 px-2'
+                                to="/account"
+                                role="button"
+                                className="nav-link navbar-link-hover me-4  py-3 px-2"
                                 style={({ isActive }) => ({ opacity: isActive ? 1 : 0.8 })}
                                 onClick={() => navbarToggle()}
-                                aria-label='前往個人帳戶頁面'
+                                aria-label="前往個人帳戶頁面"
                             >
-                                <FaUserCircle className='navbar-icon' />
+                                <FaUserCircle className="navbar-icon" />
                             </NavLink>
                         </div>
                     </div>

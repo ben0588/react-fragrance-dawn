@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { removeAllWishlist, removeWishlist } from '../../store/slice/wishListSlice';
-import WishlistButtonGroup from '../../components/WishlistButtonGroup';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useMessage from '../../hooks/useMessage';
 import listImage from '../../assets/account/list.png';
-import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useState } from 'react';
 import { clientAddToCart } from '../../api/clientApis';
 import { addToCart } from '../../store/slice/cartSlice';
@@ -85,18 +83,18 @@ const AccountWishListPage = () => {
     };
 
     return (
-        <div className='container py-3 mb-3'>
+        <div className="container py-3 mb-3">
             {wishlistRedux.length ? (
-                <div className='table-responsive'>
-                    <table className='table align-middle'>
+                <div className="table-responsive">
+                    <table className="table align-middle">
                         <thead>
                             <tr>
                                 <th colSpan={2}>追蹤商品資訊</th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th colSpan={2} className='text-center '>
-                                    <button onClick={() => handleDeleteAllWishList()} className='btn btn-none'>
+                                <th colSpan={2} className="text-center ">
+                                    <button onClick={() => handleDeleteAllWishList()} className="btn btn-none">
                                         清除所有追蹤
                                     </button>
                                 </th>
@@ -106,72 +104,72 @@ const AccountWishListPage = () => {
                             {wishlistRedux?.map((product) => (
                                 <tr key={product.id}>
                                     <td>
-                                        <div className='cart-img-container'>
+                                        <div className="cart-img-container">
                                             <Link to={`/products/${product.id}`}>
                                                 <img
                                                     src={product.imageUrl}
                                                     alt={product.title}
                                                     style={{ width: `100%` }}
-                                                    className='cart-img'
-                                                    title='查看商品詳情'
+                                                    className="cart-img"
+                                                    title="查看商品詳情"
                                                 />
                                             </Link>
                                         </div>
                                     </td>
                                     <td>
-                                        <div className='d-flex justify-content-center align-items-start flex-column '>
+                                        <div className="d-flex justify-content-center align-items-start flex-column ">
                                             <span>{product.title}</span>
-                                            <span className='text-muted fs-7'>{product.content}</span>
-                                            <span className='text-muted fs-7'>{product.unit}</span>
+                                            <span className="text-muted fs-7">{product.content}</span>
+                                            <span className="text-muted fs-7">{product.unit}</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <div className='d-flex justify-content-center align-items-start flex-column '>
-                                            <span className='text-muted fs-7 text-decoration-line-through'>
+                                        <div className="d-flex justify-content-center align-items-start flex-column ">
+                                            <span className="text-muted fs-7 text-decoration-line-through">
                                                 NT{product.origin_price}
                                             </span>
-                                            <span className='text-primary fs-7 fw-bolder'>NT{product.price}</span>
+                                            <span className="text-primary fs-7 fw-bolder">NT{product.price}</span>
                                         </div>
                                     </td>
-                                    <td className='text-center'>
+                                    <td className="text-center">
                                         <button
-                                            className='btn btn-primary btn-primary-hover'
-                                            title='加入購物車'
+                                            className="btn btn-primary btn-primary-hover"
+                                            title="加入購物車"
                                             onClick={() => handleAddToCart(product.id)}
                                             disabled={product.id === isLoadingId}
                                         >
                                             {product.id === isLoadingId ? (
                                                 <>
                                                     <span
-                                                        className='spinner-grow product-card-icon me-1'
-                                                        aria-hidden='true'
+                                                        className="spinner-grow product-card-icon me-1"
+                                                        aria-hidden="true"
                                                     ></span>
-                                                    <span role='status'>正在加入</span>
+                                                    <span role="status">正在加入</span>
                                                 </>
                                             ) : (
                                                 <span>加入購物車</span>
                                             )}
                                         </button>
                                     </td>
-                                    <td className='text-center'>
+                                    <td className="text-center">
                                         <Link
                                             to={`/products/${product.id}`}
-                                            className='link-primary'
-                                            title='查看商品詳情'
+                                            className="link-primary"
+                                            title="查看商品詳情"
                                         >
                                             查看商品詳情
                                         </Link>
                                     </td>
 
                                     <td>
-                                        <div className='d-flex justify-content-center align-items-center'>
+                                        <div className="d-flex justify-content-center align-items-center">
                                             <button
-                                                type='button'
-                                                className='btn btn-none d-flex justify-content-center align-items-center py-2'
+                                                type="button"
+                                                className="btn btn-none d-flex justify-content-center align-items-center py-2"
                                                 onClick={() => handleDeleteWish(product.id, product.title)}
-                                                title='移除追蹤'
+                                                title="移除追蹤"
                                             >
-                                                <FaRegTrashAlt className='cart-icon ' />
+                                                <FaRegTrashAlt className="cart-icon " />
                                             </button>
                                         </div>
                                     </td>
@@ -181,10 +179,10 @@ const AccountWishListPage = () => {
                     </table>
                 </div>
             ) : (
-                <div className='d-flex justify-content-center align-items-center flex-column text-center pt-5'>
-                    <p className='fs-5 p-0 m-0 mb-4'>暫時無追蹤商品</p>
-                    <img src={listImage} alt='追蹤清單圖片' className='opacity-50' />
-                    <Link to='/products' className='link-primary py-2 mt-2'>
+                <div className="d-flex justify-content-center align-items-center flex-column text-center pt-5">
+                    <p className="fs-5 p-0 m-0 mb-4">暫時無追蹤商品</p>
+                    <img src={listImage} alt="追蹤清單圖片" className="opacity-50" />
+                    <Link to="/products" className="link-primary py-2 mt-2">
                         去逛逛
                     </Link>
                 </div>

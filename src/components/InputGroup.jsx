@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
 const InputGroup = memo(function InputGroup({
     name,
@@ -37,5 +38,22 @@ const InputGroup = memo(function InputGroup({
         </div>
     );
 });
+
+InputGroup.propTypes = {
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    groupClass: PropTypes.string,
+    labelClass: PropTypes.string,
+    inputClass: PropTypes.string,
+    children: PropTypes.any,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    checked: PropTypes.bool,
+    disabled: PropTypes.bool,
+    placeholder: PropTypes.string,
+    inputStyle: PropTypes.object,
+};
 
 export default InputGroup;

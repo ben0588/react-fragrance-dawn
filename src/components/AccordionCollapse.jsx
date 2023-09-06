@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Accordion } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-function AccordionCollapse({ list }) {
+const AccordionCollapse = memo(function AccordionCollapse({ list }) {
     return (
         <Accordion defaultActiveKey={['0']} alwaysOpen flush>
             {list?.length &&
@@ -14,14 +14,15 @@ function AccordionCollapse({ list }) {
                 ))}
         </Accordion>
     );
-}
+});
 
 AccordionCollapse.propTypes = {
     list: PropTypes.arrayOf(
         PropTypes.shape({
             title: PropTypes.string,
             text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-        })
+        }),
     ),
 };
-export default memo(AccordionCollapse);
+
+export default AccordionCollapse;

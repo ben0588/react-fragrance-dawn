@@ -1,11 +1,11 @@
 import { memo } from 'react';
 import HashLoader from 'react-spinners/HashLoader';
 
-const FirstLoading = () => {
+const FirstLoading = memo(function FirstLoading() {
     return (
-        <div className='position-fixed top-50 start-50 translate-middle'>
-            <HashLoader color='#0d2e5f' size={50} />
+        <div className="position-fixed top-50 start-50 translate-middle">
+            <HashLoader color="#0d2e5f" size={50} />
         </div>
     );
-};
-export default memo(FirstLoading);
+});
+export default FirstLoading;

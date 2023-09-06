@@ -48,7 +48,7 @@ const AccountOrdersPage = () => {
         handleFetchOrders();
     }, [handleFetchOrders]);
 
-    const handlePaymentOrder = async (id, formData) => {
+    const handlePaymentOrder = async (id) => {
         try {
             dispatch(updateLoadingState(true));
             const result = await clientPaymentOrder(id);
@@ -63,7 +63,7 @@ const AccountOrdersPage = () => {
     };
 
     return (
-        <div className='container  pb-5'>
+        <div className="container  pb-5">
             <AccountOrderModal show={orderShow} handleClose={handleOrderClose} order={targetData} />
             <AccountPaymentModal
                 show={paymentShow}
@@ -75,10 +75,10 @@ const AccountOrdersPage = () => {
                 <div>isLoading 加載中</div>
             ) : orders.length ? (
                 <>
-                    <div className='table-responsive my-3'>
-                        <h4 className='fw-bolder'>訂單列表</h4>
+                    <div className="table-responsive my-3">
+                        <h4 className="fw-bolder">訂單列表</h4>
                         <hr />
-                        <table className='table align-middle'>
+                        <table className="table align-middle">
                             <thead>
                                 <tr>
                                     <th>訂單日期</th>
@@ -117,7 +117,7 @@ const AccountOrdersPage = () => {
                                             </td>
 
                                             <td>
-                                                <Button variant='light' onClick={() => handleOrderShow(order)}>
+                                                <Button variant="light" onClick={() => handleOrderShow(order)}>
                                                     查看
                                                 </Button>
                                             </td>
@@ -145,7 +145,7 @@ const AccountOrdersPage = () => {
                                                         '未確認'
                                                     )
                                                 ) : (
-                                                    <Button variant='primary' onClick={() => handlePaymentShow(order)}>
+                                                    <Button variant="primary" onClick={() => handlePaymentShow(order)}>
                                                         付款
                                                     </Button>
                                                 )}

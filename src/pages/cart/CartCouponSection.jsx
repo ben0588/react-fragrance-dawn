@@ -6,7 +6,7 @@ import { removeCarts } from '../../store/slice/cartSlice';
 import { updateCoupon, removeCoupon, updateLoading } from '../../store/slice/couponSlice';
 import { useState } from 'react';
 import useMessage from '../../hooks/useMessage';
-import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const CartCouponSection = ({ handleFetchCart }) => {
     const dispatch = useDispatch();
@@ -70,25 +70,25 @@ const CartCouponSection = ({ handleFetchCart }) => {
     return (
         <>
             <InputGroup
-                name='code'
-                id='coupon'
-                type='text'
-                title='使用優惠碼'
-                groupClass='mb-3 mt-3 '
-                labelClass='form-label d-block'
-                inputClass='form-control d-inline-block'
+                name="code"
+                id="coupon"
+                type="text"
+                title="使用優惠碼"
+                groupClass="mb-3 mt-3 "
+                labelClass="form-label d-block"
+                inputClass="form-control d-inline-block"
                 inputStyle={{ width: `200px` }}
                 onChange={(e) => setCoupon(e.target.value)}
                 value={couponRedux.code ? couponRedux.code : coupon}
-                placeholder='請輸入優惠碼'
+                placeholder="請輸入優惠碼"
                 disabled={couponRedux.code ? true : false}
                 // 50%OFF
             >
                 <button
-                    type='button'
-                    className='form-control d-inline-block bg-primary  btn-primary-hover text-white ms-1'
+                    type="button"
+                    className="form-control d-inline-block bg-primary  btn-primary-hover text-white ms-1"
                     style={{ width: `100px` }}
-                    title='使用優惠碼'
+                    title="使用優惠碼"
                     value={coupon}
                     onClick={(e) => handleUseOfferCode(e.target.value)}
                     disabled={couponRedux.code ? true : false}
@@ -98,8 +98,8 @@ const CartCouponSection = ({ handleFetchCart }) => {
 
                 {couponRedux.code && (
                     <button
-                        type='button'
-                        className='form-control d-inline-block bg-secondary  btn-primary-hover text-white mt-2'
+                        type="button"
+                        className="form-control d-inline-block bg-secondary  btn-primary-hover text-white mt-2"
                         style={{ width: `100px` }}
                         onClick={() => handleRemoveCoupon()}
                     >
@@ -107,9 +107,9 @@ const CartCouponSection = ({ handleFetchCart }) => {
                     </button>
                 )}
             </InputGroup>
-            <div className='fs-6 mt-4'> 當前可使用優惠卷：</div>
-            <div className='table-responsive'>
-                <table className='table'>
+            <div className="fs-6 mt-4"> 當前可使用優惠卷：</div>
+            <div className="table-responsive">
+                <table className="table">
                     <thead>
                         <tr>
                             <th>活動名稱</th>
@@ -129,8 +129,8 @@ const CartCouponSection = ({ handleFetchCart }) => {
                                 <td>{item.date_at}</td>
                                 <td>
                                     <button
-                                        type='button'
-                                        className='btn btn-outline-primary  text-ellipsis py-1'
+                                        type="button"
+                                        className="btn btn-outline-primary  text-ellipsis py-1"
                                         onClick={() => handleUseOfferCode(item.coupon)}
                                         disabled={couponRedux.code === item.coupon ? true : false}
                                     >
@@ -144,5 +144,9 @@ const CartCouponSection = ({ handleFetchCart }) => {
             </div>
         </>
     );
+};
+
+CartCouponSection.propTypes = {
+    handleFetchCart: PropTypes.func,
 };
 export default CartCouponSection;

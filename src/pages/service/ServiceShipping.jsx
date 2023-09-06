@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router-dom';
 import AccordionCollapse from '../../components/AccordionCollapse';
 
 const ServiceShipping = () => {

@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import PropTypes from 'prop-types';
 
 const TextareaGroup = memo(function TextareaGroup({
     name,
@@ -31,4 +32,18 @@ const TextareaGroup = memo(function TextareaGroup({
         </div>
     );
 });
+
+TextareaGroup.propTypes = {
+    name: PropTypes.string,
+    id: PropTypes.string,
+    title: PropTypes.string,
+    groupClass: PropTypes.string,
+    labelClass: PropTypes.string,
+    textareaClass: PropTypes.string,
+    cols: PropTypes.number,
+    rows: PropTypes.number,
+    placeholder: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+};
 export default TextareaGroup;

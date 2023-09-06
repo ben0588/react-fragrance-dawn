@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Card from '../../components/Card';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '../../components/Pagination';
@@ -6,7 +6,6 @@ import { clientFetchAllProducts, clientFetchCategoryProduct, clientFetchLimitedP
 import useMessage from '../../hooks/useMessage';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
-import { useFetchCartsQuery } from '../../store/store';
 
 const ProductsCardSection = () => {
     const [products, setProducts] = useState([]);
@@ -84,7 +83,7 @@ const ProductsCardSection = () => {
                 ? null
                 : sortingRedux.sorting === '上架時間：由舊到新'
                 ? null
-                : null
+                : null,
         );
         // 資料內容尚未包含創建商品時間資料，未來新增後進行修改
     }, [products, sortingRedux.sorting]);
@@ -110,31 +109,31 @@ const ProductsCardSection = () => {
                 return list;
             }
         }
-    }, [searchRedux.searchText, sortingRedux.sorting]);
+    }, [initialProducts, searchRedux.searchText, sortingRedux.sorting]);
 
     return (
-        <div className='container mb-3 pb-3 pt-1'>
-            <div className='row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mt-5'>
+        <div className="container mb-3 pb-3 pt-1">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mt-5">
                 {searchRedux.isSearch ? (
                     filterSearchProducts.length ? (
                         filterSearchProducts?.map((product) => (
-                            <div className='col' key={product.id}>
+                            <div className="col" key={product.id}>
                                 <Card product={product} />
                             </div>
                         ))
                     ) : (
-                        <div className='text-danger fs-5 w-100 '>關鍵字搜尋不到相關商品，請重新進行搜尋</div>
+                        <div className="text-danger fs-5 w-100 ">關鍵字搜尋不到相關商品，請重新進行搜尋</div>
                     )
                 ) : (
                     filterSortProducts?.map((product) => (
-                        <div className='col' key={product.id}>
+                        <div className="col" key={product.id}>
                             <Card product={product} />
                         </div>
                     ))
                 )}
             </div>
 
-            <div className='pt-4'>
+            <div className="pt-4">
                 {!searchRedux.isSearch && (
                     <Pagination
                         // 當搜尋時因為獲取全部資料去搜尋的，所以分頁資料無法取得正確，故直接不顯示

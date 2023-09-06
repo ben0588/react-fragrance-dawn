@@ -9,7 +9,7 @@ export const categorySlice = createSlice({
         changeCategory(state, action) {
             state.category = action.payload;
         },
-        removeCategory(state, action) {
+        removeCategory() {
             return {
                 category: '',
             };

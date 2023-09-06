@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { AdminFetchAllProducts, adminDeleteProduct, adminFetchLimitedProducts } from '../../api/adminApis';
-import axios from 'axios';
+import { adminDeleteProduct, adminFetchAllProducts, adminFetchLimitedProducts } from '../../api/adminApis';
 import { Modal } from 'bootstrap';
 import ProductModalState from '../../components/admin/ProductModal';
 import DeleteModal from '../../components/DeleteModal';
 import Pagination from '../../components/Pagination';
 import useMessage from '../../hooks/useMessage';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
 import { useOutletContext } from 'react-router-dom';
@@ -21,7 +20,6 @@ const AdminProductsSection = () => {
     const [deleteProductTarget, setDeleteProductTarget] = useState({});
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
-    const loadingRedux = useSelector((state) => state.loading);
     const [categoryList, setCategoryList] = useState([]);
     const [category, setCategory] = useState('');
     const { adminCheck } = useOutletContext();
@@ -70,7 +68,7 @@ const AdminProductsSection = () => {
 
     const fetchAllProducts = useCallback(async () => {
         try {
-            const result = await AdminFetchAllProducts();
+            const result = await adminFetchAllProducts();
             const newCategoryList = [...new Set(Object.values(result.products).map((item) => item.category))];
             setCategoryList(newCategoryList);
         } catch (error) {
@@ -105,7 +103,7 @@ const AdminProductsSection = () => {
     };
 
     return (
-        <div className='p-3'>
+        <div className="p-3">
             <ProductModalState
                 handleCancelProductModal={handleCancelProductModal}
                 fetchProducts={fetchProducts}
@@ -122,32 +120,32 @@ const AdminProductsSection = () => {
 
             <h3>產品列表</h3>
             <hr />
-            <div className='row align-items-center'>
-                <div className='col'>
-                    <div className='form-floating  '>
+            <div className="row align-items-center">
+                <div className="col">
+                    <div className="form-floating  ">
                         <select
-                            name='category'
-                            id='searchCategory'
-                            className='form-select w-50'
+                            name="category"
+                            id="searchCategory"
+                            className="form-select w-50"
                             onChange={(e) => handleFilterCategory(e)}
                             value={category}
                         >
-                            <option className='bg-dark text-white' value=''>
+                            <option className="bg-dark text-white" value="">
                                 預設全部
                             </option>
                             {categoryList?.map((item) => (
-                                <option className='bg-dark text-white fs-6' value={item} key={item}>
+                                <option className="bg-dark text-white fs-6" value={item} key={item}>
                                     {item}
                                 </option>
                             ))}
                         </select>
-                        <label htmlFor='searchCategory'>使用類別搜尋</label>
+                        <label htmlFor="searchCategory">使用類別搜尋</label>
                     </div>
                 </div>
-                <div className='col '>
+                <div className="col ">
                     <button
-                        type='button'
-                        className='btn btn-primary float-end'
+                        type="button"
+                        className="btn btn-primary float-end"
                         // data-bs-toggle='modal'
                         // data-bs-target='#productModal'
                         onClick={() => handleOpenProductModal('create', {})}
@@ -156,15 +154,15 @@ const AdminProductsSection = () => {
                     </button>
                 </div>
             </div>
-            <div className='table-responsive'>
-                <table className='table align-middle'>
+            <div className="table-responsive">
+                <table className="table align-middle">
                     <thead>
                         <tr>
-                            <th scope='col'>分類</th>
-                            <th scope='col'>名稱</th>
-                            <th scope='col'>售價</th>
-                            <th scope='col'>啟用狀態</th>
-                            <th scope='col'>編輯</th>
+                            <th scope="col">分類</th>
+                            <th scope="col">名稱</th>
+                            <th scope="col">售價</th>
+                            <th scope="col">啟用狀態</th>
+                            <th scope="col">編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -178,15 +176,15 @@ const AdminProductsSection = () => {
                                 </td>
                                 <td>
                                     <button
-                                        type='button'
-                                        className='btn btn-primary btn-sm'
+                                        type="button"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() => handleOpenProductModal('edit', product)} // 直接帶入產品資訊
                                     >
                                         編輯
                                     </button>
                                     <button
-                                        type='button'
-                                        className='btn btn-outline-danger btn-sm ms-2'
+                                        type="button"
+                                        className="btn btn-outline-danger btn-sm ms-2"
                                         onClick={() => handleOpenDeleteModal(product)}
                                     >
                                         刪除

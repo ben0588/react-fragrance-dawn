@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import '../../../node_modules/swiper/swiper-bundle.css'; // 所有 Swiper 樣式
 import { Pagination } from 'swiper/modules';
@@ -11,15 +11,15 @@ const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, al
     const nextRef = useRef(null);
 
     return (
-        <div className='row flex-row flex-sm-column-reverse flex-lg-row '>
-            <div className='d-none d-sm-block col-md-12 col-lg-12 col-xl-3  ps-sm-2 ps-lg-1 ps-xl-4 ps-xxl-0 '>
+        <div className="row flex-row flex-sm-column-reverse flex-lg-row ">
+            <div className="d-none d-sm-block col-md-12 col-lg-12 col-xl-3  ps-sm-2 ps-lg-1 ps-xl-4 ps-xxl-0 ">
                 <Swiper
                     onSwiper={setThumbsSwiper} // 使用 onSwiper 綁定
                     slidesPerView={5}
                     spaceBetween={10}
                     freeMode={true}
                     watchSlidesProgress={true}
-                    className='thumbs-swiper-container ms-sm-1 ms-lg-0' // 直接修改此樣式
+                    className="thumbs-swiper-container ms-sm-1 ms-lg-0" // 直接修改此樣式
                     breakpoints={{
                         768: {
                             //  >= width
@@ -28,14 +28,14 @@ const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, al
                     }}
                 >
                     {imagesList?.map((item, index) => (
-                        <SwiperSlide key={index} className='thumbs-swiper my-sm-2 my-xl-0 mb-xl-2 ms-xl-2 ms-xxl-4  '>
-                            <img src={item} alt={alt} className='thumbs-swiper-img d-block object-fit-cover' />
+                        <SwiperSlide key={index} className="thumbs-swiper my-sm-2 my-xl-0 mb-xl-2 ms-xl-2 ms-xxl-4  ">
+                            <img src={item} alt={alt} className="thumbs-swiper-img d-block object-fit-cover" />
                         </SwiperSlide>
                     ))}
                 </Swiper>
             </div>
 
-            <div className='col-md-12 col-lg-12 col-xl-9 px-lg-1'>
+            <div className="col-md-12 col-lg-12 col-xl-9 px-lg-1">
                 <Swiper
                     slidesPerView={1}
                     slidesPerGroup={1}
@@ -47,7 +47,7 @@ const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, al
                     }}
                     grabCursor={true}
                     pagination={{ clickable: true }}
-                    className='mySwiper'
+                    className="mySwiper"
                     thumbs={{ swiper: thumbsSwiper }}
                     style={{
                         '--swiper-navigation-color': '#111c30',
@@ -63,13 +63,13 @@ const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, al
                         swiper.navigation.update();
                     }}
                 >
-                    {imagesList?.map((item, index) => (
+                    {imagesList?.map((item) => (
                         <SwiperSlide key={item}>
-                            <img src={item} alt={alt} className='swiper-img' />
+                            <img src={item} alt={alt} className="swiper-img" />
                         </SwiperSlide>
                     ))}
-                    <div ref={prevRef} className='swiper-button-prev'></div>
-                    <div ref={nextRef} className='swiper-button-next'></div>
+                    <div ref={prevRef} className="swiper-button-prev"></div>
+                    <div ref={nextRef} className="swiper-button-next"></div>
                 </Swiper>
             </div>
         </div>

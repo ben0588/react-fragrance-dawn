@@ -1,9 +1,7 @@
 import { useForm } from 'react-hook-form';
 import ValidationSelectGroup from '../../components/ReactHookForm/ValidationSelectGroup';
-import SelectGroup from '../../components/SelectGroup';
 import ValidationInputGroup from '../../components/ReactHookForm/ValidationInputGroup';
 import ValidationTextareaGroup from '../../components/ReactHookForm/ValidationTextareaGroup';
-import axios from 'axios';
 import useMessage from '../../hooks/useMessage';
 
 const ServiceContactUs = () => {
@@ -32,7 +30,7 @@ const ServiceContactUs = () => {
         { text: '其他' },
     ];
 
-    const handleSubmitForm = async (data) => {
+    const handleSubmitForm = async () => {
         try {
             // const result = await axios.post() // 發送內容
             inputToastMessage({ success: true, message: '表單內容已送出，我們將盡快處理並與您聯絡 !' });
@@ -45,48 +43,48 @@ const ServiceContactUs = () => {
     return (
         <div>
             <p>如果您有任何問題、意見或需要協助，請隨時聯繫我們的客戶服務團隊</p>
-            <h4 className='border-top border-2 mt-4 pt-2'> 電話連絡：</h4>
-            <div className='mt-4'>
-                客服專線 <a href='tel:+886-2-1234567'>0800-775-800</a>
+            <h4 className="border-top border-2 mt-4 pt-2"> 電話連絡：</h4>
+            <div className="mt-4">
+                客服專線 <a href="tel:+886-2-1234567">0800-775-800</a>
             </div>
             <div>客服中心營業時間：</div>
             <p> 週一至週五 (例假日除外) 9:30-12:30, 14:00-17:30 </p>
 
-            <h4 className='border-top border-2 mt-4 pt-2'>電子信箱聯絡：</h4>
+            <h4 className="border-top border-2 mt-4 pt-2">電子信箱聯絡：</h4>
             <form onSubmit={handleSubmit(handleSubmitForm)}>
                 <ValidationSelectGroup
-                    id='question'
-                    labelText='我想詢問的事項是關於：'
-                    groupClass='mt-3'
-                    labelClass='form-label mb-1'
-                    selectClass='form-control'
+                    id="question"
+                    labelText="我想詢問的事項是關於："
+                    groupClass="mt-3"
+                    labelClass="form-label mb-1"
+                    selectClass="form-control"
                     errors={errors}
                     register={register}
                     required={true}
                     rules={{
                         required: { value: true, message: '必須選擇詢問類型' },
                     }}
-                    defaultValue=''
+                    defaultValue=""
                 >
-                    <option className='bg-dark text-white' value='' disabled>
+                    <option className="bg-dark text-white" value="" disabled>
                         *請選擇
                     </option>
                     {options.map((items) => (
-                        <option value={items.text} key={items.text} className='bg-dark text-white'>
+                        <option value={items.text} key={items.text} className="bg-dark text-white">
                             {items.text}
                         </option>
                     ))}
                 </ValidationSelectGroup>
                 <ValidationInputGroup
-                    id='name'
-                    type='text'
+                    id="name"
+                    type="text"
                     errors={errors}
                     register={register}
-                    groupClass='mt-3'
-                    labelText='聯絡人姓名'
-                    labelClass='form-label mb-1'
-                    inputClass='form-control'
-                    placeholder='請輸入聯絡人姓名'
+                    groupClass="mt-3"
+                    labelText="聯絡人姓名"
+                    labelClass="form-label mb-1"
+                    inputClass="form-control"
+                    placeholder="請輸入聯絡人姓名"
                     required={true}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
@@ -98,15 +96,15 @@ const ServiceContactUs = () => {
                     }}
                 />
                 <ValidationInputGroup
-                    id='email'
-                    type='email'
+                    id="email"
+                    type="email"
                     errors={errors}
                     register={register}
-                    groupClass='mt-3'
-                    labelText='電子信箱'
-                    labelClass='form-label mb-1'
-                    inputClass='form-control'
-                    placeholder='請輸入電子郵件'
+                    groupClass="mt-3"
+                    labelText="電子信箱"
+                    labelClass="form-label mb-1"
+                    inputClass="form-control"
+                    placeholder="請輸入電子郵件"
                     required={true}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
@@ -118,15 +116,15 @@ const ServiceContactUs = () => {
                 />
 
                 <ValidationInputGroup
-                    id='tel'
-                    type='tel'
+                    id="tel"
+                    type="tel"
                     errors={errors}
                     register={register}
-                    groupClass='mt-3'
-                    labelText='聯絡手機'
-                    labelClass='form-label mb-1'
-                    inputClass='form-control'
-                    placeholder='請輸入聯絡手機'
+                    groupClass="mt-3"
+                    labelText="聯絡手機"
+                    labelClass="form-label mb-1"
+                    inputClass="form-control"
+                    placeholder="請輸入聯絡手機"
                     required={true}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
@@ -139,22 +137,22 @@ const ServiceContactUs = () => {
                 />
 
                 <ValidationTextareaGroup
-                    id='content'
-                    type='text'
+                    id="content"
+                    type="text"
                     errors={errors}
                     register={register}
-                    groupClass='mt-3'
-                    labelText='內容'
-                    labelClass='form-label mb-1'
-                    textareaClass='form-control'
-                    placeholder='請描述問題'
+                    groupClass="mt-3"
+                    labelText="內容"
+                    labelClass="form-label mb-1"
+                    textareaClass="form-control"
+                    placeholder="請描述問題"
                     required={true}
                     rows={5}
                     rules={{
                         required: { value: true, message: '此欄位必填' },
                     }}
                 />
-                <input type='submit' value='提交表單' className='btn btn-primary btn-primary-hover w-100 mt-4' />
+                <input type="submit" value="提交表單" className="btn btn-primary btn-primary-hover w-100 mt-4" />
             </form>
         </div>
     );

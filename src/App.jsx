@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import React, { lazy, Suspense } from 'react';
 import {
     Layout,
     Error,
@@ -43,7 +42,6 @@ import AdminDashboardHome from './pages/admin/AdminDashboardHome';
 function App() {
     return (
         <>
-            {/* <Suspense fallback={null}> */}
             <Routes>
                 <Route path='/' element={<Layout />}>
                     <Route index element={<HomePage />}></Route>
@@ -90,7 +88,6 @@ function App() {
                     </Route>
                 </Route>
             </Routes>
-            {/* </Suspense> */}
         </>
     );
 }

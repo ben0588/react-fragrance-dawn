@@ -5,7 +5,7 @@ import DeleteModal from '../../components/DeleteModal';
 import Pagination from '../../components/Pagination';
 import CouponModal from '../../components/admin/CouponModal';
 import useMessage from '../../hooks/useMessage';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
 import { useOutletContext } from 'react-router-dom';
@@ -84,7 +84,7 @@ const AdminCouponsSection = () => {
     };
 
     return (
-        <div className='p-3'>
+        <div className="p-3">
             <CouponModal
                 handleCancelCouponModal={handleCancelCouponModal}
                 fetchCoupons={fetchCoupons}
@@ -101,10 +101,10 @@ const AdminCouponsSection = () => {
 
             <h3>優惠卷列表</h3>
             <hr />
-            <div className='text-end'>
+            <div className="text-end">
                 <button
-                    type='button'
-                    className='btn btn-primary'
+                    type="button"
+                    className="btn btn-primary"
                     // data-bs-toggle='modal'
                     // data-bs-target='#productModal'
                     onClick={() => handleOpenCouponModal('create', {})}
@@ -112,16 +112,16 @@ const AdminCouponsSection = () => {
                     建立新優惠卷
                 </button>
             </div>
-            <div className='table-responsive'>
-                <table className='table align-middle'>
+            <div className="table-responsive">
+                <table className="table align-middle">
                     <thead>
                         <tr>
-                            <th scope='col'>標題</th>
-                            <th scope='col'>折扣比(%)</th>
-                            <th scope='col'>到期日</th>
-                            <th scope='col'>優惠碼</th>
-                            <th scope='col'>啟用狀態</th>
-                            <th scope='col'>編輯</th>
+                            <th scope="col">標題</th>
+                            <th scope="col">折扣比(%)</th>
+                            <th scope="col">到期日</th>
+                            <th scope="col">優惠碼</th>
+                            <th scope="col">啟用狀態</th>
+                            <th scope="col">編輯</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -136,15 +136,15 @@ const AdminCouponsSection = () => {
                                 </td>
                                 <td>
                                     <button
-                                        type='button'
-                                        className='btn btn-primary btn-sm'
+                                        type="button"
+                                        className="btn btn-primary btn-sm"
                                         onClick={() => handleOpenCouponModal('edit', coupon)} // 直接帶入產品資訊
                                     >
                                         編輯
                                     </button>
                                     <button
-                                        type='button'
-                                        className='btn btn-outline-danger btn-sm ms-2'
+                                        type="button"
+                                        className="btn btn-outline-danger btn-sm ms-2"
                                         onClick={() => handleOpenDeleteModal(coupon)}
                                     >
                                         刪除

@@ -11,7 +11,7 @@ export const searchSlice = createSlice({
             state.isSearch = action.payload.isSearch;
             state.searchText = action.payload.searchText;
         },
-        removeSearch(state, action) {
+        removeSearch() {
             return {
                 isSearch: false,
                 searchText: '',

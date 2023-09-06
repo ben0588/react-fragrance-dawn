@@ -32,12 +32,12 @@ const Footer = () => {
     };
     return (
         <footer style={{ backgroundColor: 'black' }}>
-            <div className='container text-secondary py-5 '>
-                <div className='row mx-auto'>
-                    <div className='col-sm-6 col-md-2  pt-2'>
+            <div className="container text-secondary py-5 ">
+                <div className="row mx-auto">
+                    <div className="col-sm-6 col-md-2  pt-2">
                         <ListGroup
-                            title='認識我們'
-                            titleClass='text-white fw-bolder'
+                            title="認識我們"
+                            titleClass="text-white fw-bolder"
                             list={[
                                 { title: '品牌理念', path: '/about/' },
                                 { title: '加入我們', path: '/about/joinUs' },
@@ -45,20 +45,20 @@ const Footer = () => {
                             ]}
                         />
                     </div>
-                    <div className='col-sm-6 col-md-2  pt-2'>
+                    <div className="col-sm-6 col-md-2  pt-2">
                         <ListGroup
-                            title='我的帳戶'
-                            titleClass='text-white fw-bolder'
+                            title="我的帳戶"
+                            titleClass="text-white fw-bolder"
                             list={[
                                 { title: '追蹤訂單', path: '/orderTracking' },
                                 { title: '我的訂單', path: '/account/orders' },
                             ]}
                         />
                     </div>
-                    <div className='col-sm-6 col-md-2  pt-2'>
+                    <div className="col-sm-6 col-md-2  pt-2">
                         <ListGroup
-                            title='顧客服務'
-                            titleClass='text-white fw-bolder'
+                            title="顧客服務"
+                            titleClass="text-white fw-bolder"
                             list={[
                                 { title: '常見問題', path: '/service/' },
                                 { title: '運送說明', path: '/service/shipping' },
@@ -69,50 +69,50 @@ const Footer = () => {
                             ]}
                         />
                     </div>
-                    <div className='col-sm-6 col-md-2 pt-2'>
-                        <ListGroup title='關注我們' titleClass='text-white fw-bolder'>
+                    <div className="col-sm-6 col-md-2 pt-2">
+                        <ListGroup title="關注我們" titleClass="text-white fw-bolder">
                             <li>
                                 {[
-                                    <BsLine className='icon-md' />,
-                                    <BsFacebook className='icon-md' />,
-                                    <BsInstagram className='icon-md' />,
-                                    <BsYoutube className='icon-md' />,
+                                    { icon: <BsLine className="icon-md" /> },
+                                    { icon: <BsFacebook className="icon-md" /> },
+                                    { icon: <BsInstagram className="icon-md" /> },
+                                    { icon: <BsYoutube className="icon-md" /> },
                                 ].map((item, i) => (
-                                    <span className='footer-text-hover me-2' key={i}>
-                                        {item}
+                                    <span className="footer-text-hover me-2" key={i}>
+                                        {item.icon}
                                     </span>
                                 ))}
                             </li>
                         </ListGroup>
-                        <div className='mt-4'>
-                            <ListGroup title='後臺系統' titleClass='text-white fw-bolder'>
+                        <div className="mt-4">
+                            <ListGroup title="後臺系統" titleClass="text-white fw-bolder">
                                 <li>
-                                    <Link to='/admin' className='text-secondary link-primary-hover fs-7 pb-2'>
+                                    <Link to="/admin" className="text-secondary link-primary-hover fs-7 pb-2">
                                         前往後臺
                                     </Link>
                                 </li>
                             </ListGroup>
                         </div>
                     </div>
-                    <div className='col-sm-6 col-md-4  pt-2 '>
-                        <ListGroup title='訂閱電子報' titleClass='text-white fw-bolder'>
-                            <li className='fs-7 text-white pb-2'>
-                                <label htmlFor='footer-email-input'>輸入電子郵件得最新商品與活動</label>
+                    <div className="col-sm-6 col-md-4  pt-2 ">
+                        <ListGroup title="訂閱電子報" titleClass="text-white fw-bolder">
+                            <li className="fs-7 text-white pb-2">
+                                <label htmlFor="footer-email-input">輸入電子郵件得最新商品與活動</label>
                             </li>
-                            <li className=''>
-                                <div className='input-group '>
+                            <li className="">
+                                <div className="input-group ">
                                     <input
-                                        type='email'
-                                        id='footer-email-input'
-                                        placeholder='請輸入您的電子信箱地址'
-                                        className='form-control py-1 ps-1'
+                                        type="email"
+                                        id="footer-email-input"
+                                        placeholder="請輸入您的電子信箱地址"
+                                        className="form-control py-1 ps-1"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                 </div>
                                 <button
-                                    type='button'
-                                    className='btn btn-secondary mt-2'
+                                    type="button"
+                                    className="btn btn-secondary mt-2"
                                     style={{ width: `60px` }}
                                     onClick={() => handleSubmit()}
                                     disabled={email === '' && true}
@@ -124,17 +124,17 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <small className='d-flex align-items-center justify-content-center flex-column flex-md-row text-white bg-secondary py-2 '>
+            <small className="d-flex align-items-center justify-content-center flex-column flex-md-row text-white bg-secondary py-2 ">
                 Copyright © 2023
                 <Link
-                    to='https://github.com/ben0588'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    title='訪問作者GitHub連結'
-                    className='d-flex align-items-center justify-content-center text-white link-primary-hover mx-2'
+                    to="https://github.com/ben0588"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="訪問作者GitHub連結"
+                    className="d-flex align-items-center justify-content-center text-white link-primary-hover mx-2"
                 >
                     Ben0588
-                    <BsGithub className='icon-sm ms-2' />
+                    <BsGithub className="icon-sm ms-2" />
                 </Link>
                 本網站僅供個人作品集製作，並無商業用途 !
             </small>

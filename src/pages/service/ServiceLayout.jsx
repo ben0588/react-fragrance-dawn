@@ -1,11 +1,11 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 const ServiceLayout = () => {
     return (
-        <div className='container py-3'>
-            <div className='row'>
-                <div className='col-md-3 pb-3'>
-                    <ul className='nav d-flex justify-content-center align-items-center justify-content-md-start pb-3'>
+        <div className="container py-3">
+            <div className="row">
+                <div className="col-md-3 pb-3">
+                    <ul className="nav d-flex justify-content-center align-items-center justify-content-md-start pb-3">
                         {[
                             { title: '常見問題', path: '/service/' },
                             { title: '運送說明', path: '/service/shipping' },
@@ -14,7 +14,7 @@ const ServiceLayout = () => {
                             { title: '聯絡我們', path: '/service/contactUs' },
                             { title: '隱私權政策', path: '/service/privacy' },
                         ].map((item, index) => (
-                            <li key={index} className='nav-item w-100'>
+                            <li key={index} className="nav-item w-100">
                                 <NavLink
                                     to={item.path}
                                     className={({ isActive }) => `nav-link  link-hover  ${isActive ? 'active  ' : ''}`}
@@ -29,7 +29,7 @@ const ServiceLayout = () => {
                         ))}
                     </ul>
                 </div>
-                <div className='col-md-8 '>
+                <div className="col-md-8 ">
                     <Outlet />
                 </div>
             </div>

@@ -11,25 +11,25 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
 
     return (
         <div>
-            <Modal show={show} onHide={handleClose} size='lg'>
+            <Modal show={show} onHide={handleClose} size="lg">
                 <Modal.Header closeButton>
                     <Modal.Title>
                         <span>訂單：{order.id}</span>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className='row'>
-                        <div className='col-3'>姓名</div>
-                        <div className='col-9'>{order?.user?.name}</div>
-                        <div className='col-3 mt-2'>郵箱</div>
-                        <div className='col-9 mt-2'>{order?.user?.email}</div>
-                        <div className='col-3 mt-2'>連絡電話</div>
-                        <div className='col-9 mt-2'>{order?.user?.tel}</div>
-                        <div className='col-3 mt-2'>寄送地址</div>
-                        <div className='col-9 mt-2'>{order?.user?.address}</div>
+                    <div className="row">
+                        <div className="col-3">姓名</div>
+                        <div className="col-9">{order?.user?.name}</div>
+                        <div className="col-3 mt-2">郵箱</div>
+                        <div className="col-9 mt-2">{order?.user?.email}</div>
+                        <div className="col-3 mt-2">連絡電話</div>
+                        <div className="col-9 mt-2">{order?.user?.tel}</div>
+                        <div className="col-3 mt-2">寄送地址</div>
+                        <div className="col-9 mt-2">{order?.user?.address}</div>
                     </div>
-                    <div className='table-responsive'>
-                        <table className='table align-middle mt-5'>
+                    <div className="table-responsive">
+                        <table className="table align-middle mt-5">
                             <thead>
                                 <tr>
                                     <th>名稱</th>
@@ -50,7 +50,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td className='text-end fs-5 fw-bolder pe-4' colSpan={4}>
+                                    <td className="text-end fs-5 fw-bolder pe-4" colSpan={4}>
                                         合計：NT{handlePriceToTw(order.total)}
                                     </td>
                                 </tr>
@@ -67,13 +67,13 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                     </p>
                     <p>
                         訂單狀態：
-                        {order.is_paid ? <span className='text-success '>付款完成</span> : <span>未付款</span>}
+                        {order.is_paid ? <span className="text-success ">付款完成</span> : <span>未付款</span>}
                     </p>
                     <p>
                         訂單進度：
                         <span
                             className={`${
-                                Boolean(order.is_paid)
+                                order.is_paid
                                     ? order?.status === '1'
                                         ? 'text-dark'
                                         : order?.status === '2'
@@ -84,7 +84,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                                     : ''
                             }`}
                         >
-                            {Boolean(order.is_paid)
+                            {order.is_paid
                                 ? order?.status === '1'
                                     ? '已確認'
                                     : order?.status === '2'
@@ -97,7 +97,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                     </p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant='secondary' onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleClose}>
                         離開
                     </Button>
                 </Modal.Footer>

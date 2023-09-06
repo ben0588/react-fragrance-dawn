@@ -1,11 +1,10 @@
-import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 // import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './style/sass/all.scss';
 import axios from 'axios';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store/store.jsx';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -21,5 +20,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <App />
             </PersistGate>
         </Provider>
-    </HashRouter>
+    </HashRouter>,
 );

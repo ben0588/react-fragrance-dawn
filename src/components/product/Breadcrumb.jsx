@@ -7,15 +7,13 @@ import PropTypes from 'prop-types';
 const Breadcrumb = memo(function Breadcrumb({ category, title, className }) {
     const dispatch = useDispatch();
 
-    const handleToCategory = (e) => {
-        dispatch(changeCategory(category));
-    };
+    const handleToCategory = () => dispatch(changeCategory(category));
 
     return (
-        <nav aria-label='breadcrumb py-2'>
+        <nav aria-label="breadcrumb py-2">
             <ol className={`breadcrumb ${className ? className : ''}`}>
-                <li className='breadcrumb-item'>
-                    <NavLink to='/products'>全部商品</NavLink>
+                <li className="breadcrumb-item">
+                    <NavLink to="/products">全部商品</NavLink>
                 </li>
                 {category && (
                     <li className={`breadcrumb-item `}>
@@ -25,7 +23,7 @@ const Breadcrumb = memo(function Breadcrumb({ category, title, className }) {
                     </li>
                 )}
                 {title && (
-                    <li className={`breadcrumb-item active`} aria-current='page'>
+                    <li className={`breadcrumb-item active`} aria-current="page">
                         {title}
                     </li>
                 )}

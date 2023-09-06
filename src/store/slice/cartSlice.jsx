@@ -14,11 +14,10 @@ export const cartSlice = createSlice({
             const index = state.findIndex((product) => product.product_id === action.payload);
             state.splice(index, 1);
         },
-        removeCarts(state, action) {
+        removeCarts() {
             return [];
         },
     },
-
 });
 
 export const { addToCart, deleteCart, removeCarts } = cartSlice.actions;

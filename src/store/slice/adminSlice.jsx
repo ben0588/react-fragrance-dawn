@@ -23,7 +23,7 @@ export const adminSlice = createSlice({
                 state.uid = action.payload.uid;
             }
         },
-        removeAdminLogout(state, action) {
+        removeAdminLogout() {
             return {
                 isLogin: false,
                 uid: '',

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { memo } from 'react';
@@ -53,11 +53,11 @@ const CartBreadcrumb = memo(function CartBreadcrumb({ className }) {
     }, [location]);
 
     return (
-        <nav className='py-5'>
-            <div className='row row-cols-5'>
+        <nav className={className}>
+            <div className="row row-cols-5">
                 {navbarList.map((item, index) => (
                     <div key={index} className={`${index % 2 === 1 ? '' : 'px-0'}`}>
-                        <div className='d-flex flex-column justify-content-center align-items-center position-relative h-100'>
+                        <div className="d-flex flex-column justify-content-center align-items-center position-relative h-100">
                             {index % 2 === 1 ? (
                                 <>
                                     <Inner $page={item.page <= pages ? 'yes' : 'no'} />

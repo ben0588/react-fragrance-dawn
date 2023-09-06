@@ -10,7 +10,7 @@ export default defineConfig({
         postcss: {
             plugins: [
                 autoprefixer({
-                    browsers: '> 2%, IE 11',
+                    overrideBrowserslist: ['last 2 versions'],
                     grid: true,
                     flexbox: true,
                     remove: false,

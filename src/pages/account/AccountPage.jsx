@@ -8,18 +8,18 @@ const AccountPage = () => {
     const { inputToastMessage } = useMessage();
 
     return (
-        <div className='p-3 mb-3'>
-            <h4 className='fw-bolder pb-0'>帳戶中心</h4>
+        <div className="p-3 mb-3">
+            <h4 className="fw-bolder pb-0">帳戶中心</h4>
             <hr />
-            <p>親愛的會員 XXX 你好，歡迎回來​！</p>
+            <p>親愛的會員_XXX_你好，歡迎回來</p>
             <hr />
-            <div className='mb-2'>
+            <div className="mb-2">
                 公告開啟狀態：
                 {bulletin.open ? '開啟中' : '關閉中'}
             </div>
             <div>{bulletin.open ? '感謝您的支持，請留意更多優惠通知！' : '可開啟接受更多優惠訊息與通知，謝謝！'}</div>
             <button
-                type='button'
+                type="button"
                 className={`btn btn-dark mt-2`}
                 onClick={() => {
                     dispatch(updateBulletinState(!bulletin.open));
