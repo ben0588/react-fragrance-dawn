@@ -12,8 +12,12 @@ const cartApi = createApi({
     endpoints(builder) {
         return {
             fetchCarts: builder.query({
-                providesTags: () => {
-                    return ['Carts'];
+                providesTags: (result) => {
+                    const tags = result.data.carts.map((cart) => {
+                        return { type: 'Cart', id: cart.id };
+                    });
+                    tags.push({ type: 'Carts' });
+                    return tags;
                 },
                 query: () => {
                     return {
@@ -24,7 +28,7 @@ const cartApi = createApi({
             }),
             addToCart: builder.mutation({
                 invalidatesTags: () => {
-                    return ['Carts'];
+                    return [{ type: 'Carts' }];
                 },
                 query: (data) => {
                     return {
@@ -38,7 +42,7 @@ const cartApi = createApi({
             }),
             updateCart: builder.mutation({
                 invalidatesTags: () => {
-                    return ['Carts'];
+                    return [{ type: 'Carts' }];
                 },
                 query: ({ id, data }) => {
                     return {
@@ -52,7 +56,7 @@ const cartApi = createApi({
             }),
             deleteCart: builder.mutation({
                 invalidatesTags: () => {
-                    return ['Carts'];
+                    return [{ type: 'Carts' }];
                 },
                 query: (id) => {
                     return {
@@ -63,12 +67,26 @@ const cartApi = createApi({
             }),
             removeCarts: builder.mutation({
                 invalidatesTags: () => {
-                    return ['Carts'];
+                    return [{ type: 'Carts' }];
                 },
                 query: () => {
                     return {
                         url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/carts`,
                         method: 'DELETE',
+                    };
+                },
+            }),
+            createOrder: builder.mutation({
+                invalidatesTags: () => {
+                    return [{ type: 'Carts' }];
+                },
+                query: (data) => {
+                    return {
+                        url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/order`,
+                        method: 'POST',
+                        body: {
+                            ...data,
+                        },
                     };
                 },
             }),
@@ -82,6 +100,7 @@ export const {
     useUpdateCartMutation,
     useDeleteCartMutation,
     useRemoveCartsMutation,
+    useCreateOrderMutation,
 } = cartApi;
 
 export { cartApi };

@@ -7,11 +7,10 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import ValidationSelectGroup from '../../components/ReactHookForm/ValidationSelectGroup';
 import { BsCheckAll, BsChevronDoubleLeft } from 'react-icons/bs';
-import { clientCreateOrder } from '../../api/clientApis';
 import useMessage from '../../hooks/useMessage';
 import { removeCarts } from '../../store/slice/cartSlice';
 import { removeCoupon } from '../../store/slice/couponSlice';
-import { persistor } from '../../store/store';
+import { persistor, useCreateOrderMutation } from '../../store/store';
 import Swal from 'sweetalert2';
 
 const CartCheckoutSection = () => {
@@ -23,6 +22,7 @@ const CartCheckoutSection = () => {
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [createOrder] = useCreateOrderMutation();
     const {
         register,
         handleSubmit,
@@ -80,7 +80,7 @@ const CartCheckoutSection = () => {
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
-                        return await clientCreateOrder(form);
+                        return await createOrder(form);
                     } catch (error) {
                         Swal.showValidationMessage(`請求失敗： ${error}`);
                     }
@@ -134,23 +134,23 @@ const CartCheckoutSection = () => {
     const allFieldsFilled = Object.values(watch()).every((value) => value !== '');
 
     return (
-        <div className='mb-3 pb-3'>
-            <div className='row'>
-                <div className='col-lg-8  pt-2 pb-3'>
-                    <h4 className='border-bottom border-2 border-primary fs-5 pb-2'>配送資料</h4>
+        <div className="mb-3 pb-3">
+            <div className="row">
+                <div className="col-lg-8  pt-2 pb-3">
+                    <h4 className="border-bottom border-2 border-primary fs-5 pb-2">配送資料</h4>
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                         <fieldset>
                             <legend>填寫寄送者資訊</legend>
                             <ValidationInputGroup
-                                id='email'
-                                type='email'
+                                id="email"
+                                type="email"
                                 errors={errors}
                                 register={register}
-                                groupClass='mt-3'
-                                labelText='Email'
-                                labelClass='form-label mb-1'
-                                inputClass='form-control'
-                                placeholder='請輸入電子郵件'
+                                groupClass="mt-3"
+                                labelText="Email"
+                                labelClass="form-label mb-1"
+                                inputClass="form-control"
+                                placeholder="請輸入電子郵件"
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
@@ -161,15 +161,15 @@ const CartCheckoutSection = () => {
                                 }}
                             />
                             <ValidationInputGroup
-                                id='name'
-                                type='text'
+                                id="name"
+                                type="text"
                                 errors={errors}
                                 register={register}
-                                groupClass='mt-3'
-                                labelText='聯絡人姓名'
-                                labelClass='form-label mb-1'
-                                inputClass='form-control'
-                                placeholder='請輸入聯絡人姓名'
+                                groupClass="mt-3"
+                                labelText="聯絡人姓名"
+                                labelClass="form-label mb-1"
+                                inputClass="form-control"
+                                placeholder="請輸入聯絡人姓名"
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
@@ -181,15 +181,15 @@ const CartCheckoutSection = () => {
                                 }}
                             />
                             <ValidationInputGroup
-                                id='tel'
-                                type='tel'
+                                id="tel"
+                                type="tel"
                                 errors={errors}
                                 register={register}
-                                groupClass='mt-3'
-                                labelText='聯絡手機'
-                                labelClass='form-label mb-1'
-                                inputClass='form-control'
-                                placeholder='請輸入聯絡手機'
+                                groupClass="mt-3"
+                                labelText="聯絡手機"
+                                labelClass="form-label mb-1"
+                                inputClass="form-control"
+                                placeholder="請輸入聯絡手機"
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
@@ -201,20 +201,20 @@ const CartCheckoutSection = () => {
                                 }}
                             />
                             <ValidationSelectGroup
-                                id='city'
+                                id="city"
                                 errors={errors}
                                 register={register}
-                                labelText='縣市'
-                                groupClass='mt-3'
-                                labelClass='form-label mb-1'
-                                selectClass='form-control'
+                                labelText="縣市"
+                                groupClass="mt-3"
+                                labelClass="form-label mb-1"
+                                selectClass="form-control"
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '請選擇縣市' },
                                 }}
-                                defaultValue=''
+                                defaultValue=""
                             >
-                                <option value='' disabled>
+                                <option value="" disabled>
                                     --請選擇縣市--
                                 </option>
                                 {taiwanAddress?.map((items) => (
@@ -225,21 +225,21 @@ const CartCheckoutSection = () => {
                             </ValidationSelectGroup>
 
                             <ValidationSelectGroup
-                                id='area'
+                                id="area"
                                 errors={errors}
                                 register={register}
-                                labelText='鄉/鎮/市/區'
-                                groupClass='mt-3'
-                                labelClass='form-label mb-1'
-                                selectClass='form-control'
-                                defaultValue=''
+                                labelText="鄉/鎮/市/區"
+                                groupClass="mt-3"
+                                labelClass="form-label mb-1"
+                                selectClass="form-control"
+                                defaultValue=""
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '請選擇鄉鎮市區' },
                                 }}
                                 disabled={getValues('city') ? false : true}
                             >
-                                <option value='' disabled>
+                                <option value="" disabled>
                                     --請選擇鄉鎮市區--
                                 </option>
                                 {filterAreaAddress?.[0]?.AreaList?.map((items) => (
@@ -250,15 +250,15 @@ const CartCheckoutSection = () => {
                             </ValidationSelectGroup>
 
                             <ValidationInputGroup
-                                id='address'
-                                type='text'
+                                id="address"
+                                type="text"
                                 errors={errors}
                                 register={register}
-                                groupClass='mt-3'
-                                labelText='地址'
-                                labelClass='form-label mb-1'
-                                inputClass='form-control'
-                                placeholder='請輸入配送地址'
+                                groupClass="mt-3"
+                                labelText="地址"
+                                labelClass="form-label mb-1"
+                                inputClass="form-control"
+                                placeholder="請輸入配送地址"
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
@@ -269,18 +269,18 @@ const CartCheckoutSection = () => {
                                 }}
                             />
 
-                            <div className='d-flex justify-content-between align-items-center pt-3'>
+                            <div className="d-flex justify-content-between align-items-center pt-3">
                                 <Link
-                                    to='/cart'
-                                    role='button'
-                                    className='d-inline-block btn btn-secondary link-primary-hover'
+                                    to="/cart"
+                                    role="button"
+                                    className="d-inline-block btn btn-secondary link-primary-hover"
                                 >
-                                    <BsChevronDoubleLeft className='icon me-1' />
+                                    <BsChevronDoubleLeft className="icon me-1" />
                                     回到上一頁
                                 </Link>
                                 <input
-                                    type='submit'
-                                    className='btn btn-primary btn-primary-hover '
+                                    type="submit"
+                                    className="btn btn-primary btn-primary-hover "
                                     value={isLoading ? '表單處理中' : '確認送出'}
                                     style={{ width: `120px` }}
                                     disabled={!allFieldsFilled || isLoading}
@@ -289,13 +289,13 @@ const CartCheckoutSection = () => {
                         </fieldset>
                     </form>
                 </div>
-                <div className='col-lg-4 border border-2 py-2'>
-                    <h4 className='border-bottom border-2 border-primary fs-5 pb-2'>購物車明細</h4>
+                <div className="col-lg-4 border border-2 py-2">
+                    <h4 className="border-bottom border-2 border-primary fs-5 pb-2">購物車明細</h4>
                     {carts?.length
                         ? carts?.map((product) => (
                               <div key={product.id}>
-                                  <div className='row mt-3 border-bottom border-2 pb-3'>
-                                      <div className='col-3'>
+                                  <div className="row mt-3 border-bottom border-2 pb-3">
+                                      <div className="col-3">
                                           <img
                                               src={product.product.imageUrl}
                                               alt={product.product.title}
@@ -303,30 +303,30 @@ const CartCheckoutSection = () => {
                                               style={{ width: `75px`, height: `75px` }}
                                           />
                                       </div>
-                                      <div className='col-7'>
-                                          <div className='d-flex justify-content-center align-items-start flex-column'>
+                                      <div className="col-7">
+                                          <div className="d-flex justify-content-center align-items-start flex-column">
                                               <span>{product.product.title}</span>
-                                              <span className='text-muted fs-7'>
+                                              <span className="text-muted fs-7">
                                                   總價：NT{handlePriceToTw(product.total)}
                                               </span>
                                           </div>
                                       </div>
-                                      <div className='col-2'>
-                                          <div className='d-flex justify-content-center align-items-start flex-column '>
+                                      <div className="col-2">
+                                          <div className="d-flex justify-content-center align-items-start flex-column ">
                                               <span>x {product.qty}</span>
-                                              <span className='opacity-0 fs-7'>|</span>
+                                              <span className="opacity-0 fs-7">|</span>
                                           </div>
                                       </div>
-                                      <div className='col-8'>
+                                      <div className="col-8">
                                           {product?.coupon?.code ? (
-                                              <span className='mt-1 text-danger float-start d-flex align-items-center'>
-                                                  <BsCheckAll className='icon me-1' />
+                                              <span className="mt-1 text-danger float-start d-flex align-items-center">
+                                                  <BsCheckAll className="icon me-1" />
                                                   使用優惠：{product?.coupon?.code}
                                               </span>
                                           ) : null}
                                       </div>
-                                      <div className='col-4'>
-                                          <span className='mt-1 fw-border float-end'>
+                                      <div className="col-4">
+                                          <span className="mt-1 fw-border float-end">
                                               NT{handlePriceToTw(product.final_total)}
                                           </span>
                                       </div>
@@ -335,13 +335,13 @@ const CartCheckoutSection = () => {
                           ))
                         : '購物車內無商品'}
 
-                    <div className='border-bottom border-2 border-primary pt-4 pb-2'>
-                        <div className='row '>
-                            <div className='col-6 text-start'>
-                                <span className='fs-3 fw-bolder'>總價</span>
+                    <div className="border-bottom border-2 border-primary pt-4 pb-2">
+                        <div className="row ">
+                            <div className="col-6 text-start">
+                                <span className="fs-3 fw-bolder">總價</span>
                             </div>
-                            <div className='col-6 text-end'>
-                                <span className='fs-3 fw-bolder'>NT{handlePriceToTw(couponRedux.finalTotal)}</span>
+                            <div className="col-6 text-end">
+                                <span className="fs-3 fw-bolder">NT{handlePriceToTw(couponRedux.finalTotal)}</span>
                             </div>
                         </div>
                     </div>
