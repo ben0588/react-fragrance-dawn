@@ -39,22 +39,22 @@ const Layout = () => {
     };
     return (
         <div
-            className='container-fluid position-relative d-flex flex-column min-vh-100 px-0 '
+            className="container-fluid position-relative d-flex flex-column min-vh-100 px-0 "
             style={{ maxWidth: `100%`, width: `100%` }}
         >
             <Header />
-            <main className='flex-grow-1'>
+            <main className="flex-grow-1">
                 <Outlet />
             </main>
-            <ToastContainer bodyClassName='text-lg fw-bolder' />
+            <ToastContainer bodyClassName="text-lg fw-bolder" />
             <Footer />
             <button
-                type='button'
-                className='top-btn '
+                type="button"
+                className="top-btn "
                 style={{
                     display: btnShow ? 'flex' : 'none',
                 }}
-                title='回首頂端'
+                title="回首頂端"
                 onClick={() => handleGoToTop()}
             >
                 <AiOutlineArrowUp style={{ width: '1.5rem', height: '1.5rem', fill: 'white', fontSize: '1.5rem' }} />

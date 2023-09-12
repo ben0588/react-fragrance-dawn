@@ -18,8 +18,8 @@ const AdminLoginPage = () => {
         watch,
     } = useForm({
         defaultValues: {
-            username: 'energy9527z@gmail.com',
-            password: '95279527zz',
+            username: '',
+            password: '',
         },
         mode: 'onTouched',
     });

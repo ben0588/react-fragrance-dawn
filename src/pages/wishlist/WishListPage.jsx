@@ -6,14 +6,14 @@ import Swal from 'sweetalert2';
 import useMessage from '../../hooks/useMessage';
 import listImage from '../../assets/account/list.png';
 import { useState } from 'react';
-import { clientAddToCart } from '../../api/clientApis';
-import { addToCart } from '../../store/slice/cartSlice';
+import { useAddToCartMutation } from '../../store/store';
 
 const AccountWishListPage = () => {
     const [isLoadingId, setIsLoadingId] = useState('');
     const wishlistRedux = useSelector((state) => state.wishlist);
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
+    const [addToCart] = useAddToCartMutation();
 
     const handleDeleteWish = (cartId, title) => {
         Swal.fire({
@@ -72,10 +72,10 @@ const AccountWishListPage = () => {
                 product_id: id,
                 qty: 1,
             };
-            const result = await clientAddToCart(data);
-            dispatch(addToCart(data));
+            const result = await addToCart(data);
             inputToastMessage(result.data);
         } catch (error) {
+            console.log(error);
             inputToastMessage(error?.response?.data);
         } finally {
             setIsLoadingId('');
