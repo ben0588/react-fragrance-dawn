@@ -11,8 +11,8 @@ const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, al
     const nextRef = useRef(null);
 
     return (
-        <div className="row flex-row flex-sm-column-reverse flex-lg-row ">
-            <div className="d-none d-sm-block col-md-12 col-lg-12 col-xl-3  ps-sm-2 ps-lg-1 ps-xl-4 ps-xxl-0 ">
+        <div className="row flex-row flex-sm-column-reverse flex-lg-row">
+            <div className="d-none d-sm-block col-md-12 col-lg-12 col-xl-3  ps-sm-2 ps-lg-1 ps-xl-4 ps-xxl-0">
                 <Swiper
                     onSwiper={setThumbsSwiper} // 使用 onSwiper 綁定
                     slidesPerView={5}
@@ -28,7 +28,7 @@ const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, al
                     }}
                 >
                     {imagesList?.map((item, index) => (
-                        <SwiperSlide key={index} className="thumbs-swiper my-sm-2 my-xl-0 mb-xl-2 ms-xl-2 ms-xxl-4  ">
+                        <SwiperSlide key={index} className="thumbs-swiper my-sm-2 my-xl-0 mb-xl-2 ms-xl-2 ms-xxl-4">
                             <img src={item} alt={alt} className="thumbs-swiper-img d-block object-fit-cover" />
                         </SwiperSlide>
                     ))}

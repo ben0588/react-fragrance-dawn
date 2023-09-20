@@ -58,7 +58,7 @@ const Header = () => {
     return (
         <header className="sticky-top" ref={headerContainerRef}>
             {bulletin.open ? (
-                <div className="position-relative bg-dark text-center text-white ">
+                <div className="position-relative bg-dark text-center text-white">
                     <Swiper
                         autoplay={{
                             delay: 10000,
@@ -92,7 +92,7 @@ const Header = () => {
                 </div>
             ) : null}
             <nav className="navbar navbar-expand-lg sticky-top bg-white border-bottom border-2 py-4" role="navigation">
-                <div className="container-fluid ">
+                <div className="container-fluid">
                     <Link
                         to="/"
                         className="navbar-brand"
@@ -131,12 +131,11 @@ const Header = () => {
                                 </li>
                             ))}
                         </ul>
-                        <div className="d-flex ">
+                        <div className="d-flex">
                             <NavLink
                                 to="/cart"
                                 role="button"
                                 className="nav-link position-relative navbar-link-hover me-2 py-3 px-2"
-                                style={({ isActive }) => ({ opacity: isActive ? 1 : 0.8 })}
                                 onClick={() => navbarToggle()}
                                 aria-label="前往購物車頁面"
                             >
@@ -154,7 +153,6 @@ const Header = () => {
                                 to="/wishlist"
                                 role="button"
                                 className="nav-link navbar-link-hover me-2 py-3 px-2"
-                                style={({ isActive }) => ({ opacity: isActive ? 1 : 0.8 })}
                                 onClick={() => navbarToggle()}
                                 aria-label="前往願望追蹤清單頁面"
                             >
@@ -164,8 +162,7 @@ const Header = () => {
                             <NavLink
                                 to="/account"
                                 role="button"
-                                className="nav-link navbar-link-hover me-4  py-3 px-2"
-                                style={({ isActive }) => ({ opacity: isActive ? 1 : 0.8 })}
+                                className="nav-link navbar-link-hover me-4 py-3 px-2"
                                 onClick={() => navbarToggle()}
                                 aria-label="前往個人帳戶頁面"
                             >

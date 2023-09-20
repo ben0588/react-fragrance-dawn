@@ -75,7 +75,6 @@ const AccountWishListPage = () => {
             const result = await addToCart(data);
             inputToastMessage(result.data);
         } catch (error) {
-            console.log(error);
             inputToastMessage(error?.response?.data);
         } finally {
             setIsLoadingId('');
@@ -93,7 +92,7 @@ const AccountWishListPage = () => {
                                 <th></th>
                                 <th></th>
                                 <th></th>
-                                <th colSpan={2} className="text-center ">
+                                <th colSpan={2} className="text-center">
                                     <button onClick={() => handleDeleteAllWishList()} className="btn btn-none">
                                         清除所有追蹤
                                     </button>
@@ -117,14 +116,14 @@ const AccountWishListPage = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="d-flex justify-content-center align-items-start flex-column ">
+                                        <div className="d-flex justify-content-center align-items-start flex-column">
                                             <span>{product.title}</span>
                                             <span className="text-muted fs-7">{product.content}</span>
                                             <span className="text-muted fs-7">{product.unit}</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="d-flex justify-content-center align-items-start flex-column ">
+                                        <div className="d-flex justify-content-center align-items-start flex-column">
                                             <span className="text-muted fs-7 text-decoration-line-through">
                                                 NT{product.origin_price}
                                             </span>
@@ -169,7 +168,7 @@ const AccountWishListPage = () => {
                                                 onClick={() => handleDeleteWish(product.id, product.title)}
                                                 title="移除追蹤"
                                             >
-                                                <FaRegTrashAlt className="cart-icon " />
+                                                <FaRegTrashAlt className="cart-icon" />
                                             </button>
                                         </div>
                                     </td>

@@ -32,7 +32,7 @@ const Footer = () => {
     };
     return (
         <footer style={{ backgroundColor: 'black' }}>
-            <div className="container text-secondary py-5 ">
+            <div className="container text-secondary py-5">
                 <div className="row mx-auto">
                     <div className="col-sm-6 col-md-2  pt-2">
                         <ListGroup
@@ -94,13 +94,13 @@ const Footer = () => {
                             </ListGroup>
                         </div>
                     </div>
-                    <div className="col-sm-6 col-md-4  pt-2 ">
+                    <div className="col-sm-6 col-md-4  pt-2">
                         <ListGroup title="訂閱電子報" titleClass="text-white fw-bolder">
                             <li className="fs-7 text-white pb-2">
                                 <label htmlFor="footer-email-input">輸入電子郵件得最新商品與活動</label>
                             </li>
                             <li className="">
-                                <div className="input-group ">
+                                <div className="input-group">
                                     <input
                                         type="email"
                                         id="footer-email-input"
@@ -124,7 +124,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <small className="d-flex align-items-center justify-content-center flex-column flex-md-row text-white bg-secondary py-2 ">
+            <small className="d-flex align-items-center justify-content-center flex-column flex-md-row text-white bg-secondary py-2">
                 Copyright © 2023
                 <Link
                     to="https://github.com/ben0588"

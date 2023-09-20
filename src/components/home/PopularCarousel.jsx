@@ -54,9 +54,9 @@ const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
                 {imagesList?.map((item) => (
                     <SwiperSlide key={item.id}>
                         <div className="popular-card-container my-4 py-4">
-                            <Link to={`/products/${item.id}`} className="d-block ">
+                            <Link to={`/products/${item.id}`} className="d-block">
                                 <img src={item.imageUrl} alt={item.title} className="popular-card-img" />
-                                <h3 className="popular-card-title text-ellipsis text-center fw-bolder fs-5 ">
+                                <h3 className="popular-card-title text-ellipsis text-center fw-bolder fs-5">
                                     {item.title}
                                 </h3>
                                 <span className="popular-card-price py-2">NT{handlePriceToTw(item.price)}</span>

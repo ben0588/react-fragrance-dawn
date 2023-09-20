@@ -4,20 +4,22 @@ import Swal from 'sweetalert2';
 import { FaRegTrashAlt } from 'react-icons/fa';
 import WishlistButtonGroup from '../../components/WishlistButtonGroup';
 import usePriceToTw from '../../hooks/usePriceToTw';
-import { useDispatch } from 'react-redux';
 import useMessage from '../../hooks/useMessage';
-import { removeCoupon } from '../../store/slice/couponSlice';
-import { useDeleteCartMutation, useRemoveCartsMutation, useUpdateCartMutation } from '../../store/store';
-import PropTypes from 'prop-types';
+import {
+    useDeleteCartMutation,
+    useFetchCartsQuery,
+    useRemoveCartsMutation,
+    useUpdateCartMutation,
+} from '../../store/store';
 
-const CartProductsSection = ({ carts, handleFetchCart }) => {
-    const dispatch = useDispatch();
+const CartProductsSection = () => {
     const { handlePriceToTw } = usePriceToTw();
     const [loadingItems, setLoadingItems] = useState([]);
     const { inputToastMessage } = useMessage();
     const [deleteCart] = useDeleteCartMutation();
     const [removeCarts] = useRemoveCartsMutation();
     const [updateCart] = useUpdateCartMutation();
+    const { data } = useFetchCartsQuery();
 
     const handlePutCart = async (cartId, productId, quantity) => {
         try {
@@ -34,7 +36,6 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                 position: 'top-left',
             });
             setLoadingItems(loadingItems.filter((items) => items !== cartId));
-            await handleFetchCart();
         } catch (error) {
             inputToastMessage(error?.data);
         }
@@ -70,8 +71,6 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                dispatch(removeCoupon());
-                handleFetchCart();
             }
         });
     };
@@ -107,16 +106,13 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
-                // dispatch(removeCarts());
-                dispatch(removeCoupon());
-                handleFetchCart();
             }
         });
     };
 
     return (
         <div className="table-responsive">
-            <table className="table align-middle ">
+            <table className="table align-middle">
                 <thead>
                     <tr>
                         <th>商品資料</th>
@@ -135,11 +131,11 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                     </tr>
                 </thead>
                 <tbody className="table-group-divider">
-                    {carts?.map((cart) => (
+                    {data?.data?.carts?.map((cart) => (
                         <tr key={cart.id}>
                             <td>
                                 <div className="row m-0">
-                                    <div className="col-lg-4 col-xl-3 d-flex justify-content-start align-items-center p-0 ">
+                                    <div className="col-lg-4 col-xl-3 d-flex justify-content-start align-items-center p-0">
                                         <Link to={`/products/${cart.product_id}`} className="cart-img-container">
                                             <img
                                                 src={cart?.product?.imageUrl}
@@ -151,7 +147,7 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                                     </div>
                                     <div className="col-lg-8 col-xl-9 p-0">
                                         <div className="h-100 d-flex justify-content-center align-items-start flex-column position-relative">
-                                            <h3 className="fs-6 m-0 mt-2 pb-lg-1">
+                                            <h3 className="fs-6 pb-lg-1 m-0 mt-2">
                                                 <Link to={`/products/${cart.product_id}`} title="查看商品詳情">
                                                     {cart?.product?.title}
                                                 </Link>
@@ -161,7 +157,7 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                                                     id={cart?.product?.id} // 要傳入產品 id
                                                 />
                                             </h3>
-                                            <p className="d-none d-md-block fs-7 text-muted text-ellipsis m-0 ">
+                                            <p className="d-none d-md-block fs-7 text-muted m-0 text-ellipsis">
                                                 {cart?.product?.content}
                                             </p>
                                             <span className="pt-2">{cart?.product?.unit}</span>
@@ -193,7 +189,7 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
                                     onClick={() => handleDeleteCart(cart.id, cart?.product?.title)}
                                     title="移除商品"
                                 >
-                                    <FaRegTrashAlt className="cart-icon " />
+                                    <FaRegTrashAlt className="cart-icon" />
                                 </button>
                             </td>
                         </tr>
@@ -204,8 +200,4 @@ const CartProductsSection = ({ carts, handleFetchCart }) => {
     );
 };
 
-CartProductsSection.propTypes = {
-    carts: PropTypes.array,
-    handleFetchCart: PropTypes.func,
-};
 export default CartProductsSection;

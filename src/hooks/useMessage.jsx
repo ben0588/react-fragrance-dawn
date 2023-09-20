@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 const useMessage = () => {
@@ -17,21 +18,24 @@ const useMessage = () => {
 
         <ToastContainer />
     */
-    const inputToastMessage = (props) => {
+    const inputToastMessage = useCallback((props) => {
         if (props?.success) {
             let type = props.type ?? 'success';
             if (props.type === 'default') {
-                return toast(props.message, { ...initialOption, position: props.position ?? initialOption.position });
+                return toast(props.message, {
+                    ...initialOption,
+                    position: props.position ?? initialOption.position,
+                });
             } else {
                 return toast[type](props.message, initialOption);
             }
         } else {
             return toast['error'](
                 Array.isArray(props.message) ? props.message.join('、') : props.message,
-                initialOption
+                initialOption,
             );
         }
-    };
+    }, []);
 
     const toastPromiseMessage = (fetch) => {
         return toast.promise(fetch, {

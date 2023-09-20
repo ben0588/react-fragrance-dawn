@@ -12,10 +12,9 @@ const AdminDashboardPage = () => {
     const navigate = useNavigate();
     const matchDashboardLayout = useMatch('/admin/dashboard'); // 登入後台 Layout 首頁
     const dispatch = useDispatch();
-    const adminState = useSelector((state) => state.admin);
+    const expState = useSelector((state) => state.exp);
     const [adminCheck] = useAdminCheckMutation();
     const { adminLogout } = useOutletContext();
-
     const token = document.cookie
         .split('; ')
         .find((row) => row.startsWith('adminToken='))
@@ -24,11 +23,11 @@ const AdminDashboardPage = () => {
 
     const handleCheckAdminAuth = async () => {
         try {
-            const response = await adminCheck(adminState.uid).unwrap();
+            const response = await adminCheck(expState.uid).unwrap();
             return response;
         } catch (error) {
             dispatch(createAsyncMessage(error.data));
-            adminLogout(adminState.uid); // 登出 + 返回管理者
+            adminLogout(expState.uid); // 登出 + 返回管理者
             throw error;
         }
     };
@@ -38,6 +37,8 @@ const AdminDashboardPage = () => {
             return navigate('/admin'); // 沒有 Token 直接返回，不執行檢查權限
         } else if (!matchDashboardLayout) {
             return; // 不是初次進入後台就不重新檢查權限
+        } else {
+            handleCheckAdminAuth();
         }
     }, [token, navigate]);
 
@@ -60,7 +61,7 @@ const AdminDashboardPage = () => {
                         </NavLink>
                     </ul>
                 </div>
-                <div className="w-100">{token && <Outlet context={{ adminCheck: handleCheckAdminAuth }} />}</div>
+                <div className="w-100">{token && <Outlet />}</div>
             </div>
 
             <ToastContainer />

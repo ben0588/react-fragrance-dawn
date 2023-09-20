@@ -14,41 +14,44 @@ const ArticlePage = () => {
     const dispatch = useDispatch();
     const { inputToastMessage } = useMessage();
 
-    const handleFetchArticles = useCallback(async (page) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await clientFetchArticles(page);
-            setArticles(result?.data?.articles);
-            setPagination(result?.data?.pagination);
-            dispatch(updateLoadingState(false));
-        } catch (error) {
-            inputToastMessage(error?.response?.data);
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const handleFetchArticles = useCallback(
+        async (page) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await clientFetchArticles(page);
+                setArticles(result?.data?.articles);
+                setPagination(result?.data?.pagination);
+                dispatch(updateLoadingState(false));
+            } catch (error) {
+                inputToastMessage(error?.response?.data);
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
     useEffect(() => {
         handleFetchArticles();
     }, [handleFetchArticles]);
 
     return (
-        <div className='container mt-5 py-3 mb-3'>
+        <div className="container mt-5 py-3 mb-3">
             {loading.isLoading ? (
                 <div>資料加載中</div>
             ) : articles.length ? (
                 <>
-                    <div className='row flex-column-reverse flex-md-row'>
-                        <div className='col-12'>
-                            <div className='row g-3 '>
+                    <div className="d-flex flex-column-reverse flex-md-row">
+                        <div>
+                            <div className="row g-3">
                                 {articles?.map((items, index) => (
-                                    <div className='col-md-6 col-lg-4 col-xl-3' key={index}>
+                                    <div className="col-md-6 col-lg-4 col-xl-3" key={index}>
                                         <ArticleCard article={items} />
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
-                    <div className='mt-5'>
+                    <div className="mt-5">
                         <Pagination
                             changePage={handleFetchArticles}
                             totalPage={pagination.total_pages}

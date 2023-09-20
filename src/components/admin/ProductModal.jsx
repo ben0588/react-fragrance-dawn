@@ -12,7 +12,6 @@ const ProductModal = memo(function ProductModal({
     fetchProducts,
     modalOpenType,
     editProductTarget,
-    checkAdminAuth,
 }) {
     const initialValue = {
         title: '',
@@ -29,6 +28,8 @@ const ProductModal = memo(function ProductModal({
     const [products, setProducts] = useState(initialValue);
     const { inputToastMessage } = useMessage();
     const [isUpload, setIsUpload] = useState(false);
+    const [isAddFile, setIsAddFile] = useState(false);
+
     const uploadFormRef = useRef(null);
     const [isCheck, setIsCheck] = useState(false);
 
@@ -86,7 +87,6 @@ const ProductModal = memo(function ProductModal({
     const handleSubmitAddProduct = async () => {
         try {
             setIsCheck(true);
-            await checkAdminAuth(); // 檢查管理者權限
             let typeToggle = modalOpenType === 'create' ? true : false;
             let result;
             if (typeToggle) {
@@ -109,7 +109,6 @@ const ProductModal = memo(function ProductModal({
         try {
             e.preventDefault();
             setIsUpload(true);
-            await checkAdminAuth();
             const formData = new FormData();
             const file = e.target[0].files[0];
             if (!file) {
@@ -157,7 +156,7 @@ const ProductModal = memo(function ProductModal({
             className="modal fade"
             id="productModal" // 與 Bootstrap Modal 綁定
         >
-            <div className="modal-dialog modal-lg">
+            <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">
@@ -167,6 +166,7 @@ const ProductModal = memo(function ProductModal({
                             type="button"
                             className="btn-close"
                             onClick={() => {
+                                setIsAddFile(false);
                                 handleRemoveUploadForm();
                                 handleCancelProductModal();
                             }}
@@ -198,12 +198,13 @@ const ProductModal = memo(function ProductModal({
                                         groupClass="mb-3"
                                         labelClass="form-label"
                                         inputClass="form-control"
+                                        onChange={(e) => (e.target.value ? setIsAddFile(true) : setIsAddFile(false))}
                                     >
                                         <input
                                             type="submit"
                                             value={`${isUpload ? '圖片上傳中..' : '上傳圖片'}`}
                                             className="form-control btn btn-dark mt-1"
-                                            disabled={isUpload ? true : false}
+                                            disabled={isUpload || !isAddFile}
                                         />
                                     </InputGroup>
                                 </form>
@@ -327,6 +328,7 @@ const ProductModal = memo(function ProductModal({
                             type="button"
                             className="btn btn-secondary"
                             onClick={() => {
+                                setIsAddFile(false);
                                 handleRemoveUploadForm();
                                 handleCancelProductModal();
                             }}
@@ -358,6 +360,5 @@ ProductModal.propTypes = {
     fetchProducts: PropTypes.func,
     modalOpenType: PropTypes.oneOf(['create', 'edit']),
     editProductTarget: PropTypes.object,
-    checkAdminAuth: PropTypes.func,
 };
 export default ProductModal;

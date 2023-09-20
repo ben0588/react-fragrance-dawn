@@ -29,9 +29,9 @@ const Card = memo(function Card({ product }) {
     };
 
     return (
-        <div className="card border-light h-100 ">
+        <div className="card border-light h-100">
             <Link to={`/products/${product.id}`} className="product-card-container text-decoration-none">
-                <div className="product-card-img-container ">
+                <div className="product-card-img-container">
                     <img
                         src={product.imageUrl}
                         className="card-img-top product-card-img object-fit-cover"
@@ -62,11 +62,11 @@ const Card = memo(function Card({ product }) {
                 </div>
 
                 <div className="card-body position-relative">
-                    <h5 className="card-title fs-6 text-break ">{product.title}</h5>
+                    <h5 className="card-title fs-6 text-break">{product.title}</h5>
                     <div onClick={(e) => e.preventDefault()}>
                         <WishlistButtonGroup product={product} id={product.id} />
                     </div>
-                    <p className="card-text text-muted fs-7 my-1 ">{product.content}</p>
+                    <p className="card-text text-muted fs-7 my-1">{product.content}</p>
                     <p className="card-text fs-6 text-muted text-decoration-line-through user-select-none opacity-50 mt-3 mb-0">
                         NT$ {product.origin_price}
                     </p>

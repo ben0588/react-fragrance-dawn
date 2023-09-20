@@ -11,7 +11,7 @@ const AccountPage = () => {
         <div className="p-3 mb-3">
             <h4 className="fw-bolder pb-0">帳戶中心</h4>
             <hr />
-            <p>親愛的會員_XXX_你好，歡迎回來</p>
+            <div>親愛的會員_XXX_你好，歡迎回來</div>
             <hr />
             <div className="mb-2">
                 公告開啟狀態：

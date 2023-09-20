@@ -12,6 +12,7 @@ import AccordionCollapse from '../../components/AccordionCollapse';
 import Breadcrumb from '../../components/product/Breadcrumb';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useAddToCartMutation } from '../../store/store';
+import usePriceToTw from '../../hooks/usePriceToTw';
 
 const ProductsDetailPage = () => {
     const [product, setProduct] = useState({});
@@ -23,21 +24,25 @@ const ProductsDetailPage = () => {
     const loading = useSelector((state) => state.loading);
     const [categoryList, setCategoryList] = useState([]);
     const [addToCart] = useAddToCartMutation();
+    const { handlePriceToTw } = usePriceToTw();
 
-    const fetchCategory = useCallback(async (category) => {
-        try {
-            const result = await axios({
-                method: 'GET',
-                baseURL: null,
-                url: 'https://ben0588.github.io/react-fragrance-dawn/detail.json',
-                'Content-Type': 'application/json',
-            });
-            const newList = result?.data?.filter((item) => item.category === category);
-            setCategoryList(newList[0].contents);
-        } catch (error) {
-            inputToastMessage(error?.response?.data);
-        }
-    }, []);
+    const fetchCategory = useCallback(
+        async (category) => {
+            try {
+                const result = await axios({
+                    method: 'GET',
+                    baseURL: null,
+                    url: 'https://ben0588.github.io/react-fragrance-dawn/detail.json',
+                    'Content-Type': 'application/json',
+                });
+                const newList = result?.data?.filter((item) => item.category === category);
+                setCategoryList(newList[0].contents);
+            } catch (error) {
+                inputToastMessage(error?.response?.data);
+            }
+        },
+        [inputToastMessage],
+    );
 
     const fetchProduct = useCallback(async () => {
         try {
@@ -50,7 +55,7 @@ const ProductsDetailPage = () => {
             inputToastMessage(error?.response?.data);
             dispatch(updateLoadingState(false));
         }
-    }, [fetchCategory]);
+    }, [fetchCategory, dispatch, inputToastMessage, id]);
 
     useEffect(() => {
         fetchProduct();
@@ -63,9 +68,7 @@ const ProductsDetailPage = () => {
                 product_id: product.id,
                 qty: quantity,
             };
-            // const result = await clientAddToCart(data);
             const result = await addToCart(data);
-            // dispatch(addToCart(data));
             inputToastMessage(result.data);
         } catch (error) {
             inputToastMessage(error?.response?.data);
@@ -74,15 +77,12 @@ const ProductsDetailPage = () => {
         }
     };
 
-    const handlePriceToTw = (value) =>
-        new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0 }).format(value);
-
     return (
         <div className="container my-5">
             <Breadcrumb
                 category={product.category}
                 title={product.title}
-                className="mb-2 ps-ms-0 ps-xl-0 mb-xl-4 ps-xxl-3"
+                className="ps-ms-0 ps-xl-0 mb-xl-4 ps-xxl-3 mb-2"
             />
             {loading.isLoading ? (
                 <div>isLoading 資料加載中</div>
@@ -100,7 +100,7 @@ const ProductsDetailPage = () => {
                             )}
                         </div>
 
-                        <div className="col-lg-6 position-relative px-3 py-3 ">
+                        <div className="col-lg-6 position-relative px-3 py-3">
                             <WishlistButtonGroup
                                 product={product}
                                 id={id}
@@ -118,7 +118,7 @@ const ProductsDetailPage = () => {
 
                             <div
                                 role="button"
-                                className="fs-6 border border-2 py-2 text-center my-3"
+                                className="fs-6 my-3 border border-2 py-2 text-center"
                                 style={{ width: `100%`, maxWidth: `70px` }}
                             >
                                 {product.unit}
@@ -142,7 +142,7 @@ const ProductsDetailPage = () => {
                                     {isLoading ? '正在加入購物車中' : '加入購物車'}
                                 </button>
                             </div>
-                            <div className="d-flex flex-column border-start border-5 border-primary ps-2 mb-4 mt-5 ">
+                            <div className="d-flex flex-column border-start border-5 border-primary mb-4 mt-5 ps-2">
                                 <span className="text-ellipsis">全店，滿額免運：全店滿$999元免運 (海外地區不適用)</span>
                                 <span className="text-ellipsis">全店，滿額贈：消費滿$2000元贈 TEXT 品牌提袋 x1</span>
                             </div>
@@ -157,17 +157,17 @@ const ProductsDetailPage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row mt-5">
-                        <div className="col-12 text-center fs-4 fw-bolder my-5">
+                    <div className="mt-5 mx-auto">
+                        <div className="fs-4 fw-bolder my-5 text-center">
                             <span className="border-bottom border-3 border-primary">商品描述</span>
                         </div>
 
                         {categoryList?.map((items, index) => (
-                            <div key={index} className="col-md-6">
+                            <div key={index}>
                                 <img
                                     src={items.imageUrl}
                                     alt={items.content}
-                                    className="d-block w-100 object-fit-cover"
+                                    className="d-block object-fit-cover mx-auto w-50"
                                 />
                                 <p className="fs-6 my-5">{items.content}</p>
                             </div>

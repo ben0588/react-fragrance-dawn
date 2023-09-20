@@ -31,7 +31,7 @@ const HomeCategory = () => {
         } catch (error) {
             inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
         }
-    }, []);
+    }, [inputToastMessage]);
 
     useEffect(() => {
         handleFetchAllProducts(); // 初始取得全部商品類型

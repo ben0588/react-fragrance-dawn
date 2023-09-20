@@ -6,16 +6,16 @@ import { createAsyncMessage } from '../../store/slice/messageSlice';
 import Loading from '../../components/Loading';
 import { useEffect } from 'react';
 import { useAdminLogoutMutation } from '../../store/store';
+import { removerExpLog } from '../../store/slice/expSlice';
 
 const AdminLayout = () => {
-    const adminState = useSelector((state) => state.admin);
+    const expState = useSelector((state) => state.exp);
     const [adminLogout, result] = useAdminLogoutMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleAdminLogout = async () => {
-        // 處理權限不足時操作
-        adminLogout(adminState.uid)
+        adminLogout(expState.uid)
             .unwrap()
             .then((response) => {
                 document.cookie = 'adminToken=;';
@@ -31,16 +31,19 @@ const AdminLayout = () => {
             .catch((error) => {
                 dispatch(createAsyncMessage(error?.data));
                 navigate('/admin');
+            })
+            .finally(() => {
+                dispatch(removerExpLog());
             });
     };
 
     useEffect(() => {
         // 監控有效時間，無效時通知且登出管理員
-        if (adminState.expired !== '' && adminState.expired <= new Date().getTime()) {
+        if (expState.exp !== '' && expState.exp <= new Date().getTime()) {
             dispatch(createAsyncMessage({ id: new Date().getTime(), message: '管理者時效已達，登出成功，請重新登入' }));
             handleAdminLogout();
         }
-    }, [adminState]);
+    }, [expState]);
 
     return (
         <div>
@@ -66,16 +69,14 @@ const AdminLayout = () => {
                     </button>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul className="navbar-nav">
-                            {adminState.isLogin ? (
+                            {expState.exp !== '' ? (
                                 <>
-                                    {adminState.expired && (
-                                        <li className="nav-item d-flex justify-content-center align-items-center text-white ">
-                                            <span className="me-3">
-                                                管理者登入成功，有效時間：
-                                                {new Date(adminState.expired).toLocaleString()}
-                                            </span>
-                                        </li>
-                                    )}
+                                    <li className="nav-item d-flex justify-content-center align-items-center text-white">
+                                        <span className="me-3">
+                                            管理者登入成功，有效時間：
+                                            {new Date(expState.exp).toLocaleString()}
+                                        </span>
+                                    </li>
                                     <li className="nav-item me-2">
                                         <button
                                             type="button"
@@ -84,7 +85,7 @@ const AdminLayout = () => {
                                             disabled={result.isLoading}
                                         >
                                             {result.isLoading && (
-                                                <div className="spinner-border spinner-border-sm me-2 " role="status">
+                                                <div className="spinner-border spinner-border-sm me-2" role="status">
                                                     <span className="visually-hidden">Loading...</span>
                                                 </div>
                                             )}

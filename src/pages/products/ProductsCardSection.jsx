@@ -27,34 +27,40 @@ const ProductsCardSection = () => {
             inputToastMessage(error?.response?.data);
             dispatch(updateLoadingState(false));
         }
-    }, []);
+    }, [dispatch, inputToastMessage]);
 
-    const handleFetchCategoryProducts = useCallback(async (page = 1, category) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await clientFetchCategoryProduct(page, category);
-            setProducts(result?.data?.products);
-            setPagination(result?.data?.pagination);
-            dispatch(updateLoadingState(false));
-        } catch (error) {
-            inputToastMessage(error?.response?.data);
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const handleFetchCategoryProducts = useCallback(
+        async (page = 1, category) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await clientFetchCategoryProduct(page, category);
+                setProducts(result?.data?.products);
+                setPagination(result?.data?.pagination);
+                dispatch(updateLoadingState(false));
+            } catch (error) {
+                inputToastMessage(error?.response?.data);
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
-    const fetchProducts = useCallback(async (page = 1) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await clientFetchLimitedProducts(page);
-            const { products, pagination } = result.data;
-            setProducts(products);
-            setPagination(pagination);
-            dispatch(updateLoadingState(false));
-        } catch (error) {
-            inputToastMessage(error?.response?.data);
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const fetchProducts = useCallback(
+        async (page = 1) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await clientFetchLimitedProducts(page);
+                const { products, pagination } = result.data;
+                setProducts(products);
+                setPagination(pagination);
+                dispatch(updateLoadingState(false));
+            } catch (error) {
+                inputToastMessage(error?.response?.data);
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
     useEffect(() => {
         handleFetchAllProducts(); // 初始取得全部商品用來關鍵字搜尋
@@ -122,7 +128,7 @@ const ProductsCardSection = () => {
                             </div>
                         ))
                     ) : (
-                        <div className="text-danger fs-5 w-100 ">關鍵字搜尋不到相關商品，請重新進行搜尋</div>
+                        <div className="text-danger fs-5 w-100">關鍵字搜尋不到相關商品，請重新進行搜尋</div>
                     )
                 ) : (
                     filterSortProducts?.map((product) => (

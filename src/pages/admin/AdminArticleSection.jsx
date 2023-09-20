@@ -7,7 +7,6 @@ import ArticleModal from '../../components/admin/ArticleModal';
 import { adminDeleteArticle, adminFetchArticle, adminFetchLimitedArticles } from '../../api/adminArticleApis';
 import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
-import { useOutletContext } from 'react-router-dom';
 
 const AdminArticleSection = () => {
     const [articles, setArticles] = useState([]);
@@ -19,7 +18,6 @@ const AdminArticleSection = () => {
     const [deleteTarget, setDeleteTarget] = useState({});
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
-    const { adminCheck } = useOutletContext();
     const [editLoading, setEditLoading] = useState(false);
     const [firstEditId, setFirstEditId] = useState('');
 
@@ -62,19 +60,22 @@ const AdminArticleSection = () => {
 
     const handleCancelDeleteModal = () => deleteModalRef.current.hide();
 
-    const fetchArticle = useCallback(async (page = 1) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await adminFetchLimitedArticles(page);
-            const { articles, pagination } = result;
-            setArticles(articles);
-            setPagination(pagination);
-        } catch (error) {
-            inputToastMessage(error?.response?.data);
-        } finally {
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const fetchArticle = useCallback(
+        async (page = 1) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await adminFetchLimitedArticles(page);
+                const { articles, pagination } = result;
+                setArticles(articles);
+                setPagination(pagination);
+            } catch (error) {
+                inputToastMessage(error?.response?.data);
+            } finally {
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
     useEffect(() => {
         fetchArticle();
@@ -83,7 +84,6 @@ const AdminArticleSection = () => {
     const handleDeleteArticle = async () => {
         try {
             dispatch(updateLoadingState(true));
-            await adminCheck();
             const result = await adminDeleteArticle(deleteTarget.id);
             inputToastMessage(result);
             fetchArticle();
@@ -104,7 +104,6 @@ const AdminArticleSection = () => {
                 fetchData={fetchArticle}
                 modalOpenType={modalOpenType}
                 editTarget={editTarget}
-                checkAdminAuth={adminCheck}
             />
 
             <DeleteModal

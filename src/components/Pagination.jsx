@@ -11,7 +11,7 @@ const Pagination = memo(function Pagination({ changePage, totalPage, currentPage
         currentPage !== '' && dispatch(createPage(currentPage));
     }, [currentPage, dispatch]);
     return (
-        <nav aria-label="Page navigation example ">
+        <nav aria-label="Page navigation example">
             <ul className="pagination">
                 <li className="page-item">
                     <a

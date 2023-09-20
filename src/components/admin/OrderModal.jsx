@@ -7,7 +7,7 @@ import usePriceToTw from '../../hooks/usePriceToTw';
 import { memo } from 'react';
 import PropTypes from 'prop-types';
 
-const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrders, editOrderTarget, checkAdminAuth }) {
+const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrders, editOrderTarget }) {
     const initialValues = {
         is_paid: '',
         status: 0,
@@ -44,7 +44,6 @@ const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrder
     const handleSubmitPutOrder = async () => {
         try {
             setCheckAuth(true);
-            await checkAdminAuth();
             const data = {
                 create_at: orders.create_at,
                 is_paid: orders.is_paid,
@@ -71,10 +70,10 @@ const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrder
             className="modal fade"
             id="orderModal" // 與 Bootstrap Modal 綁定
         >
-            <div className="modal-dialog modal-lg">
+            <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content py-1 px-3">
-                    <div className="modal-header px-0 ">
-                        <h5 className="modal-title fw-bolder ">編輯訂單：{editOrderTarget.id}</h5>
+                    <div className="modal-header px-0">
+                        <h5 className="modal-title fw-bolder">編輯訂單：{editOrderTarget.id}</h5>
                         <button
                             type="button"
                             className="btn-close"
@@ -110,7 +109,7 @@ const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrder
                             </li>
                         </ul>
 
-                        <div className="table-responsive ">
+                        <div className="table-responsive">
                             <table className="table mb-0">
                                 <thead>
                                     <tr>
@@ -132,7 +131,7 @@ const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrder
                                     </tr>
                                 </tbody>
                             </table>
-                            <span className="float-end fw-bolder mt-2 ">
+                            <span className="float-end fw-bolder mt-2">
                                 總金額：NT{handlePriceToTw(editOrderTarget.total)}
                             </span>
                         </div>
@@ -145,7 +144,7 @@ const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrder
                                 type="checkbox"
                                 title={`付款狀態 ${orders.is_paid ? '(已付款)' : '(未付款)'}`}
                                 groupClass="form-check mb-3 py-2"
-                                labelClass="form-check-label "
+                                labelClass="form-check-label"
                                 inputClass="form-check-input"
                                 onChange={handleChangeValue}
                                 checked={!!orders.is_paid || false}
@@ -186,12 +185,12 @@ const OrderModal = memo(function OrderModal({ handleCancelOrderModal, fetchOrder
                         </button>
                         <button
                             type="button"
-                            className="btn btn-primary "
+                            className="btn btn-primary"
                             onClick={() => handleSubmitPutOrder()}
                             disabled={checkAuth}
                         >
                             {checkAuth && (
-                                <div className="spinner-border spinner-border-sm me-2 " role="status">
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             )}
@@ -209,6 +208,5 @@ OrderModal.propTypes = {
     fetchOrders: PropTypes.func,
     modalOpenType: PropTypes.oneOf(['create', 'edit']),
     editOrderTarget: PropTypes.object,
-    checkAdminAuth: PropTypes.func,
 };
 export default OrderModal;

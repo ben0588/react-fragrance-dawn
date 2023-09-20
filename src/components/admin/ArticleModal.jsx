@@ -9,13 +9,7 @@ import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { memo } from 'react';
 import PropTypes from 'prop-types';
 
-const ArticleModal = memo(function ArticleModal({
-    handleCancelModal,
-    fetchData,
-    modalOpenType,
-    editTarget,
-    checkAdminAuth,
-}) {
+const ArticleModal = memo(function ArticleModal({ handleCancelModal, fetchData, modalOpenType, editTarget }) {
     const initialValue = {
         id: '',
         title: '',
@@ -28,7 +22,6 @@ const ArticleModal = memo(function ArticleModal({
         create_at: new Date().getTime(),
     };
     const [article, setArticle] = useState(initialValue);
-    const [tag, setTag] = useState([]);
     const { inputToastMessage } = useMessage();
     const selectRef = useRef();
     const options = [
@@ -41,7 +34,7 @@ const ArticleModal = memo(function ArticleModal({
         { value: '香水應用', label: '香水應用' },
         { value: '香水的歷史', label: '香水的歷史' },
     ];
-    const [selectDefault, setSelectDefault] = useState([]);
+    const [selectDefault, setSelectDefault] = useState(null);
     const loadingRedux = useSelector((state) => state.loading);
     const dispatch = useDispatch();
     const [checkAuth, setCheckAuth] = useState(false);
@@ -56,14 +49,12 @@ const ArticleModal = memo(function ArticleModal({
 
     useEffect(() => {
         if (modalOpenType === 'create') {
-            selectRef?.current?.setValue([], 'clear');
-            setSelectDefault([]);
+            setSelectDefault(null);
             setArticle(initialValue);
         } else if (modalOpenType === 'edit') {
             dispatch(updateLoadingState(true));
             setArticle(editTarget);
             if (editTarget.tag) {
-                setTag(editTarget.tag);
                 const check = options
                     .map((option, index) => (editTarget.tag.includes(option.value) ? index : null))
                     .filter((i) => i !== null)
@@ -74,7 +65,7 @@ const ArticleModal = memo(function ArticleModal({
                 dispatch(updateLoadingState(false));
             }
         }
-    }, [modalOpenType, editTarget]);
+    }, [modalOpenType, editTarget, dispatch]);
 
     const handleChangeValue = (e) => {
         const { name, value } = e.target;
@@ -94,9 +85,7 @@ const ArticleModal = memo(function ArticleModal({
     const handleSubmitAddArticle = async () => {
         try {
             setCheckAuth(true);
-            await checkAdminAuth();
-            const newTag =
-                modalOpenType === 'create' ? tag?.map((item) => item.value) : selectDefault?.map((item) => item.value); // 依照新增或編輯給予不同預設值
+            const newTag = selectDefault?.map((item) => item.value);
             const form = {
                 data: {
                     title: article.title,
@@ -118,8 +107,7 @@ const ArticleModal = memo(function ArticleModal({
             }
             inputToastMessage(result);
             setArticle(initialValue);
-            setSelectDefault([]);
-            selectRef.current.setValue([], 'clear');
+            setSelectDefault(null);
             fetchData();
             handleCancelModal();
         } catch (error) {
@@ -130,12 +118,14 @@ const ArticleModal = memo(function ArticleModal({
         }
     };
 
+    const handleChangeSelectTag = (item) => setSelectDefault(item);
+
     return (
         <div
             className="modal fade"
             id="articleModal" // 與 Bootstrap Modal 綁定
         >
-            <div className="modal-dialog modal-lg">
+            <div className="modal-dialog modal-lg modal-dialog-centered">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title fw-bolder">
@@ -145,6 +135,7 @@ const ArticleModal = memo(function ArticleModal({
                             type="button"
                             className="btn-close"
                             onClick={() => {
+                                setSelectDefault(null);
                                 setArticle(initialValue);
                                 handleCancelModal();
                             }}
@@ -228,15 +219,16 @@ const ArticleModal = memo(function ArticleModal({
                                             </label>
                                             <Select
                                                 ref={selectRef}
-                                                key={`my_unique_select_key__${selectDefault}`}
                                                 name="tag"
                                                 id="articleTag"
-                                                defaultValue={selectDefault}
+                                                value={selectDefault}
                                                 options={options}
-                                                onChange={(item) => setTag(item)}
+                                                onChange={(item) => handleChangeSelectTag(item)}
                                                 isMulti={true}
                                                 closeMenuOnSelect={false}
                                                 placeholder="選擇標籤"
+                                                isClearable={true}
+                                                defaultValue={null}
                                             />
                                         </>
                                     )}
@@ -260,6 +252,7 @@ const ArticleModal = memo(function ArticleModal({
                             type="button"
                             className="btn btn-secondary"
                             onClick={() => {
+                                setSelectDefault(null);
                                 setArticle(initialValue);
                                 handleCancelModal();
                             }}
@@ -268,12 +261,12 @@ const ArticleModal = memo(function ArticleModal({
                         </button>
                         <button
                             type="button"
-                            className="btn btn-primary "
+                            className="btn btn-primary"
                             onClick={() => handleSubmitAddArticle()}
                             disabled={!allFieldsFilled || checkAuth}
                         >
                             {checkAuth && (
-                                <div className="spinner-border spinner-border-sm me-2 " role="status">
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             )}
@@ -297,7 +290,6 @@ ArticleModal.propTypes = {
     fetchData: PropTypes.func,
     modalOpenType: PropTypes.oneOf(['create', 'edit']),
     editTarget: PropTypes.object,
-    checkAdminAuth: PropTypes.func,
 };
 
 export default ArticleModal;

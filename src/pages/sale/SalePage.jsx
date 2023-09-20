@@ -31,29 +31,29 @@ const SalePage = () => {
             inputToastMessage(error?.response?.data);
             dispatch(updateLoadingState(false));
         }
-    }, []);
+    }, [dispatch, inputToastMessage]);
 
     useEffect(() => {
         handleFetchSales();
     }, [handleFetchSales]);
     return (
-        <div className='container my-5 px-2'>
-            <div className='row g-3'>
+        <div className="container my-5 px-2">
+            <div className="row g-3">
                 {loading.isLoading ? (
                     <div>isLoading</div>
                 ) : (
                     sales?.map((item) => (
-                        <div className='col-sm-6 col-md-4 col-xl-3 ' key={item.id}>
-                            <Link to='/products' className='hover-opacity text-decoration-none' title='前往查看'>
-                                <div className='card  border-none h-100 '>
+                        <div className="col-sm-6 col-md-4 col-xl-3 " key={item.id}>
+                            <Link to="/products" className="hover-opacity text-decoration-none" title="前往查看">
+                                <div className="card  border-none h-100 ">
                                     <img
                                         src={item.imageUrl}
-                                        className='card-img-top object-fit-cover'
+                                        className="card-img-top object-fit-cover"
                                         alt={item.content}
                                     />
-                                    <div className='card-body ps-0'>
-                                        <h5 className='card-title fw-bolder'> {item.title}</h5>
-                                        <p className='card-text text-muted py-3'>{item.content}</p>
+                                    <div className="card-body ps-0">
+                                        <h5 className="card-title fw-bolder"> {item.title}</h5>
+                                        <p className="card-text text-muted py-3">{item.content}</p>
                                     </div>
                                 </div>
                             </Link>

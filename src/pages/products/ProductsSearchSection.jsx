@@ -79,7 +79,7 @@ const ProductsSearchSection = () => {
         } catch (error) {
             inputToastMessage(error?.response?.data);
         }
-    }, []);
+    }, [inputToastMessage]);
 
     useEffect(() => {
         handleFetchAllProducts();
@@ -99,7 +99,7 @@ const ProductsSearchSection = () => {
 
     return (
         <div
-            className="search-sticky bg-white w-100"
+            className="search-sticky w-100 bg-white"
             style={{
                 position: 'sticky',
                 top: `${navbar.height - 1}px`, // RWD選單時也可以悬停搜尋欄位
@@ -108,7 +108,7 @@ const ProductsSearchSection = () => {
             }}
         >
             <div
-                className="bg-white sidebar-collapse-icon "
+                className="sidebar-collapse-icon bg-white "
                 onClick={() => handleSearchContainer()}
                 title={menuOpen ? '展開篩選條件區塊' : '收合篩選條件區塊'}
             >
@@ -143,12 +143,12 @@ const ProductsSearchSection = () => {
                                 }`}
                             >
                                 {categoryRedux?.category ? (
-                                    <div className=" d-flex justify-content-start justify-content-lg-center align-items-center w-100 ">
+                                    <div className="d-flex justify-content-start justify-content-lg-center align-items-center w-100 ">
                                         當前類別：
-                                        <mark className="position-relative border border-2 user-select-none bg-white pe-4">
+                                        <mark className="position-relative user-select-none border border-2 bg-white pe-4">
                                             {categoryRedux.category}
                                             <BsXSquare
-                                                className="closure-icon position-absolute top-50 end-0 translate-middle-y"
+                                                className="closure-icon position-absolute top-50 translate-middle-y end-0"
                                                 role="button"
                                                 title="清除類別選擇"
                                                 onClick={() => {
@@ -161,10 +161,10 @@ const ProductsSearchSection = () => {
                                 ) : searchRedux?.searchText ? (
                                     <div className="d-flex justify-content-start justify-content-lg-center align-items-center ">
                                         當前搜尋：
-                                        <mark className="position-relative border border-2 user-select-none bg-white ps-4 pe-5">
+                                        <mark className="position-relative user-select-none border border-2 bg-white pe-5 ps-4">
                                             {searchRedux.searchText}
                                             <BsXSquare
-                                                className="closure-icon position-absolute top-50 end-0 translate-middle-y"
+                                                className="closure-icon position-absolute top-50 translate-middle-y end-0"
                                                 role="button"
                                                 title="清除搜尋目標"
                                                 onClick={() => {
@@ -191,7 +191,7 @@ const ProductsSearchSection = () => {
                                         {searchRedux.searchText !== '' ? '不可選擇' : ' 開始選擇'}
                                     </option>
                                     {categoryList?.map((item) => (
-                                        <option className="bg-dark text-white fs-6" value={item} key={item}>
+                                        <option className="bg-dark fs-6 text-white" value={item} key={item}>
                                             {item}
                                         </option>
                                     ))}
@@ -209,7 +209,7 @@ const ProductsSearchSection = () => {
                                     value={sortingValue}
                                 >
                                     {sortingList.map((item) => (
-                                        <option className="bg-dark text-white fs-6" value={item} key={item}>
+                                        <option className="bg-dark fs-6 text-white" value={item} key={item}>
                                             {item}
                                         </option>
                                     ))}

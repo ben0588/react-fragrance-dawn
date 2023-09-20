@@ -6,10 +6,13 @@ import { createAdminLogin } from '../../store/slice/adminSlice';
 import ValidationInputGroup from '../../components/ReactHookForm/ValidationInputGroup';
 import { useForm } from 'react-hook-form';
 import { useAdminLoginMutation } from '../../store/store';
+import { createExpLog } from '../../store/slice/expSlice';
 
 const AdminLoginPage = () => {
     const adminLoginRef = useRef(null);
     const [adminLogin, result] = useAdminLoginMutation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -24,15 +27,13 @@ const AdminLoginPage = () => {
         mode: 'onTouched',
     });
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
     const handleAdminLoginSubmit = async (data) => {
         await adminLogin(data)
             .unwrap()
             .then((result) => {
                 let newDate = new Date(result.expired).toLocaleString();
                 document.cookie = `adminToken=${result.token}; expires=${newDate};`; // 儲存 Token
+                dispatch(createExpLog({ uid: result.uid, exp: result.expired }));
                 dispatch(createAdminLogin({ ...result, expired: result.expired }));
                 dispatch(createAsyncMessage(result));
                 if (document.cookie) {
@@ -47,9 +48,9 @@ const AdminLoginPage = () => {
     const checkForm = Object.values(watch()).every((value) => value !== '');
 
     return (
-        <div className="position-relative ">
+        <div className="position-relative">
             <form
-                className=" mx-auto my-5"
+                className="mx-auto my-5"
                 style={{ width: `40%` }}
                 onSubmit={handleSubmit(handleAdminLoginSubmit)}
                 ref={adminLoginRef}
@@ -93,11 +94,11 @@ const AdminLoginPage = () => {
                     </div>
                     <button
                         type="submit"
-                        className=" btn btn-primary w-25 mt-2"
+                        className="btn btn-primary w-25 mt-2"
                         disabled={!checkForm || result.isLoading}
                     >
                         {result.isLoading && (
-                            <div className="spinner-border spinner-border-sm me-2 " role="status">
+                            <div className="spinner-border spinner-border-sm me-2" role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         )}

@@ -1,34 +1,27 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import usePriceToTw from '../../hooks/usePriceToTw';
-import { useForm, useWatch } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import ValidationInputGroup from '../../components/ReactHookForm/ValidationInputGroup';
 import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import ValidationSelectGroup from '../../components/ReactHookForm/ValidationSelectGroup';
 import { BsCheckAll, BsChevronDoubleLeft } from 'react-icons/bs';
 import useMessage from '../../hooks/useMessage';
-import { removeCarts } from '../../store/slice/cartSlice';
-import { removeCoupon } from '../../store/slice/couponSlice';
-import { persistor, useCreateOrderMutation } from '../../store/store';
+import { useCreateOrderMutation, useFetchCartsQuery } from '../../store/store';
 import Swal from 'sweetalert2';
 
 const CartCheckoutSection = () => {
-    const [carts, setCarts] = useState([]);
-    let { state } = useLocation();
-    const couponRedux = useSelector((state) => state.coupon);
     const { handlePriceToTw } = usePriceToTw();
-    const [isLoading, setIsLoading] = useState(false);
     const { inputToastMessage } = useMessage();
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [createOrder] = useCreateOrderMutation();
+    const [createOrder, createOrderRequest] = useCreateOrderMutation();
+    const { data, isLoading } = useFetchCartsQuery();
+
     const {
         register,
         handleSubmit,
         formState: { errors },
         getValues,
-        control,
         reset,
         watch,
     } = useForm({
@@ -44,17 +37,8 @@ const CartCheckoutSection = () => {
     });
     const [taiwanAddress, setTaiwanAddress] = useState([]);
 
-    useEffect(() => {
-        if (couponRedux.total) {
-            setCarts(state?.carts || []); // 調整傳入資料狀態清除
-        } else {
-            setCarts([]);
-        }
-    }, [state, couponRedux]);
-
     const handleSubmitForm = async (data) => {
         try {
-            setIsLoading(true);
             const { name, email, tel, address, city, area } = data;
             const form = {
                 data: {
@@ -95,17 +79,12 @@ const CartCheckoutSection = () => {
                         showConfirmButton: false,
                         timer: 1500,
                     });
-                    dispatch(removeCarts());
-                    dispatch(removeCoupon());
-                    persistor.purge('coupon');
                     reset();
                     navigate('/cart/payment', { state: result.value.data.orderId });
                 }
             });
         } catch (error) {
             inputToastMessage(error?.response?.data);
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -118,7 +97,7 @@ const CartCheckoutSection = () => {
         } catch (error) {
             inputToastMessage(error?.response?.data);
         }
-    }, []);
+    }, [inputToastMessage]);
 
     useEffect(() => {
         handleFetchTaiwanAddress();
@@ -126,18 +105,14 @@ const CartCheckoutSection = () => {
 
     const filterAreaAddress = taiwanAddress.filter((city) => city.CityName === getValues('city'));
 
-    // 監控中
-    const useFormState = useWatch({ control });
-    useEffect(() => {}, [useFormState]);
-
     // 監控是否表單所有內容已填寫
     const allFieldsFilled = Object.values(watch()).every((value) => value !== '');
 
     return (
         <div className="mb-3 pb-3">
             <div className="row">
-                <div className="col-lg-8  pt-2 pb-3">
-                    <h4 className="border-bottom border-2 border-primary fs-5 pb-2">配送資料</h4>
+                <div className="col-lg-8  pb-3 pt-2">
+                    <h4 className="border-bottom border-primary fs-5 border-2 pb-2">配送資料</h4>
                     <form onSubmit={handleSubmit(handleSubmitForm)}>
                         <fieldset>
                             <legend>填寫寄送者資訊</legend>
@@ -280,68 +255,72 @@ const CartCheckoutSection = () => {
                                 </Link>
                                 <input
                                     type="submit"
-                                    className="btn btn-primary btn-primary-hover "
-                                    value={isLoading ? '表單處理中' : '確認送出'}
+                                    className="btn btn-primary btn-primary-hover"
+                                    value={createOrderRequest.isLoading ? '表單處理中' : '確認送出'}
                                     style={{ width: `120px` }}
-                                    disabled={!allFieldsFilled || isLoading}
+                                    disabled={!allFieldsFilled || createOrderRequest.isLoading}
                                 />
                             </div>
                         </fieldset>
                     </form>
                 </div>
                 <div className="col-lg-4 border border-2 py-2">
-                    <h4 className="border-bottom border-2 border-primary fs-5 pb-2">購物車明細</h4>
-                    {carts?.length
-                        ? carts?.map((product) => (
-                              <div key={product.id}>
-                                  <div className="row mt-3 border-bottom border-2 pb-3">
-                                      <div className="col-3">
-                                          <img
-                                              src={product.product.imageUrl}
-                                              alt={product.product.title}
-                                              title={product.product.title}
-                                              style={{ width: `75px`, height: `75px` }}
-                                          />
-                                      </div>
-                                      <div className="col-7">
-                                          <div className="d-flex justify-content-center align-items-start flex-column">
-                                              <span>{product.product.title}</span>
-                                              <span className="text-muted fs-7">
-                                                  總價：NT{handlePriceToTw(product.total)}
-                                              </span>
-                                          </div>
-                                      </div>
-                                      <div className="col-2">
-                                          <div className="d-flex justify-content-center align-items-start flex-column ">
-                                              <span>x {product.qty}</span>
-                                              <span className="opacity-0 fs-7">|</span>
-                                          </div>
-                                      </div>
-                                      <div className="col-8">
-                                          {product?.coupon?.code ? (
-                                              <span className="mt-1 text-danger float-start d-flex align-items-center">
-                                                  <BsCheckAll className="icon me-1" />
-                                                  使用優惠：{product?.coupon?.code}
-                                              </span>
-                                          ) : null}
-                                      </div>
-                                      <div className="col-4">
-                                          <span className="mt-1 fw-border float-end">
-                                              NT{handlePriceToTw(product.final_total)}
-                                          </span>
-                                      </div>
-                                  </div>
-                              </div>
-                          ))
-                        : '購物車內無商品'}
+                    <h4 className="border-bottom border-primary fs-5 border-2 pb-2">購物車明細</h4>
+                    {isLoading ? (
+                        <div>資料加載中</div>
+                    ) : data?.data?.carts?.length ? (
+                        data?.data?.carts?.map((product) => (
+                            <div key={product.id}>
+                                <div className="row border-bottom mt-3 border-2 pb-3">
+                                    <div className="col-3">
+                                        <img
+                                            src={product.product.imageUrl}
+                                            alt={product.product.title}
+                                            title={product.product.title}
+                                            style={{ width: `75px`, height: `75px` }}
+                                        />
+                                    </div>
+                                    <div className="col-7">
+                                        <div className="d-flex justify-content-center align-items-start flex-column">
+                                            <span>{product.product.title}</span>
+                                            <span className="text-muted fs-7">
+                                                總價：NT{handlePriceToTw(product.total)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="col-2">
+                                        <div className="d-flex justify-content-center align-items-start flex-column">
+                                            <span>x {product.qty}</span>
+                                            <span className="fs-7 opacity-0">|</span>
+                                        </div>
+                                    </div>
+                                    <div className="col-8">
+                                        {product?.coupon?.code ? (
+                                            <span className="text-danger float-start d-flex align-items-center mt-1">
+                                                <BsCheckAll className="icon me-1" />
+                                                使用優惠：{product?.coupon?.code}
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                    <div className="col-4">
+                                        <span className="fw-border float-end mt-1">
+                                            NT{handlePriceToTw(product.final_total)}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        '購物車內無商品'
+                    )}
 
-                    <div className="border-bottom border-2 border-primary pt-4 pb-2">
-                        <div className="row ">
+                    <div className="border-bottom border-primary border-2 pb-2 pt-4">
+                        <div className="row">
                             <div className="col-6 text-start">
                                 <span className="fs-3 fw-bolder">總價</span>
                             </div>
                             <div className="col-6 text-end">
-                                <span className="fs-3 fw-bolder">NT{handlePriceToTw(couponRedux.finalTotal)}</span>
+                                <span className="fs-3 fw-bolder">NT{handlePriceToTw(data?.data?.final_total)}</span>
                             </div>
                         </div>
                     </div>
@@ -350,4 +329,5 @@ const CartCheckoutSection = () => {
         </div>
     );
 };
+
 export default CartCheckoutSection;

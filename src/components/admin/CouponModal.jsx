@@ -11,7 +11,6 @@ const CouponModal = memo(function CouponModal({
     fetchCoupons,
     modalOpenType,
     editCouponTarget,
-    checkAdminAuth,
 }) {
     const initialValue = {
         title: '',
@@ -74,7 +73,6 @@ const CouponModal = memo(function CouponModal({
         const newCoupons = { ...coupons, due_date: new Date(coupons.due_date).getTime() }; // 將到期時間 yyyy-dd-mm 轉換 unix 時間戳
         try {
             setCheckAuth(true);
-            await checkAdminAuth();
             let typeToggle = modalOpenType === 'create' ? true : false;
             let result;
             if (typeToggle) {
@@ -95,88 +93,88 @@ const CouponModal = memo(function CouponModal({
 
     return (
         <div
-            className='modal fade'
-            id='couponModal' // 與 Bootstrap Modal 綁定
+            className="modal fade"
+            id="couponModal" // 與 Bootstrap Modal 綁定
         >
-            <div className='modal-dialog modal-lg'>
-                <div className='modal-content'>
-                    <div className='modal-header'>
-                        <h5 className='modal-title fw-bolder'>
+            <div className="modal-dialog modal-lg modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title fw-bolder">
                             {modalOpenType === 'create' ? '新增優惠卷' : `編輯優惠卷：${editCouponTarget.title}`}
                         </h5>
                         <button
-                            type='button'
-                            className='btn-close'
+                            type="button"
+                            className="btn-close"
                             onClick={() => handleCancelCouponModal()}
-                            aria-label='Close'
+                            aria-label="Close"
                         ></button>
                     </div>
-                    <div className='modal-body'>
-                        <div className=''>
+                    <div className="modal-body">
+                        <div className="">
                             <InputGroup
-                                name='title'
-                                id='couponTitle'
-                                type='text'
-                                title='標題'
-                                groupClass='mb-3'
-                                labelClass='form-label fw-bolder'
-                                inputClass='form-control'
+                                name="title"
+                                id="couponTitle"
+                                type="text"
+                                title="標題"
+                                groupClass="mb-3"
+                                labelClass="form-label fw-bolder"
+                                inputClass="form-control"
                                 onChange={handleChangeValue}
                                 value={coupons.title || ''}
-                                placeholder='請輸入標題'
+                                placeholder="請輸入標題"
                             />
 
-                            <div className='row g-3'>
-                                <div className='col-6'>
+                            <div className="row g-3">
+                                <div className="col-6">
                                     <InputGroup
-                                        name='percent'
-                                        id='couponPercent'
-                                        type='number'
-                                        title='折扣 (%)'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
+                                        name="percent"
+                                        id="couponPercent"
+                                        type="number"
+                                        title="折扣 (%)"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
                                         onChange={handleChangeValue}
                                         value={coupons.percent || ''}
-                                        placeholder='請輸入折扣 (%)'
+                                        placeholder="請輸入折扣 (%)"
                                     />
                                 </div>
-                                <div className='col-6'>
+                                <div className="col-6">
                                     <InputGroup
-                                        name='due_date'
-                                        id='couponDueDate'
-                                        type='date'
-                                        title='到期日'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
+                                        name="due_date"
+                                        id="couponDueDate"
+                                        type="date"
+                                        title="到期日"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
                                         onChange={handleChangeValue}
                                         value={coupons.due_date || ''}
                                     />
                                 </div>
-                                <div className='col-6 mt-0'>
+                                <div className="col-6 mt-0">
                                     <InputGroup
-                                        name='code'
-                                        id='couponCode'
-                                        type='text'
-                                        title='優惠碼'
-                                        groupClass='mb-3'
-                                        labelClass='form-label fw-bolder'
-                                        inputClass='form-control'
+                                        name="code"
+                                        id="couponCode"
+                                        type="text"
+                                        title="優惠碼"
+                                        groupClass="mb-3"
+                                        labelClass="form-label fw-bolder"
+                                        inputClass="form-control"
                                         onChange={handleChangeValue}
                                         value={coupons.code || ''}
-                                        placeholder='請輸入優惠碼'
+                                        placeholder="請輸入優惠碼"
                                     />
                                 </div>
-                                <div className='col-12 mt-0'>
+                                <div className="col-12 mt-0">
                                     <InputGroup
-                                        name='is_enabled'
-                                        id='couponEnabled'
-                                        type='checkbox'
-                                        title='是否啟用'
-                                        groupClass='form-check mb-3'
-                                        labelClass='form-check-label'
-                                        inputClass='form-check-input'
+                                        name="is_enabled"
+                                        id="couponEnabled"
+                                        type="checkbox"
+                                        title="是否啟用"
+                                        groupClass="form-check mb-3"
+                                        labelClass="form-check-label"
+                                        inputClass="form-check-input"
                                         onChange={handleChangeValue}
                                         checked={Boolean(coupons.is_enabled)}
                                     />
@@ -184,19 +182,19 @@ const CouponModal = memo(function CouponModal({
                             </div>
                         </div>
                     </div>
-                    <div className='modal-footer'>
-                        <button type='button' className='btn btn-secondary' onClick={() => handleCancelCouponModal()}>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={() => handleCancelCouponModal()}>
                             關閉
                         </button>
                         <button
-                            type='button'
-                            className='btn btn-primary '
+                            type="button"
+                            className="btn btn-primary"
                             onClick={() => handleSubmitAddCoupon()}
                             disabled={!allFieldsFilled || checkAuth}
                         >
                             {checkAuth && (
-                                <div className='spinner-border spinner-border-sm me-2 ' role='status'>
-                                    <span className='visually-hidden'>Loading...</span>
+                                <div className="spinner-border spinner-border-sm me-2" role="status">
+                                    <span className="visually-hidden">Loading...</span>
                                 </div>
                             )}
                             {modalOpenType === 'create'
@@ -219,6 +217,5 @@ CouponModal.propTypes = {
     fetchCoupons: PropTypes.func,
     modalOpenType: PropTypes.oneOf(['create', 'edit']),
     editCouponTarget: PropTypes.object,
-    checkAdminAuth: PropTypes.func,
 };
 export default CouponModal;

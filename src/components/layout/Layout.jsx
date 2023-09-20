@@ -39,7 +39,7 @@ const Layout = () => {
     };
     return (
         <div
-            className="container-fluid position-relative d-flex flex-column min-vh-100 px-0 "
+            className="container-fluid position-relative d-flex flex-column min-vh-100 px-0"
             style={{ maxWidth: `100%`, width: `100%` }}
         >
             <Header />
@@ -50,7 +50,7 @@ const Layout = () => {
             <Footer />
             <button
                 type="button"
-                className="top-btn "
+                className="top-btn"
                 style={{
                     display: btnShow ? 'flex' : 'none',
                 }}

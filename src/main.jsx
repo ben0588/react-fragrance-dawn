@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-// import 'bootstrap/scss/bootstrap.scss';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './style/sass/all.scss';
 import axios from 'axios';

@@ -76,9 +76,23 @@ const cartApi = createApi({
                     };
                 },
             }),
-            createOrder: builder.mutation({
+            AddCouponCart: builder.mutation({
                 invalidatesTags: () => {
                     return [{ type: 'Carts' }];
+                },
+                query: (data) => {
+                    return {
+                        url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/coupon`,
+                        method: 'POST',
+                        body: {
+                            data,
+                        },
+                    };
+                },
+            }),
+            createOrder: builder.mutation({
+                invalidatesTags: () => {
+                    return [{ type: 'Carts' }, { type: 'Order' }]; // 與 Carts 同組時當建立訂單後會重新呼叫取得購物車
                 },
                 query: (data) => {
                     return {
@@ -87,6 +101,39 @@ const cartApi = createApi({
                         body: {
                             ...data,
                         },
+                    };
+                },
+            }),
+            fetchOrders: builder.query({
+                providesTags: () => {
+                    return [{ type: 'Order' }];
+                },
+                query: (page = 0) => {
+                    return {
+                        url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/orders?page=${page}`,
+                        method: 'GET',
+                    };
+                },
+            }),
+            fetchOrder: builder.query({
+                invalidatesTags: () => {
+                    return [{ type: 'Order' }];
+                },
+                query: (orderId) => {
+                    return {
+                        url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/order/${orderId}`,
+                        method: 'GET',
+                    };
+                },
+            }),
+            paymentOrder: builder.mutation({
+                invalidatesTags: () => {
+                    return [{ type: 'Order' }];
+                },
+                query: (orderId) => {
+                    return {
+                        url: `/v2/api/${import.meta.env.VITE_BACKEND_BASE_API_PATH}/pay/${orderId}`,
+                        method: 'POST',
                     };
                 },
             }),
@@ -100,7 +147,11 @@ export const {
     useUpdateCartMutation,
     useDeleteCartMutation,
     useRemoveCartsMutation,
+    useAddCouponCartMutation,
     useCreateOrderMutation,
+    useFetchOrdersQuery,
+    useFetchOrderQuery,
+    usePaymentOrderMutation,
 } = cartApi;
 
 export { cartApi };

@@ -13,6 +13,7 @@ import couponReducer from './slice/couponSlice';
 import loadingReducer from './slice/loadingSlice';
 import popularReducer from './slice/popularSlice';
 import bulletinReducer from './slice/bulletinSlice';
+import expReducer from './slice/expSlice';
 
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -38,6 +39,7 @@ const reducers = combineReducers({
     bulletin: bulletinReducer,
     [adminApi.reducerPath]: adminApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    exp: expReducer,
 });
 
 const persistConfig = {
@@ -59,8 +61,9 @@ const persistConfig = {
         'cart',
         adminApi.reducerPath,
         cartApi.reducerPath,
+        'coupon',
     ], // 設置黑名單
-    whitList: ['wishlist', 'coupon', 'bulletin'], // 設置白名單
+    whitList: ['wishlist', 'bulletin', 'exp'], // 設置白名單
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -82,11 +85,6 @@ export const persistor = persistStore(store);
 
 setupListeners(store.dispatch); // 設置監聽器
 
-// persistor.subscribe(() => {
-//     const previousState = persistor.getState();
-//     console.log('取得狀態:', previousState);
-// });
-
 export { useAdminLoginMutation, useAdminLogoutMutation, useAdminCheckMutation } from './apis/adminApi';
 
 export {
@@ -95,5 +93,9 @@ export {
     useUpdateCartMutation,
     useDeleteCartMutation,
     useRemoveCartsMutation,
+    useAddCouponCartMutation,
     useCreateOrderMutation,
+    useFetchOrdersQuery,
+    useFetchOrderQuery,
+    usePaymentOrderMutation,
 } from './apis/cartApi';

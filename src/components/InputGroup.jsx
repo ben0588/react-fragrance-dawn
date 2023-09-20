@@ -49,7 +49,7 @@ InputGroup.propTypes = {
     inputClass: PropTypes.string,
     children: PropTypes.any,
     onChange: PropTypes.func,
-    value: PropTypes.string,
+    value: PropTypes.any,
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
     placeholder: PropTypes.string,

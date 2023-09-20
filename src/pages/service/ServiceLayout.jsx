@@ -3,7 +3,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 const ServiceLayout = () => {
     return (
         <div className="container py-3">
-            <div className="row">
+            <div className="row max-auto">
                 <div className="col-md-3 pb-3">
                     <ul className="nav d-flex justify-content-center align-items-center justify-content-md-start pb-3">
                         {[
@@ -17,7 +17,7 @@ const ServiceLayout = () => {
                             <li key={index} className="nav-item w-100">
                                 <NavLink
                                     to={item.path}
-                                    className={({ isActive }) => `nav-link  link-hover  ${isActive ? 'active  ' : ''}`}
+                                    className="nav-link link-hover"
                                     style={({ isActive }) => ({
                                         backgroundColor: isActive ? 'black' : 'white',
                                         color: isActive ? 'white' : 'black',
@@ -29,7 +29,7 @@ const ServiceLayout = () => {
                         ))}
                     </ul>
                 </div>
-                <div className="col-md-8 ">
+                <div className="col-md-9">
                     <Outlet />
                 </div>
             </div>

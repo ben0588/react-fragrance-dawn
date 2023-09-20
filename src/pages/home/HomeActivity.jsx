@@ -27,7 +27,7 @@ const HomeActivity = () => {
         } catch (error) {
             inputToastMessage({ success: false, message: '發生錯誤，請重新整理或尋求客服處理' });
         }
-    }, []);
+    }, [inputToastMessage]);
 
     useEffect(() => {
         handleFetchSales();
@@ -58,7 +58,7 @@ const HomeActivity = () => {
     };
 
     return (
-        <div className="container py-5 my-5">
+        <div className="container my-5 py-5">
             <h2 className="home-title">
                 熱門活動<span></span>
                 <span></span>
@@ -66,25 +66,25 @@ const HomeActivity = () => {
 
             <div className="row align-items-center">
                 <div className="col-6">
-                    <strong className="d-flex align-items-center justify-content-center fs-6 pt-3 pb-2">
+                    <strong className="d-flex align-items-center justify-content-center fs-6 pb-2 pt-3">
                         <FaStar className="icon-md me-1" />
                         領取活動優惠碼
                     </strong>
                 </div>
                 <div className="col-6">
-                    <strong className="d-flex align-items-center justify-content-center fs-6 pt-3 pb-2">
+                    <strong className="d-flex align-items-center justify-content-center fs-6 pb-2 pt-3">
                         <BiCalendarHeart className="icon-md me-1" />
                         期間限定活動
                     </strong>
                 </div>
             </div>
             <div className="row align-items-center">
-                <div className="col-lg-6 ">
-                    <div className="row border border-3 border-primary">
+                <div className="col-lg-6">
+                    <div className="row border-3 border-primary border">
                         {sales.map((item, index) => (
                             <motion.div
                                 key={item.id}
-                                className=" col-6 p-0 m-0"
+                                className="col-6 m-0 p-0"
                                 initial="hidden"
                                 whileInView="show"
                                 variants={imagesVariants}
@@ -117,14 +117,14 @@ const HomeActivity = () => {
 
                 <div className="col-lg-6">
                     <div className="row align-items-stretch">
-                        <div className="d-flex align-items-center justify-content-center flex-column h-100 ">
+                        <div className="d-flex align-items-center justify-content-center flex-column h-100">
                             <div className="px-4 py-4">
                                 <div className="fs-3 text-center">活動舉行中：{activityTarget?.title}</div>
                                 <div className="fs-3 text-ellipsis text-center">
                                     活動舉行期間：{activityTarget?.date}
                                 </div>
-                                <div className="d-flex align-items-center justify-content-center fs-4 ">
-                                    優惠碼：<span className="bg-danger text-white px-2">50%OFF</span>
+                                <div className="d-flex align-items-center justify-content-center fs-4">
+                                    優惠碼：<span className="bg-danger px-2 text-white">50%OFF</span>
                                     <button
                                         type="button"
                                         className="btn btn-danger ms-2"
@@ -135,13 +135,15 @@ const HomeActivity = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="d-flex align-items-center justify-content-center flex-column h-100  ">
+                        <div className="d-flex align-items-center justify-content-center flex-column h-100">
                             <div className="px-4 py-4">
-                                <div className="d-flex align-items-center justify-content-start fs-5 mb-2 ">
-                                    <PiWarningCircleBold className="icon-sm pt-1" />
-                                    <span className="text-ellipsis">領取優惠碼時，請注意以下注意事項：</span>
+                                <div className="d-flex align-items-center justify-content-start mb-2">
+                                    <p className="fs-5">
+                                        <PiWarningCircleBold className="icon-sm" />
+                                        領取優惠碼時，請注意以下注意事項：
+                                    </p>
                                 </div>
-                                <ol className="text-ellipsis border border-2 ps-5 p-3  ">
+                                <ol className="text-ellipsis border border-2 p-3 ps-5">
                                     <li>請在使用期限內使用優惠卷，逾期作廢。</li>
                                     <li>請在使用期限內使用優惠卷，逾期作廢。</li>
                                     <li>部分優惠卷僅限制特定商品，領取後請注意。</li>
@@ -152,7 +154,7 @@ const HomeActivity = () => {
                                 <Link
                                     to="/products"
                                     role="button"
-                                    className="btn btn-primary btn-primary-hover border border-3  border-primary w-100 py- "
+                                    className="btn btn-primary btn-primary-hover border-3 border-primary  w-100 py- border"
                                 >
                                     前去逛逛
                                 </Link>

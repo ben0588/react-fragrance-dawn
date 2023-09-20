@@ -8,7 +8,6 @@ import useMessage from '../../hooks/useMessage';
 import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
-import { useOutletContext } from 'react-router-dom';
 
 const AdminProductsSection = () => {
     const [products, setProducts] = useState([]);
@@ -22,7 +21,6 @@ const AdminProductsSection = () => {
     const dispatch = useDispatch();
     const [categoryList, setCategoryList] = useState([]);
     const [category, setCategory] = useState('');
-    const { adminCheck } = useOutletContext();
 
     useEffect(() => {
         productModalRef.current = new Modal('#productModal', {
@@ -48,19 +46,22 @@ const AdminProductsSection = () => {
     };
     const handleCancelDeleteModal = () => deleteModalRef.current.hide();
 
-    const fetchProducts = useCallback(async (page = 1, category = null) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await adminFetchLimitedProducts(page, category);
-            const { products, pagination } = result;
-            setProducts(products);
-            setPagination(pagination);
-            dispatch(updateLoadingState(false));
-        } catch (error) {
-            inputToastMessage(error.response.data);
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const fetchProducts = useCallback(
+        async (page = 1, category = null) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await adminFetchLimitedProducts(page, category);
+                const { products, pagination } = result;
+                setProducts(products);
+                setPagination(pagination);
+                dispatch(updateLoadingState(false));
+            } catch (error) {
+                inputToastMessage(error.response.data);
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
     useEffect(() => {
         fetchProducts();
@@ -74,7 +75,7 @@ const AdminProductsSection = () => {
         } catch (error) {
             inputToastMessage(error.response.data);
         }
-    }, []);
+    }, [inputToastMessage]);
 
     useEffect(() => {
         fetchAllProducts();
@@ -83,7 +84,6 @@ const AdminProductsSection = () => {
     const handleDeleteProduct = async () => {
         try {
             dispatch(updateLoadingState(true));
-            await adminCheck();
             const result = await adminDeleteProduct(deleteProductTarget.id);
             inputToastMessage(result);
             fetchProducts();
@@ -109,7 +109,6 @@ const AdminProductsSection = () => {
                 fetchProducts={fetchProducts}
                 modalOpenType={modalOpenType}
                 editProductTarget={editProductTarget}
-                checkAdminAuth={adminCheck}
             />
 
             <DeleteModal
@@ -122,7 +121,7 @@ const AdminProductsSection = () => {
             <hr />
             <div className="row align-items-center">
                 <div className="col">
-                    <div className="form-floating  ">
+                    <div className="form-floating">
                         <select
                             name="category"
                             id="searchCategory"
@@ -142,7 +141,7 @@ const AdminProductsSection = () => {
                         <label htmlFor="searchCategory">使用類別搜尋</label>
                     </div>
                 </div>
-                <div className="col ">
+                <div className="col">
                     <button
                         type="button"
                         className="btn btn-primary float-end"

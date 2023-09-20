@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
 import Swal from 'sweetalert2';
-import { useOutletContext } from 'react-router-dom';
 
 const AdminOrdersSection = () => {
     const [orders, setOrders] = useState([]);
@@ -22,7 +21,6 @@ const AdminOrdersSection = () => {
     const { inputToastMessage } = useMessage();
     const { handlePriceToTw } = usePriceToTw();
     const dispatch = useDispatch();
-    const { adminCheck } = useOutletContext();
 
     useEffect(() => {
         orderModalRef.current = new Modal('#orderModal', {
@@ -41,19 +39,22 @@ const AdminOrdersSection = () => {
     const handleCancelOrderModal = () => orderModalRef.current.hide();
     const handleCancelDeleteModal = () => deleteModalRef.current.hide();
 
-    const fetchOrders = useCallback(async (page = 1) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await adminFetchLimitedOrders(page);
-            const { orders, pagination } = result;
-            setOrders(orders);
-            setPagination(pagination);
-            dispatch(updateLoadingState(false));
-        } catch (error) {
-            inputToastMessage(error.response.data);
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const fetchOrders = useCallback(
+        async (page = 1) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await adminFetchLimitedOrders(page);
+                const { orders, pagination } = result;
+                setOrders(orders);
+                setPagination(pagination);
+                dispatch(updateLoadingState(false));
+            } catch (error) {
+                inputToastMessage(error.response.data);
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
     useEffect(() => {
         fetchOrders(); // 初始取得訂單
@@ -75,7 +76,6 @@ const AdminOrdersSection = () => {
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
-                        await adminCheck();
                         return await adminDeleteOrder(orderId);
                     } catch (error) {
                         Swal.showValidationMessage(`請求失敗： ${error}`);
@@ -115,7 +115,6 @@ const AdminOrdersSection = () => {
                 showLoaderOnConfirm: true,
                 preConfirm: async () => {
                     try {
-                        await adminCheck();
                         return await adminDeleteAllOrders();
                     } catch (error) {
                         Swal.showValidationMessage(`請求失敗： ${error}`);
@@ -145,7 +144,6 @@ const AdminOrdersSection = () => {
                 handleCancelOrderModal={handleCancelOrderModal}
                 fetchOrders={fetchOrders}
                 editOrderTarget={editOrderTarget}
-                checkAdminAuth={adminCheck}
             />
             <DeleteModal handleCancelDeleteModal={handleCancelDeleteModal} />
 

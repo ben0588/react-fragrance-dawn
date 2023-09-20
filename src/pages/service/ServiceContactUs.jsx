@@ -10,6 +10,7 @@ const ServiceContactUs = () => {
         handleSubmit,
         formState: { errors },
         reset,
+        watch,
     } = useForm({
         defaultValues: {
             question: '',
@@ -40,17 +41,18 @@ const ServiceContactUs = () => {
         }
     };
 
+    const allFieldsFilled = Object.values(watch()).every((value) => value !== '');
+
     return (
         <div>
-            <p>如果您有任何問題、意見或需要協助，請隨時聯繫我們的客戶服務團隊</p>
-            <h4 className="border-top border-2 mt-4 pt-2"> 電話連絡：</h4>
+            <h4>如果您有任何問題、意見或需要協助，請隨時聯繫我們的客戶服務團隊</h4>
+            <h5 className="border-top border-2 fw-bolder mt-4 pt-2"> 電話連絡：</h5>
             <div className="mt-4">
                 客服專線 <a href="tel:+886-2-1234567">0800-775-800</a>
             </div>
             <div>客服中心營業時間：</div>
-            <p> 週一至週五 (例假日除外) 9:30-12:30, 14:00-17:30 </p>
-
-            <h4 className="border-top border-2 mt-4 pt-2">電子信箱聯絡：</h4>
+            <div>週一至週五 (例假日除外) 9:30-12:30, 14:00-17:30 </div>
+            <h5 className="border-top border-2 fw-bolder mt-4 pt-2">電子信箱聯絡：</h5>
             <form onSubmit={handleSubmit(handleSubmitForm)}>
                 <ValidationSelectGroup
                     id="question"
@@ -152,7 +154,12 @@ const ServiceContactUs = () => {
                         required: { value: true, message: '此欄位必填' },
                     }}
                 />
-                <input type="submit" value="提交表單" className="btn btn-primary btn-primary-hover w-100 mt-4" />
+                <input
+                    type="submit"
+                    value="提交表單"
+                    className="btn btn-primary btn-primary-hover w-100 mt-4"
+                    disabled={!allFieldsFilled}
+                />
             </form>
         </div>
     );

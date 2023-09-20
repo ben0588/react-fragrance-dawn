@@ -1,23 +1,7 @@
 import axios from 'axios';
 
 // ----- Admin 管理者 Login API -----
-export const adminSignIns = async (user) => {
-    const adminSignInsApiUrl = `/v2/admin/signin`;
-    const response = await axios.post(adminSignInsApiUrl, user);
-    return response.data;
-};
-
-export const adminCheckAuth = async () => {
-    const checkLoginStateApiUrl = `${import.meta.env.VITE_BACKEND_BASE_API_URL}/v2/api/user/check`;
-    const response = await axios.post(checkLoginStateApiUrl);
-    return response.data;
-};
-
-export const adminLogout = async () => {
-    const adminLogoutApiUrl = `${import.meta.env.VITE_BACKEND_BASE_API_URL}/v2/logout`;
-    const response = await axios.post(adminLogoutApiUrl);
-    return response.data;
-};
+// 使用 RTK Query 改寫
 
 // ----- Admin 管理者 Product API -----
 export const adminFetchAllProducts = async () => {

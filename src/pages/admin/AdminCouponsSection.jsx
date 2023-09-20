@@ -8,7 +8,6 @@ import useMessage from '../../hooks/useMessage';
 import { useDispatch } from 'react-redux';
 import { updateLoadingState } from '../../store/slice/loadingSlice';
 import { useCallback } from 'react';
-import { useOutletContext } from 'react-router-dom';
 
 const AdminCouponsSection = () => {
     const [coupons, setCoupons] = useState([]);
@@ -20,7 +19,6 @@ const AdminCouponsSection = () => {
     const [deleteCouponTarget, setDeleteCouponTarget] = useState({});
     const { inputToastMessage } = useMessage();
     const dispatch = useDispatch();
-    const { adminCheck } = useOutletContext();
 
     useEffect(() => {
         couponModalRef.current = new Modal('#couponModal', {
@@ -47,19 +45,22 @@ const AdminCouponsSection = () => {
 
     const handleCancelDeleteModal = () => deleteModalRef.current.hide();
 
-    const fetchCoupons = useCallback(async (page = 1) => {
-        try {
-            dispatch(updateLoadingState(true));
-            const result = await adminFetchLimitedCoupons(page);
-            const { coupons, pagination } = result;
-            setCoupons(coupons);
-            setPagination(pagination);
-            dispatch(updateLoadingState(false));
-        } catch (error) {
-            inputToastMessage(error.response.data);
-            dispatch(updateLoadingState(false));
-        }
-    }, []);
+    const fetchCoupons = useCallback(
+        async (page = 1) => {
+            try {
+                dispatch(updateLoadingState(true));
+                const result = await adminFetchLimitedCoupons(page);
+                const { coupons, pagination } = result;
+                setCoupons(coupons);
+                setPagination(pagination);
+                dispatch(updateLoadingState(false));
+            } catch (error) {
+                inputToastMessage(error.response.data);
+                dispatch(updateLoadingState(false));
+            }
+        },
+        [dispatch, inputToastMessage],
+    );
 
     useEffect(() => {
         fetchCoupons(); // 初始取得優惠卷列表
@@ -68,7 +69,6 @@ const AdminCouponsSection = () => {
     const handleDeleteCoupon = async () => {
         try {
             dispatch(updateLoadingState(true));
-            await adminCheck();
             const result = await adminDeleteCoupon(deleteCouponTarget.id);
             inputToastMessage(result);
             setDeleteCouponTarget({});
@@ -90,7 +90,6 @@ const AdminCouponsSection = () => {
                 fetchCoupons={fetchCoupons}
                 modalOpenType={modalOpenType}
                 editCouponTarget={editCouponTarget}
-                checkAdminAuth={adminCheck}
             />
 
             <DeleteModal

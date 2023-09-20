@@ -1,18 +1,25 @@
 import Swal from 'sweetalert2';
 import InputGroup from '../../components/InputGroup';
-import { clientDeleteAllCarts, clientUseCoupon } from '../../api/clientApis';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeCarts } from '../../store/slice/cartSlice';
-import { updateCoupon, removeCoupon, updateLoading } from '../../store/slice/couponSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useMessage from '../../hooks/useMessage';
-import PropTypes from 'prop-types';
+import { useRemoveCartsMutation } from '../../store/store';
+import { useAddCouponCartMutation, useFetchCartsQuery } from '../../store/apis/cartApi';
 
-const CartCouponSection = ({ handleFetchCart }) => {
-    const dispatch = useDispatch();
+const CartCouponSection = () => {
     const [coupon, setCoupon] = useState('');
-    const couponRedux = useSelector((state) => state.coupon);
+    const [useCoupon, setUseCoupon] = useState(false);
     const { inputToastMessage } = useMessage();
+    const [removeCarts] = useRemoveCartsMutation();
+    const [addCoupon, addCouponResult] = useAddCouponCartMutation();
+    const { data } = useFetchCartsQuery();
+
+    useEffect(() => {
+        const newCoupon = data.data.carts.filter((item) => item.coupon && item.coupon);
+        if (newCoupon.length) {
+            setCoupon(newCoupon[0].coupon.code);
+            setUseCoupon(true);
+        }
+    }, [data]);
 
     const handleRemoveCoupon = () => {
         Swal.fire({
@@ -29,41 +36,40 @@ const CartCouponSection = ({ handleFetchCart }) => {
             showLoaderOnConfirm: true,
             preConfirm: async () => {
                 try {
-                    return await clientDeleteAllCarts();
+                    return await removeCarts();
                 } catch (error) {
                     Swal.showValidationMessage(`請求失敗： ${error}`);
                 }
             },
             allowOutsideClick: () => !Swal.isLoading(),
         }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire('成功', result?.value?.data?.message, 'success');
+            if (result?.value?.data?.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: `購物車商品${result?.value?.data?.message}`,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
                 setCoupon('');
-                dispatch(removeCarts());
-                dispatch(removeCoupon());
-                handleFetchCart();
             }
         });
     };
 
     const handleUseOfferCode = async (coupon) => {
         try {
-            dispatch(updateLoading(true));
             const data = {
                 code: coupon,
             };
-            const result = await clientUseCoupon(data);
-            const couponData = {
-                isLoading: false,
-                isSelected: true,
-                code: coupon,
-                finalTotal: result?.data?.data?.final_total,
-            };
-            dispatch(updateCoupon(couponData));
-            handleFetchCart();
+            const result = await addCoupon(data);
+            inputToastMessage({
+                success: true,
+                type: 'default',
+                message: `✨ ${result.data.message}`,
+                position: 'top-left',
+            });
         } catch (error) {
             inputToastMessage(error?.response?.data);
-            dispatch(updateLoading(false));
         }
     };
 
@@ -74,32 +80,30 @@ const CartCouponSection = ({ handleFetchCart }) => {
                 id="coupon"
                 type="text"
                 title="使用優惠碼"
-                groupClass="mb-3 mt-3 "
+                groupClass="mb-3 mt-3"
                 labelClass="form-label d-block"
                 inputClass="form-control d-inline-block"
                 inputStyle={{ width: `200px` }}
                 onChange={(e) => setCoupon(e.target.value)}
-                value={couponRedux.code ? couponRedux.code : coupon}
+                value={coupon}
                 placeholder="請輸入優惠碼"
-                disabled={couponRedux.code ? true : false}
-                // 50%OFF
+                disabled={addCouponResult.isLoading || coupon !== ''}
             >
                 <button
                     type="button"
-                    className="form-control d-inline-block bg-primary  btn-primary-hover text-white ms-1"
+                    className="form-control d-inline-block bg-primary  btn-primary-hover ms-1 text-white"
                     style={{ width: `100px` }}
-                    title="使用優惠碼"
+                    title="請輸入優惠碼"
                     value={coupon}
                     onClick={(e) => handleUseOfferCode(e.target.value)}
-                    disabled={couponRedux.code ? true : false}
+                    disabled={addCouponResult.isLoading || coupon === '' || useCoupon}
                 >
                     套用折扣
                 </button>
-
-                {couponRedux.code && (
+                {useCoupon && (
                     <button
                         type="button"
-                        className="form-control d-inline-block bg-secondary  btn-primary-hover text-white mt-2"
+                        className="form-control d-inline-block bg-secondary  btn-primary-hover mt-2 text-white"
                         style={{ width: `100px` }}
                         onClick={() => handleRemoveCoupon()}
                     >
@@ -130,11 +134,21 @@ const CartCouponSection = ({ handleFetchCart }) => {
                                 <td>
                                     <button
                                         type="button"
-                                        className="btn btn-outline-primary  text-ellipsis py-1"
+                                        className={`btn text-ellipsis py-1 ${
+                                            coupon === item.coupon ? 'btn-primary' : 'btn-outline-primary'
+                                        }`}
                                         onClick={() => handleUseOfferCode(item.coupon)}
-                                        disabled={couponRedux.code === item.coupon ? true : false}
+                                        disabled={addCouponResult.isLoading || coupon === item.coupon ? true : false}
                                     >
-                                        {couponRedux.code === item.coupon ? '代碼使用中' : '使用代碼'}
+                                        {addCouponResult.isLoading &&
+                                        addCouponResult.originalArgs.code === item.coupon ? (
+                                            <>
+                                                <div className="spinner-border spinner-border-sm" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                            </>
+                                        ) : null}
+                                        {coupon === item.coupon ? '代碼使用中' : '使用代碼'}
                                     </button>
                                 </td>
                             </tr>
@@ -146,7 +160,4 @@ const CartCouponSection = ({ handleFetchCart }) => {
     );
 };
 
-CartCouponSection.propTypes = {
-    handleFetchCart: PropTypes.func,
-};
 export default CartCouponSection;

@@ -7,14 +7,17 @@ import PropTypes from 'prop-types';
 const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, order }) {
     const { handlePriceToTw } = usePriceToTw();
 
-    const filterCarts = Object.entries(order.products ? order.products : {}).map((item) => item[1]);
+    const filterCarts = Object.entries(order?.products ? order.products : {}).map((item) => item[1]);
 
+    if (!filterCarts.length) {
+        return;
+    }
     return (
-        <div>
-            <Modal show={show} onHide={handleClose} size="lg">
+        <>
+            <Modal show={show} onHide={handleClose} size="lg" centered>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        <span>訂單：{order.id}</span>
+                        <span>訂單：{order?.id}</span>
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -40,7 +43,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                             </thead>
                             <tbody>
                                 {filterCarts?.map((cart) => (
-                                    <tr key={cart.id}>
+                                    <tr key={cart?.id}>
                                         <td>{cart?.product?.title}</td>
                                         <td>{cart?.qty}</td>
                                         <td>{handlePriceToTw(cart?.final_total)}</td>
@@ -51,29 +54,29 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                             <tfoot>
                                 <tr>
                                     <td className="text-end fs-5 fw-bolder pe-4" colSpan={4}>
-                                        合計：NT{handlePriceToTw(order.total)}
+                                        合計：NT{handlePriceToTw(order?.total)}
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-                    <p>
+                    <div>
                         訂單建立時間：
-                        {new Date(order.create_at * 1000).toLocaleString(undefined, {
+                        {new Date(order?.create_at * 1000).toLocaleString(undefined, {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric',
                         })}
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         訂單狀態：
-                        {order.is_paid ? <span className="text-success ">付款完成</span> : <span>未付款</span>}
-                    </p>
-                    <p>
+                        {order?.is_paid ? <span className="text-success">付款完成</span> : <span>未付款</span>}
+                    </div>
+                    <div>
                         訂單進度：
                         <span
                             className={`${
-                                order.is_paid
+                                order?.is_paid
                                     ? order?.status === '1'
                                         ? 'text-dark'
                                         : order?.status === '2'
@@ -84,7 +87,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                                     : ''
                             }`}
                         >
-                            {order.is_paid
+                            {order?.is_paid
                                 ? order?.status === '1'
                                     ? '已確認'
                                     : order?.status === '2'
@@ -94,7 +97,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                                     : '未確認'
                                 : '未付款'}
                         </span>
-                    </p>
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
@@ -102,7 +105,7 @@ const AccountOrderModal = memo(function AccountOrderModal({ show, handleClose, o
                     </Button>
                 </Modal.Footer>
             </Modal>
-        </div>
+        </>
     );
 });
 

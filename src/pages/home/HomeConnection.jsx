@@ -43,41 +43,44 @@ const HomeConnection = () => {
     };
 
     return (
-        <div className=" position-relative my-5 mt-5">
+        <div className='position-relative my-5 mt-5'>
             <div
-                className="position-absolute top-100 start-50 translate-middle w-100 "
+                className='position-absolute top-100 start-50 translate-middle w-100'
                 style={{ zIndex: -1, height: `300px`, backgroundColor: '#dfe6e9' }}
             ></div>
-            <div className="container bg-white">
-                <h2 className="home-title py-3">
+            <div className='container bg-white'>
+                <h2 className='home-title py-3'>
                     聯絡我們<span></span>
                     <span></span>
                 </h2>
-                <div className="row  border border-2  py-3">
-                    <div className="col-lg-6 ">
+                <div className='row border border-2 py-3'>
+                    <div className='col-lg-6 '>
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14561.12891656417!2d120.6468631!3d24.1618329!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2c5e7459c2aaf71a!2z6Ie65Lit5biC5pS_5bqc!5e0!3m2!1szh-TW!2stw!4v1664543172932!5m2!1szh-TW!2stw"
-                            width="100%"
-                            height="100%"
-                            title="Google 地圖"
-                            aria-label="Google 地圖，顯示香氛晨光總公司位置的地理信息"
+                            src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14561.12891656417!2d120.6468631!3d24.1618329!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2c5e7459c2aaf71a!2z6Ie65Lit5biC5pS_5bqc!5e0!3m2!1szh-TW!2stw!4v1664543172932!5m2!1szh-TW!2stw'
+                            width='100%'
+                            height='100%'
+                            title='Google 地圖'
+                            aria-label='Google 地圖，顯示香氛晨光總公司位置的地理信息'
                             allowFullScreen={false}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
+                            loading='lazy'
+                            referrerPolicy='no-referrer-when-downgrade'
                         ></iframe>
                     </div>
-                    <div className="col-lg-6">
-                        <form onSubmit={handleSubmit(handleSubmitConnection)} className="mt-4">
+                    <div className='col-lg-6'>
+                        <form
+                            onSubmit={handleSubmit(handleSubmitConnection)}
+                            className='mt-4'
+                        >
                             <ValidationInputGroup
-                                id="connectionName"
-                                type="text"
+                                id='connectionName'
+                                type='text'
                                 errors={errors}
                                 register={register}
-                                groupClass="mt-3"
-                                labelText="姓名"
-                                labelClass="form-label mb-1"
-                                inputClass="form-control"
-                                placeholder="請輸入聯絡人姓名"
+                                groupClass='mt-3'
+                                labelText='姓名'
+                                labelClass='form-label mb-1'
+                                inputClass='form-control'
+                                placeholder='請輸入聯絡人姓名'
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
@@ -90,15 +93,15 @@ const HomeConnection = () => {
                             />
 
                             <ValidationInputGroup
-                                id="connectionEmail"
-                                type="text"
+                                id='connectionEmail'
+                                type='text'
                                 errors={errors}
                                 register={register}
-                                groupClass="mt-3"
-                                labelText="電子信箱"
-                                labelClass="form-label mb-1"
-                                inputClass="form-control"
-                                placeholder="請輸入聯絡人電子信箱"
+                                groupClass='mt-3'
+                                labelText='電子信箱'
+                                labelClass='form-label mb-1'
+                                inputClass='form-control'
+                                placeholder='請輸入聯絡人電子信箱'
                                 required={true}
                                 rules={{
                                     required: { value: true, message: '此欄位必填' },
@@ -109,15 +112,15 @@ const HomeConnection = () => {
                                 }}
                             />
                             <ValidationTextareaGroup
-                                id="connectionContent"
-                                type="text"
+                                id='connectionContent'
+                                type='text'
                                 errors={errors}
                                 register={register}
-                                groupClass="mt-3"
-                                labelText="內容"
-                                labelClass="form-label mb-1"
-                                textareaClass="form-control"
-                                placeholder="請輸入聯絡內容"
+                                groupClass='mt-3'
+                                labelText='內容'
+                                labelClass='form-label mb-1'
+                                textareaClass='form-control'
+                                placeholder='請輸入聯絡內容'
                                 required={true}
                                 rows={5}
                                 rules={{
@@ -126,9 +129,9 @@ const HomeConnection = () => {
                             />
 
                             <input
-                                type="submit"
-                                value="送出表單"
-                                className="btn btn-dark w-100 mt-4"
+                                type='submit'
+                                value='送出表單'
+                                className='btn btn-dark w-100 mt-4'
                                 disabled={!allFieldsFilled}
                             />
                         </form>

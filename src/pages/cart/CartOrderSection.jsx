@@ -1,16 +1,24 @@
 import usePriceToTw from '../../hooks/usePriceToTw';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useFetchCartsQuery } from '../../store/store';
 
-const CartOrderSection = ({ carts }) => {
+const CartOrderSection = () => {
     const { handlePriceToTw } = usePriceToTw();
-    const couponRedux = useSelector((state) => state.coupon);
+    const { data } = useFetchCartsQuery();
 
+    const handleFilterCoupon = () => {
+        return (
+            <>
+                {data.data.carts.map((item) => {
+                    return <span key={item.id}>{item?.coupon?.code ? item.coupon.code : '未使用'}</span>;
+                })}
+            </>
+        );
+    };
     const orderList = [
-        { title: '總量', text: carts?.length },
-        { title: '總計', text: handlePriceToTw(couponRedux.total) },
-        { title: '優惠碼', text: couponRedux.code ? couponRedux.code : '未使用' },
+        { title: '總量', text: data?.data?.carts?.length },
+        { title: '總計', text: handlePriceToTw(data?.data?.total) },
+        { title: '優惠碼', text: handleFilterCoupon() },
         { title: '運輸 (滿$1000免運費)', text: '$0' },
     ];
 
@@ -31,25 +39,22 @@ const CartOrderSection = ({ carts }) => {
             <h5 className="d-flex justify-content-between align-items-center border-top border-2 border-primary fs-5 mt-4 pt-4 pb-3">
                 <span className="d-flex align-items-center">
                     訂單總額
-                    {couponRedux.code ? <span className="fs-7 fw-normal badge bg-danger ms-1 px-1">已折扣</span> : null}
+                    {data?.data?.final_total < data?.data?.total ? (
+                        <span className="fs-7 fw-normal badge bg-danger ms-1 px-1">已折扣</span>
+                    ) : null}
                 </span>
-                <span>
-                    {couponRedux.finalTotal < couponRedux.total
-                        ? handlePriceToTw(couponRedux.finalTotal)
-                        : handlePriceToTw(couponRedux.total)}
-                </span>
+                <span>{handlePriceToTw(data?.data?.final_total)}</span>
             </h5>
             <Link
                 role="button"
                 to="/cart/checkout"
-                className={`btn btn-primary btn-primary-hover w-100 mb-2 ${couponRedux.isLoading ? 'disabled' : ''}`}
+                className={`btn btn-primary btn-primary-hover w-100 mb-2`}
                 title="前往結帳"
-                state={{ carts: carts }}
             >
                 前往結帳
             </Link>
             <div className="border-top border-2 border-primary mt-3 mb-2 pt-3">
-                <h5 className="fs-5 ">更多資訊請參考以下</h5>
+                <h5 className="fs-5">更多資訊請參考以下</h5>
                 <ul>
                     {[
                         '訂單摘要優惠碼僅提供狀態提示，商品使用代碼請前往結帳，屆時購物車明細將逐一顯示商品代碼。',
@@ -67,7 +72,4 @@ const CartOrderSection = ({ carts }) => {
     );
 };
 
-CartOrderSection.propTypes = {
-    carts: PropTypes.array,
-};
 export default CartOrderSection;

@@ -44,6 +44,10 @@ th {
     }
 }
 
+.nav-link.active {
+    opacity: 0.8;
+}
+
 .link-hover {
     &:hover {
         opacity: 0.7;
@@ -73,6 +77,10 @@ th {
 .icon-sm {
     width: 1.25rem;
     height: 1.25rem;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
 .icon-md {
@@ -103,6 +111,16 @@ th {
 }
 .border-none {
     background: #00000000;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+}
+
+input[type='submit']:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
 }
 
 .footer-text-hover {
@@ -139,6 +157,7 @@ p {
     line-height: 1.5;
     letter-spacing: 0.05em;
     word-break: break-all;
+    margin: 0 auto;
 }
 
 p:lang(en) {

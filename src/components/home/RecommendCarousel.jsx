@@ -26,7 +26,7 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
     };
 
     return (
-        <div className="row flex-row flex-sm-column-reverse flex-lg-row ">
+        <div className="row flex-row flex-sm-column-reverse flex-lg-row">
             <div className="col-12">
                 <Swiper
                     slidesPerView={5}
@@ -84,7 +84,7 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
                                         <div className="home-swiper-img-container">
                                             <img src={item.imageUrl} alt={item.title} className="home-swiper-img" />
                                         </div>
-                                        <div className="home-swiper-content ">
+                                        <div className="home-swiper-content">
                                             <h3 className="text-ellipsis text-center fs-5 mb-0">{item.title}</h3>
                                             <span>NT{handlePriceToTw(item.price)}</span>
                                         </div>
