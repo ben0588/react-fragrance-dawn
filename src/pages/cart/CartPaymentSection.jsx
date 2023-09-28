@@ -182,7 +182,7 @@ const CartPaymentSection = () => {
                                 <span className="fs-3 fw-bolder">訂單總額</span>
                             </div>
                             <div className="col">
-                                <span className="float-end fs-3 fw-bolder">NT{handlePriceToTw(data?.order.total)}</span>
+                                <span className="float-end fs-3 fw-bolder">NT{handlePriceToTw(data?.order?.total)}</span>
                             </div>
                         </div>
                     </div>

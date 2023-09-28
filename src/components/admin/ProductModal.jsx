@@ -44,6 +44,14 @@ const ProductModal = memo(function ProductModal({
         }
     }, [modalOpenType, editProductTarget]);
 
+    const handleCancel = () => {
+        if (modalOpenType === 'create') {
+            setProducts(initialValue);
+        } else if (modalOpenType === 'edit') {
+            setProducts(editProductTarget);
+        }
+    };
+
     const handleChangeValue = (e) => {
         const { name, value } = e.target;
         const matchImages = name.match('images')?.[0];
@@ -168,6 +176,7 @@ const ProductModal = memo(function ProductModal({
                             onClick={() => {
                                 setIsAddFile(false);
                                 handleRemoveUploadForm();
+                                handleCancel();
                                 handleCancelProductModal();
                             }}
                             aria-label="Close"
@@ -330,6 +339,7 @@ const ProductModal = memo(function ProductModal({
                             onClick={() => {
                                 setIsAddFile(false);
                                 handleRemoveUploadForm();
+                                handleCancel();
                                 handleCancelProductModal();
                             }}
                         >

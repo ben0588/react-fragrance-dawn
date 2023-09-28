@@ -36,6 +36,17 @@ const CouponModal = memo(function CouponModal({
         }
     }, [modalOpenType, editCouponTarget]);
 
+    const handleCancel = () => {
+        if (modalOpenType === 'create') {
+            setCoupons(initialValue);
+        } else if (modalOpenType === 'edit') {
+            setCoupons({
+                ...editCouponTarget,
+                due_date: new Date(editCouponTarget.due_date).toISOString().split('T')[0],
+            });
+        }
+    };
+
     const handleChangeValue = (e) => {
         const { name, value } = e.target;
         if (name === 'percent') {
@@ -105,7 +116,10 @@ const CouponModal = memo(function CouponModal({
                         <button
                             type="button"
                             className="btn-close"
-                            onClick={() => handleCancelCouponModal()}
+                            onClick={() => {
+                                handleCancel();
+                                handleCancelCouponModal();
+                            }}
                             aria-label="Close"
                         ></button>
                     </div>
@@ -183,7 +197,14 @@ const CouponModal = memo(function CouponModal({
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={() => handleCancelCouponModal()}>
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={() => {
+                                handleCancel();
+                                handleCancelCouponModal();
+                            }}
+                        >
                             關閉
                         </button>
                         <button

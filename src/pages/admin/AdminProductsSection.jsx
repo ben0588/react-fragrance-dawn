@@ -90,7 +90,7 @@ const AdminProductsSection = () => {
             setDeleteProductTarget({});
             handleCancelDeleteModal();
         } catch (error) {
-            // 不需要再處理這裡的錯誤，因為已經在 adminCheck 中處理
+            inputToastMessage(error?.response?.data);
         } finally {
             dispatch(updateLoadingState(false));
             handleCancelDeleteModal();

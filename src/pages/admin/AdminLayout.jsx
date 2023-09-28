@@ -43,7 +43,7 @@ const AdminLayout = () => {
             dispatch(createAsyncMessage({ id: new Date().getTime(), message: '管理者時效已達，登出成功，請重新登入' }));
             handleAdminLogout();
         }
-    }, [expState]);
+    }, [expState, handleAdminLogout]);
 
     return (
         <div>
