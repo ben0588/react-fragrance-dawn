@@ -81,9 +81,9 @@ const HomeActivity = () => {
             <div className="row align-items-center">
                 <div className="col-lg-6">
                     <div className="row border-3 border-primary border">
-                        {sales.map((item, index) => (
+                        {sales?.map((item, index) => (
                             <motion.div
-                                key={item.id}
+                                key={item?.id}
                                 className="col-6 m-0 p-0"
                                 initial="hidden"
                                 whileInView="show"
@@ -93,8 +93,8 @@ const HomeActivity = () => {
                                 <Link to="/products" className="home-activity-card-container">
                                     <h3 className="home-activity-card-title fs-6 fw-bolder p-2">
                                         <div className="d-flex align-items-center justify-content-center fs-5">
-                                            {item.title}
-                                            {item.title === activityTarget?.title ? (
+                                            {item?.title}
+                                            {item?.title === activityTarget?.title ? (
                                                 <IoFlameSharp
                                                     style={{
                                                         width: `1.2rem`,
@@ -106,9 +106,9 @@ const HomeActivity = () => {
                                             ) : null}
                                         </div>
 
-                                        <time className="d-block fs-6">{item.date}</time>
+                                        <time className="d-block fs-6">{item?.date}</time>
                                     </h3>
-                                    <img src={item.imageUrl} alt={item.title} className="home-activity-card-image" />
+                                    <img src={item?.imageUrl} alt={item?.title} className="home-activity-card-image" />
                                 </Link>
                             </motion.div>
                         ))}

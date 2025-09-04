@@ -6,6 +6,7 @@ import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 const ImagesSwiperCarousel = memo(function ImagesSwiperCarousel({ imagesList, alt }) {
+    // console.log('ImagesSwiperCarousel',imagesList)
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const prevRef = useRef(null);
     const nextRef = useRef(null);

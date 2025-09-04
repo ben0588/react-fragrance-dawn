@@ -14,13 +14,14 @@ const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
     const dispatch = useDispatch();
 
     const handleSlideChange = (swiper) => {
+        // console.log('imagesList',imagesList)
         const target = imagesList[swiper.realIndex];
         dispatch(
             updatePopular({
-                id: target.id,
-                content: target.content,
-                description: target.description,
-                title: target.title,
+                id: target?.id,
+                content: target?.content,
+                description: target?.description,
+                title: target?.title,
             }),
         );
     };
@@ -52,14 +53,14 @@ const PopularCarousel = memo(function PopularCarousel({ imagesList }) {
                 onSlideChange={handleSlideChange} // 監聽輪播切換事件
             >
                 {imagesList?.map((item) => (
-                    <SwiperSlide key={item.id}>
+                    <SwiperSlide key={item?.id}>
                         <div className="popular-card-container my-4 py-4">
-                            <Link to={`/products/${item.id}`} className="d-block">
-                                <img src={item.imageUrl} alt={item.title} className="popular-card-img" />
+                            <Link to={`/products/${item?.id}`} className="d-block">
+                                <img src={item?.imageUrl} alt={item?.title} className="popular-card-img" />
                                 <h3 className="popular-card-title text-ellipsis text-center fw-bolder fs-5">
-                                    {item.title}
+                                    {item?.title}
                                 </h3>
-                                <span className="popular-card-price py-2">NT{handlePriceToTw(item.price)}</span>
+                                <span className="popular-card-price py-2">NT{handlePriceToTw(item?.price)}</span>
                             </Link>
                         </div>
                     </SwiperSlide>

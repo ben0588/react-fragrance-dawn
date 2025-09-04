@@ -9,6 +9,7 @@ import { memo } from 'react';
 import PropTypes from 'prop-types';
 
 const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
+    // console.log('RecommendCarousel',imagesList)
     const { handlePriceToTw } = usePriceToTw();
 
     const imagesVariants = {
@@ -72,7 +73,7 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
                     }}
                 >
                     {imagesList?.map((item, index) => (
-                        <SwiperSlide key={item.id}>
+                        <SwiperSlide key={item?.id}>
                             <div className="home-swiper-container my-4 py-4">
                                 <motion.div
                                     initial="hidden"
@@ -80,16 +81,16 @@ const RecommendCarousel = memo(function RecommendCarousel({ imagesList }) {
                                     custom={index}
                                     variants={imagesVariants}
                                 >
-                                    <Link to={`/products/${item.id}`} className="d-block">
+                                    <Link to={`/products/${item?.id}`} className="d-block">
                                         <div className="home-swiper-img-container">
-                                            <img src={item.imageUrl} alt={item.title} className="home-swiper-img" />
+                                            <img src={item?.imageUrl} alt={item?.title} className="home-swiper-img" />
                                         </div>
                                         <div className="home-swiper-content">
-                                            <h3 className="text-ellipsis text-center fs-5 mb-0">{item.title}</h3>
-                                            <span>NT{handlePriceToTw(item.price)}</span>
+                                            <h3 className="text-ellipsis text-center fs-5 mb-0">{item?.title}</h3>
+                                            <span>NT{handlePriceToTw(item?.price)}</span>
                                         </div>
                                     </Link>
-                                    <Link to={`/products/${item.id}`} className="home-swiper-icon-button">
+                                    <Link to={`/products/${item?.id}`} className="home-swiper-icon-button">
                                         <AiOutlineArrowRight className="icon-md" />
                                     </Link>
                                 </motion.div>
